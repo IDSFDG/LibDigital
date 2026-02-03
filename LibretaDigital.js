@@ -57848,7 +57848,8 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="img/directoriosm.jpeg" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
@@ -57859,7 +57860,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="img/libretasm.jpeg" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja Renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
@@ -57871,7 +57872,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="img/htabsm.jpeg" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con columnas y renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones.</p>');
@@ -57883,7 +57884,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="img/editorsm.jpeg" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
