@@ -57852,7 +57852,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto editados.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
           this.WebHTMLContainer2.FHTML.Add("  </div>");
@@ -57862,7 +57862,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
           this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo imagen">');
           this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja Renglones</h5>');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
