@@ -57389,6 +57389,7 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebHTMLDiv1.SetHeight(272);
         this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
         this.WebHTMLDiv1.SetChildOrderEx(1);
+        this.WebHTMLDiv1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
         this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
         this.WebHTMLDiv1.SetRole("");
         this.WebScrollBox1.SetParentComponent(this);
@@ -57401,6 +57402,7 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebScrollBox1.SetAlign(pas["WEBLib.Controls"].TAlign.alBottom);
         this.WebScrollBox1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
         this.WebScrollBox1.SetChildOrderEx(2);
+        this.WebScrollBox1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
         this.btnRenglones.SetParentComponent(this.WebScrollBox1);
         this.btnRenglones.SetName("btnRenglones");
         this.btnRenglones.SetLeft(16);
@@ -57460,7 +57462,8 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebHTMLContainer1.SetTop(0);
         this.WebHTMLContainer1.SetWidth(640);
         this.WebHTMLContainer1.SetHeight(120);
-        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
         this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
         this.WebHTMLContainer1.SetChildOrderEx(4);
         this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
@@ -57491,11 +57494,11 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebResponsiveGridPanel1.SetParentComponent(this);
         this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
         this.WebResponsiveGridPanel1.SetLeft(0);
-        this.WebResponsiveGridPanel1.SetTop(32);
-        this.WebResponsiveGridPanel1.SetWidth(632);
-        this.WebResponsiveGridPanel1.SetHeight(409);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(480);
         this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
         this.WebResponsiveGridPanel1.SetChildOrderEx(3);
         this.WebResponsiveGridPanel1.FControlCollection.Clear();
         var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
@@ -57811,7 +57814,8 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
         this.WebHTMLContainer1.SetTop(0);
         this.WebHTMLContainer1.SetWidth(640);
         this.WebHTMLContainer1.SetHeight(165);
-        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
         this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
         this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
         this.WebHTMLContainer1.FHTML.BeginUpdate();
@@ -57845,6 +57849,8 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
         this.WebHTMLContainer2.SetTop(165);
         this.WebHTMLContainer2.SetWidth(640);
         this.WebHTMLContainer2.SetHeight(315);
+        this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer2.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
         this.WebHTMLContainer2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
         this.WebHTMLContainer2.SetChildOrderEx(1);
         this.WebHTMLContainer2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
@@ -57866,7 +57872,8 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add("  </div>");
           this.WebHTMLContainer2.FHTML.Add("</div>");
           this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
+          this.WebHTMLContainer2.FHTML.Add('<div class="overflow-auto" style="max-height: calc(100vh - 150px);">');
           this.WebHTMLContainer2.FHTML.Add('<div class="card"   style="width: 25rem;">');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
@@ -57917,19 +57924,19 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
           this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div> ");
           this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("");
         } finally {
           this.WebHTMLContainer2.FHTML.EndUpdate();
         };
         this.WebResponsiveGridPanel1.SetParentComponent(this);
         this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
         this.WebResponsiveGridPanel1.SetLeft(0);
-        this.WebResponsiveGridPanel1.SetTop(32);
-        this.WebResponsiveGridPanel1.SetWidth(632);
-        this.WebResponsiveGridPanel1.SetHeight(409);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(472);
         this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
         this.WebResponsiveGridPanel1.SetChildOrderEx(3);
         this.WebResponsiveGridPanel1.FControlCollection.Clear();
         var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
