@@ -57302,8 +57302,24 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
     };
     this.WebFormHashChange = function (Sender, oldURL, newURL) {
       window.console.log("Navigated from2 " + oldURL + " to " + newURL);
-      this.Close();
-      window.history.pushState(null, '', newURL);
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu1")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu2")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else {
+        this.Close();
+        window.history.pushState(null, '', newURL);
+      };
     };
     this.LoadDFMValues = function () {
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
@@ -57384,9 +57400,9 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebHTMLDiv1.SetParentComponent(this);
         this.WebHTMLDiv1.SetName("WebHTMLDiv1");
         this.WebHTMLDiv1.SetLeft(0);
-        this.WebHTMLDiv1.SetTop(120);
+        this.WebHTMLDiv1.SetTop(165);
         this.WebHTMLDiv1.SetWidth(640);
-        this.WebHTMLDiv1.SetHeight(272);
+        this.WebHTMLDiv1.SetHeight(227);
         this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
         this.WebHTMLDiv1.SetChildOrderEx(1);
         this.WebHTMLDiv1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
@@ -57461,7 +57477,7 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
         this.WebHTMLContainer1.SetLeft(0);
         this.WebHTMLContainer1.SetTop(0);
         this.WebHTMLContainer1.SetWidth(640);
-        this.WebHTMLContainer1.SetHeight(120);
+        this.WebHTMLContainer1.SetHeight(165);
         this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
         this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
         this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
@@ -57483,6 +57499,8 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu1">Opcion Menu 1</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu2">Opcion Menu 2</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
           this.WebHTMLContainer1.FHTML.Add("        </div>");
           this.WebHTMLContainer1.FHTML.Add("      </div>");
@@ -57833,7 +57851,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
           this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
           this.WebHTMLContainer1.FHTML.Add("        </div>");
@@ -57872,9 +57890,11 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add("  </div>");
           this.WebHTMLContainer2.FHTML.Add("</div>");
           this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<div class="overflow-auto" style="max-height: calc(100vh - 150px);">');
-          this.WebHTMLContainer2.FHTML.Add('<div class="card"   style="width: 25rem;">');
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
           this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
@@ -57884,46 +57904,72 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto ');
           this.WebHTMLContainer2.FHTML.Add("editados.</p>");
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrer</a>');
+          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
           this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add(" </div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
           this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
           this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrer</a>');
+          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
           this.WebHTMLContainer2.FHTML.Add("</div>");
           this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
           this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
           this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con columnas y renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrer</a>');
+          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
           this.WebHTMLContainer2.FHTML.Add("</div>");
           this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 25rem;">');
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
           this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
           this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrer</a>');
+          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
           this.WebHTMLContainer2.FHTML.Add("</div> ");
           this.WebHTMLContainer2.FHTML.Add("</div>");
         } finally {
