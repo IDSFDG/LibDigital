@@ -57768,6 +57768,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
       pas["WEBLib.Forms"].TForm.$final.call(this);
     };
     this.WebFormCreate = function (Sender) {
+      this.WebHTMLDiv1.GetElementHandle().classList.add("scrollable-div");
     };
     this.WebFormHashChange = function (Sender, oldURL, newURL) {
       var $Self = this;
@@ -57810,7 +57811,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
       this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
       this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
-      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divMenu"]);
       this.WebHTMLContainer2 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
       this.WebHTMLContainer1.BeforeLoadDFMValues();
       this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
@@ -57921,8 +57922,8 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
         this.WebHTMLDiv1.SetRole("");
         this.WebHTMLContainer2.SetParentComponent(this.WebHTMLDiv1);
         this.WebHTMLContainer2.SetName("WebHTMLContainer2");
-        this.WebHTMLContainer2.SetLeft(226);
-        this.WebHTMLContainer2.SetTop(10);
+        this.WebHTMLContainer2.SetLeft(0);
+        this.WebHTMLContainer2.SetTop(0);
         this.WebHTMLContainer2.SetWidth(100);
         this.WebHTMLContainer2.SetHeight(186);
         this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
