@@ -57952,7 +57952,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
           this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="overflow-auto" style="max-height: calc(100vh - 150px);">');
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-auto" style="max-height: calc(100vh - 150px);"> -->');
           this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
           this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
           this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
@@ -57963,8 +57963,9 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto ');
           this.WebHTMLContainer2.FHTML.Add("editados.</p>");
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
@@ -57982,8 +57983,9 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
@@ -58002,8 +58004,9 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones registro de información de manera');
           this.WebHTMLContainer2.FHTML.Add(" tabular, encabezado columnas, formulas etc.              </p>");
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!-- <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
@@ -58021,8 +58024,9 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
           this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
           this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("  <!--  ");
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!--   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
           this.WebHTMLContainer2.FHTML.Add("");
           this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
@@ -58031,7 +58035,7 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
           this.WebHTMLContainer2.FHTML.Add("-->");
           this.WebHTMLContainer2.FHTML.Add("  </div> ");
           this.WebHTMLContainer2.FHTML.Add("</div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add(" <!-- </div>-->");
         } finally {
           this.WebHTMLContainer2.FHTML.EndUpdate();
         };
