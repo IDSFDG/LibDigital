@@ -57236,10 +57236,14 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
       var tabledata2 = [
           {id:1, nombre:"Notas 1", tipo:"1", fecha:"19/02/1984"},
           {id:2, nombre:"Notas 2",tipo:"1", fecha:"14/05/1982"},
-          {id:3, nombre:"Hoja 1", tipo:"2", fecha:"22/05/1982"},
-          {id:4, nombre:"Texto 1", tipo:"3", fecha:"01/08/1980"},
-          {id:5, nombre:"Hoja 2",  tipo:"2", fecha:"31/01/1999"},
-          {id:6, nombre:"Notas 3",  tipo:"1", fecha:"12/05/1966"},
+          {id:3, nombre:"Hoja 3", tipo:"2", fecha:"22/05/1982"},
+          {id:4, nombre:"Texto 4", tipo:"3", fecha:"01/08/1980"},
+          {id:5, nombre:"Hoja 5",  tipo:"2", fecha:"31/01/1999"},
+          {id:6, nombre:"Notas 6",  tipo:"1", fecha:"12/05/1966"},
+          {id:7, nombre:"Notas 7",  tipo:"1", fecha:"12/05/1966"},
+          {id:8, nombre:"Texto 8",  tipo:"3", fecha:"12/05/1966"},
+          {id:9, nombre:"Notas 8",  tipo:"1", fecha:"12/05/1966"},
+          {id:10, nombre:"Hoja 10",  tipo:"2", fecha:"12/05/1966"},
       ];
       
       
@@ -57256,6 +57260,8 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
           initialSort:[             //set the initial sort order of the data
               {column:"tipo", dir:"asc"},
           ],
+      
+      
           columnDefaults:{
               tooltip:true,         //show tool tips on cells
           },
@@ -57281,7 +57287,54 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
               {title:"Nombre", field:"nombre", editor:false},
           ],
       
+          //locale:true,
+            langs:{
+              "espaniol":{
+                  "columns":{
+                      "name":"Name", //replace the title of column name with the value "Name"
+                  },
+                  "data":{
+                      "loading":"Loading", //data loader text
+                      "error":"Error", //data error text
+                  },
+                  "groups":{ //copy for the auto generated item count in group header
+                      "item":"item", //the singular  for item
+                      "items":"items", //the plural for items
+                  },
+                  "pagination":{
+                      "page_size":"Tam.Pag.", //label for the page size select element
+                      "page_title":"Ver Pag.",//tooltip text for the numeric page button, appears in front of the page number (eg. "Show Page" will result in a tool tip of "Show Page 1" on the page 1 button)
+                      "first":"Prim.", //text for the first page button
+                      "first_title":"Prim.Pag", //tooltip text for the first page button
+                      "last":"Ultim.",
+                      "last_title":"Ult.Pag.",
+                      "prev":"Prev.",
+                      "prev_title":"Pag.Ant.",
+                      "next":"Sig.",
+                      "next_title":"Pag.Sig.",
+                      "all":"All",
+                      "counter":{
+                          "showing": "Ver",
+                          "of": "de",
+                          "rows": "rengs",
+                          "pages": "paginas",
+                      }
+                  },
+                  "headerFilters":{
+                      "default":"filter column...", //default header filter placeholder text
+                      "columns":{
+                          "name":"filter name...", //replace default header filter text for column name
+                      }
+                  }
+              }
+          },
+      
       });
+      
+      table.on("tableBuilt", function(){
+            table.setLocale("espaniol"); //set locale to espaniol
+      
+             });
     };
     this.btnSalirClick = function (Sender) {
       this.Close();
@@ -57594,6 +57647,1952 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
   });
   this.frmLibretaResponsive = null;
 });
+rtl.module("uEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.Menus","WEBLib.Menus","WEBLib.ExtCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmEditor",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.divSunEditor = null;
+      this.WebButton1 = null;
+      this.WebPanelBottom = null;
+      this.WebButton3 = null;
+      this.WebButton2 = null;
+      this.btnfocus = null;
+      this.cmeditor = undefined;
+      this.suneditor = undefined;
+    };
+    this.$final = function () {
+      this.divSunEditor = undefined;
+      this.WebButton1 = undefined;
+      this.WebPanelBottom = undefined;
+      this.WebButton3 = undefined;
+      this.WebButton2 = undefined;
+      this.btnfocus = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      var varsuneditor = undefined;
+      // Function to hide the toolbar
+           function hideToolbar() {
+             //const editor = editorInstance;
+             const editor = suneditor;
+             console.log(editor);
+             editorInstance .toolbar.hide();
+           }
+      
+           // Function to show the toolbar
+            function showToolbar() {
+              const editor = editorInstance;
+              editor.toolbar.show();
+          }
+      
+      
+          // INICIO No Crear SummerNote    **********************************
+      
+        if (1==0) {
+          var undoButton = function (context) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+              contents: '<i class="fas fa-undo"/> Undo',
+              tooltip: 'Undo'
+            });
+            return button.render();
+          };
+      
+          var redoButton = function (context) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+              contents: '<i class="fas fa-redo"/> Redo',
+              tooltip: 'Redo',
+            });
+            return button.render();
+          };
+      
+          var SummernoteSave = this.SummernoteSave;
+          var saveButton = function (context) {
+            var ui = $.summernote.ui;
+            var button = ui.button({
+              contents: '<div id="SummernoteSave"><i class="fas fa-check"></div>',
+              tooltip: 'Save Changes',
+              id: "SummernoteSave",
+              container: $('.note-editor.note-frame'),
+              click: function () {
+                var HTML = $('#divSummernote').summernote('code');
+                SummernoteSave(HTML);
+              }
+            });
+            return button.render();
+          };
+      
+      
+          $('#divSummernote').summernote({
+            height: 200,
+            minHeight: 100,
+            buttons: {
+              undo: undoButton,
+              redo: redoButton,
+              save: saveButton,
+            },
+            toolbar: [
+              ['edit', ['undo','save','redo']],
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear']],
+              ['fontname', ['fontname']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            icons: {
+              align:         'fas fa-align',
+              alignCenter:   'fas fa-align-center',
+              alignJustify:  'fas fa-align-justify',
+              alignLeft:     'fas fa-align-left',
+              alignRight:    'fas fa-align-right',
+              indent:        'fas fa-indent',
+              outdent:       'fas fa-outdent',
+              arrowsAlt:     'fas fa-expand',
+              bold:          'fas fa-bold',
+              caret:         'fas fa-caret-down',
+              circle:        'fas fa-circle',
+              close:         'fas fa fa-close',
+              code:          'fas fa-code',
+              eraser:        'fas fa-eraser',
+              font:          'fas fa-font',
+              italic:        'fas fa-italic',
+              link:          'fas fa-link',
+              unlink:        'fas fa-chain-broken',
+              magic:         'fas fa-magic',
+              menuCheck:     'fas fa-check',
+              minus:         'fas fa-minus',
+              orderedlist:   'fas fa-list-ol',
+              pencil:        'fas fa-pencil',
+              picture:       'fas fa-image',
+              question:      'fas fa-question',
+              redo:          'fas fa-redo',
+              square:        'fas fa-square',
+              strikethrough: 'fas fa-strikethrough',
+              subscript:     'fas fa-subscript',
+              superscript:   'fas fa-superscript',
+              table:         'fas fa-table',
+              textHeight:    'fas fa-text-height',
+              trash:         'fas fa-trash',
+              underline:     'fas fa-underline',
+              undo:          'fas fa-undo',
+              unorderedlist: 'fas fa-list-ul',
+              video:         'fas fa-video-camera'
+            },
+          });
+      
+          $('#divSummernote').on('summernote.change', function(we, contents, $editable) {
+            document.getElementById('SummernoteSave').style.color = "green";
+          });
+      
+      
+      
+          // Fixes the duplicate carets issue
+          var styleEle = $("style#fixed");
+          if (styleEle.length == 0)
+            $("<style id=\"fixed\">.note-editor .dropdown-toggle::after { all: unset; } .note-editor .note-dropdown-menu { box-sizing: content-box; } .note-editor .note-modal-footer { box-sizing: content-box; }</style>")
+            .prependTo("body");
+      
+         } // 1=0
+      
+          // FIN No Crear SummerNote    **********************************
+      
+          var SunEditorSave = this.SunEditorSave;
+          this.suneditor = SUNEDITOR.create('divSunEditor',{
+         // const editorInstance = SUNEDITOR.create('divSunEditor', {
+        // options...
+            width: 'auto',
+            height: 300,
+            minHeight: 100,
+            codeMirror: {
+              src: CodeMirror,
+              options: {
+                lineNumbers: true
+              }
+            },
+            katex: katex,
+            callBackSave: function (contents, isChanged) {
+              SunEditorSave(contents);
+            },
+            buttonList: [
+              ['undo', 'save', 'redo'],
+              ['font', 'fontSize', 'formatBlock'],
+              ['paragraphStyle', 'blockquote','horizontalRule'],
+              ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'math'],
+              ['fontColor', 'hiliteColor', 'textStyle', 'removeFormat'],
+              ['list', 'outdent', 'indent', 'align', 'lineHeight'],
+              ['table', 'link', 'image', 'video', 'audio'],
+              ['fullScreen','showBlocks', 'codeView', 'print']
+            ],
+            icons: {
+              undo: '<span><i class="fas fa-undo"></i></span>',
+              save: '<span class="HTMLSave" style="margin-top: -2px;"><i class="fas fa-check fa-xl"></i></span>',
+              redo: '<span><i class="fas fa-redo"></i></span>',
+      
+              paragraph_style: '<span><i class="fas fa-paragraph"></i></span>',
+              blockquote: '<span><i class="fas fa-quote-left"></i></span>',
+              horizontal_rule: '<span><i class="fas fa-horizontal-rule"></i></span>',
+      
+              bold: '<span><i class="fas fa-bold"></i></span>',
+              underline: '<span><i class="fas fa-underline"></i></span>',
+              italic: '<span><i class="fas fa-italic"></i></span>',
+              strike: '<span><i class="fas fa-strikethrough"></i></span>',
+              subscript: '<span><i class="fas fa-subscript"></i></span>',
+              superscript: '<span><i class="fas fa-superscript"></i></span>',
+              math: '<span><i class="fas fa-abacus"></i></span>',
+      
+              font_color: '<span><i class="fas fa-pen-nib"></i></span>',
+              highlight_color: '<span><i class="fas fa-highlighter"></i></span>',
+              text_style: '<span><i class="fas fa-text"></i></span>',
+              erase: '<span><i class="fas fa-eraser"></i></span>',
+      
+              list_bullets: '<span><i class="fas fa-list"></i></span>',
+              list_number: '<span><i class="fas fa-list-ol"></i></span>',
+              outdent: '<span><i class="fas fa-indent"></i></span>',
+              indent: '<span><i class="fas fa-outdent"></i></span>',
+              align_left: '<span><i class="fas fa-align-left"></i></span>',
+              align_right: '<span><i class="fas fa-align-right"></i></span>',
+              align_justify: '<span><i class="fas fa-align-justify"></i></span>',
+              align_center: '<span><i class="fas fa-align-center"></i></span>',
+              line_height: '<span><i class="fas fa-text-height"></i></span>',
+      
+              table: '<span><i class="fas fa-table"></i></span>',
+              link: '<span><i class="fas fa-link"></i></span>',
+              image: '<span><i class="fas fa-image"></i></span>',
+              video: '<span><i class="fas fa-video"></i></span>',
+              audio: '<span><i class="fas fa-microphone"></i></span>',
+      
+              expansion: '<span><i class="fas fa-expand"></i></span>',
+              reduction: '<span><i class="fas fa-compress"></i></span>',
+              show_blocks: '<span><i class="fas fa-tasks"></i></span>',
+              code_view: '<span><i class="fas fa-code"></i></span>',
+              print: '<span><i class="fas fa-print"></i></span>'
+            },
+          });
+      
+      
+      
+          // INICIO No Crear divCodeMirror    **********************************
+         if (1==0) {
+      
+          this.cmeditor = CodeMirror(divCodeMirror, {
+            mode: "markdown",
+            lineNumbers: true
+          });
+      
+          var boldclick = this.btnCodeMirrorBoldClick;
+          this.cmeditor.addKeyMap({"Ctrl-B":function (cm) { boldclick() }});
+          var underlineclick = this.btnCodeMirrorBoldClick;
+          this.cmeditor.addKeyMap({"Ctrl-I":function (cm) { underlineclick() }});
+          var italicclick = this.btnCodeMirrorBoldClick;
+          this.cmeditor.addKeyMap({"Ctrl-U":function (cm) { italicclick() }});
+          var saveclick = this.btnCodeMirrorSaveClick;
+          this.cmeditor.addKeyMap({"Ctrl-S":function (cm) { saveclick() }});
+      
+          divCodeMirror.classList.add('w-100');
+          divCodeMirror.firstElementChild.style.height = "200px";
+          divCodeMirror.firstElementChild.style.minHeight = "100px";
+          divCodeMirror.firstElementChild.style.resize = "vertical";
+          divCodeMirror.firstElementChild.style.overflow = "auto !important";
+      
+          // Set default CodeMirror Text
+          this.cmeditor.setValue('# Hello\r1. One\r1. Two\r1. Three\r');
+         }  // 1=0
+      
+          // FINAL No Crear divCodeMirror    **********************************
+      
+        //  hideToolbar();
+      console.log('editor',this.suneditor);
+      varsuneditor=this.suneditor;
+      console.log('editor2',varsuneditor);
+      $mod.vsuneditor = varsuneditor;
+      window.console.log("vsuneditor",$mod.vsuneditor);
+    };
+    this.btnCodeMirrorBoldClick = function (Sender) {
+      var cm = undefined;
+      cm = $mod.frmEditor.cmeditor;
+      var selection = cm.getSelection();
+      cm.replaceSelection('**' + selection + '**');
+      if (!selection) {
+        var cursorPos =cm.getCursor();
+        cm.setCursor(cursorPos.line, cursorPos.ch - 2);
+      };
+    };
+    this.btnCodeMirrorUnderlineClick = function (Sender) {
+      var cm = undefined;
+      cm = $mod.frmEditor.cmeditor;
+      var selection = cm.getSelection();
+      cm.replaceSelection('<span style="text-decoration: underline">' + selection + '</span>');
+      if (!selection) {
+        var cursorPos =cm.getCursor();
+        cm.setCursor(cursorPos.line, cursorPos.ch - 2);
+      };
+    };
+    this.btnCodeMirrorItalicClick = function (Sender) {
+      var cm = undefined;
+      cm = $mod.frmEditor.cmeditor;
+      var selection = cm.getSelection();
+      cm.replaceSelection('*' + selection + '*');
+      if (!selection) {
+        var cursorPos =cm.getCursor();
+        cm.setCursor(cursorPos.line, cursorPos.ch - 2);
+      };
+    };
+    this.SummernoteSave = function (HTML) {
+      window.console.log("User wants to save an HTML file that has SummernoteSave" + pas.SysUtils.IntToStr(HTML.length) + " bytes");
+    };
+    this.SunEditorSave = function (HTML) {
+      var strHmtl = "";
+      strHmtl = HTML;
+      window.console.log("User wants to save an HTML file that has SunEditorSave " + pas.SysUtils.IntToStr(HTML.length) + " bytes");
+      alert('Salvar  SunEditorSave');
+      alert(strHmtl);
+    };
+    this.btnCodeMirrorSaveClick = function (Sender) {
+      var cm = undefined;
+      var se = undefined;
+      cm = $mod.frmEditor.cmeditor;
+      se = $mod.frmEditor.suneditor;
+      var markdown = cm.getValue();
+         var converter = new showdown.Converter();
+         var html = converter.makeHtml(markdown);
+         $("#divSummernote").summernote('code',html);
+      //   se.setContents(html);
+    };
+    this.WebPanelBottomClick = function (Sender) {
+      this.Close();
+    };
+    this.WebLabel1Click = function (Sender) {
+      this.Close();
+    };
+    this.WebButton1Click = function (Sender) {
+      this.Close();
+    };
+    this.WebButton2Click = function (Sender) {
+      var se = undefined;
+      window.console.log("form",$mod.frmEditor);
+      window.console.log("editor3",$mod.vsuneditor);
+      se = $mod.vsuneditor;
+      se.toolbar.show();
+    };
+    this.WebButton3Click = function (Sender) {
+      var se = undefined;
+      window.console.log("editor3",$mod.vsuneditor);
+      se = $mod.vsuneditor;
+      se.toolbar.hide();
+    };
+    this.btnfocusClick = function (Sender) {
+      var se = undefined;
+      window.console.log("editorfocus",$mod.vsuneditor);
+      se = $mod.vsuneditor;
+      console.log(se.core);
+      se.core.focus();
+    };
+    this.WebFormShow = function (Sender) {
+      var se = undefined;
+      window.console.log("editorfocus",$mod.vsuneditor);
+      se = $mod.vsuneditor;
+      console.log(se.core);
+      se.core.focus();
+    };
+    this.WebFormResize = function (Sender) {
+      var frmwidth = 0;
+      frmwidth = this.GetWidth();
+      console.log('frmwidth',frmwidth);
+      this.WebPanelBottom.SetWidth(frmwidth);
+      this.SetHeight(450);
+      return;
+      this.WebPanelBottom.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epIgnore);
+      this.WebPanelBottom.SetWidth(frmwidth);
+      this.WebPanelBottom.SetTop(this.GetHeight() - this.WebPanelBottom.GetHeight());
+      this.WebPanelBottom.SetLeft(0);
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.divSunEditor = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divSunEditor"]);
+      this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebPanelBottom = pas["WEBLib.ExtCtrls"].TPanel.$create("Create$1",[this]);
+      this.WebButton3 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebButton2 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnfocus = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.divSunEditor.BeforeLoadDFMValues();
+      this.WebButton1.BeforeLoadDFMValues();
+      this.WebPanelBottom.BeforeLoadDFMValues();
+      this.WebButton3.BeforeLoadDFMValues();
+      this.WebButton2.BeforeLoadDFMValues();
+      this.btnfocus.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmEditor");
+        this.SetWidth(600);
+        this.SetHeight(960);
+        this.SetColor(12632256);
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnResize","WebFormResize");
+        this.SetEvent(this,"OnShow","WebFormShow");
+        this.divSunEditor.SetParentComponent(this);
+        this.divSunEditor.SetName("divSunEditor");
+        this.divSunEditor.SetLeft(8);
+        this.divSunEditor.SetTop(39);
+        this.divSunEditor.SetWidth(584);
+        this.divSunEditor.SetHeight(192);
+        this.divSunEditor.SetChildOrderEx(1);
+        this.divSunEditor.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epIgnore);
+        this.divSunEditor.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.divSunEditor.SetRole("");
+        this.WebButton1.SetParentComponent(this);
+        this.WebButton1.SetName("WebButton1");
+        this.WebButton1.SetLeft(0);
+        this.WebButton1.SetTop(935);
+        this.WebButton1.SetWidth(600);
+        this.WebButton1.SetHeight(25);
+        this.WebButton1.SetAlign(pas["WEBLib.Controls"].TAlign.alBottom);
+        this.WebButton1.SetCaption("Salir");
+        this.WebButton1.SetChildOrderEx(4);
+        this.WebButton1.SetElementClassName("btn btn-light");
+        this.WebButton1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton1.SetHeightPercent(100.000000000000000000);
+        this.WebButton1.SetVisible(false);
+        this.WebButton1.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton1,this,"OnClick","WebButton1Click");
+        this.WebPanelBottom.SetParentComponent(this);
+        this.WebPanelBottom.SetName("WebPanelBottom");
+        this.WebPanelBottom.SetLeft(0);
+        this.WebPanelBottom.SetTop(896);
+        this.WebPanelBottom.SetWidth(600);
+        this.WebPanelBottom.SetHeight(39);
+        this.WebPanelBottom.SetElementClassName("card text-white bg-secondary mb-3");
+        this.WebPanelBottom.SetAlign(pas["WEBLib.Controls"].TAlign.alBottom);
+        this.WebPanelBottom.SetCaption("Salir");
+        this.WebPanelBottom.SetChildOrderEx(4);
+        this.WebPanelBottom.FElementBodyClassName = "card-body";
+        this.WebPanelBottom.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebPanelBottom.SetTabOrder(2);
+        this.SetEvent$1(this.WebPanelBottom,this,"OnClick","WebPanelBottomClick");
+        this.WebButton3.SetParentComponent(this.WebPanelBottom);
+        this.WebButton3.SetName("WebButton3");
+        this.WebButton3.SetLeft(112);
+        this.WebButton3.SetTop(5);
+        this.WebButton3.SetWidth(96);
+        this.WebButton3.SetHeight(17);
+        this.WebButton3.SetCaption("Hide");
+        this.WebButton3.SetChildOrderEx(3);
+        this.WebButton3.SetElementClassName("btn btn-light");
+        this.WebButton3.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton3.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton3.SetHeightPercent(100.000000000000000000);
+        this.WebButton3.SetVisible(false);
+        this.WebButton3.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton3,this,"OnClick","WebButton3Click");
+        this.WebButton2.SetParentComponent(this.WebPanelBottom);
+        this.WebButton2.SetName("WebButton2");
+        this.WebButton2.SetLeft(214);
+        this.WebButton2.SetTop(3);
+        this.WebButton2.SetWidth(96);
+        this.WebButton2.SetHeight(17);
+        this.WebButton2.SetCaption("Show");
+        this.WebButton2.SetChildOrderEx(2);
+        this.WebButton2.SetElementClassName("btn btn-light");
+        this.WebButton2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton2.SetHeightPercent(100.000000000000000000);
+        this.WebButton2.SetVisible(false);
+        this.WebButton2.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton2,this,"OnClick","WebButton2Click");
+        this.btnfocus.SetParentComponent(this.WebPanelBottom);
+        this.btnfocus.SetName("btnfocus");
+        this.btnfocus.SetLeft(3);
+        this.btnfocus.SetTop(3);
+        this.btnfocus.SetWidth(96);
+        this.btnfocus.SetHeight(25);
+        this.btnfocus.SetCaption("focus");
+        this.btnfocus.SetChildOrderEx(2);
+        this.btnfocus.SetElementClassName("btn btn-light");
+        this.btnfocus.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnfocus.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnfocus.SetHeightPercent(100.000000000000000000);
+        this.btnfocus.SetVisible(false);
+        this.btnfocus.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.btnfocus,this,"OnClick","btnfocusClick");
+      } finally {
+        this.divSunEditor.AfterLoadDFMValues();
+        this.WebButton1.AfterLoadDFMValues();
+        this.WebPanelBottom.AfterLoadDFMValues();
+        this.WebButton3.AfterLoadDFMValues();
+        this.WebButton2.AfterLoadDFMValues();
+        this.btnfocus.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("divSunEditor",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebPanelBottom",pas["WEBLib.ExtCtrls"].$rtti["TPanel"]);
+    $r.addField("WebButton3",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebButton2",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnfocus",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnCodeMirrorBoldClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnCodeMirrorUnderlineClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnCodeMirrorItalicClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("SummernoteSave",0,[["HTML",pas.System.$rtti["WideString"]]]);
+    $r.addMethod("SunEditorSave",0,[["HTML",pas.System.$rtti["WideString"]]]);
+    $r.addMethod("btnCodeMirrorSaveClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebPanelBottomClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebLabel1Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton1Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton2Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton3Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnfocusClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormShow",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormResize",0,[["Sender",pas.System.$rtti["TObject"]]]);
+  });
+  this.frmEditor = null;
+  this.vsuneditor = undefined;
+});
+rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.Controls","WEBLib.ExtCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmRLibretaResponsive",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.Panel1 = null;
+      this.WebButton1 = null;
+      this.WebHTMLDiv1 = null;
+      this.WebScrollBox1 = null;
+      this.btnRenglones = null;
+      this.btnTabular = null;
+      this.btnEditor = null;
+      this.btnSalir = null;
+      this.WebResponsiveGridPanel1 = null;
+      this.txtBuscar = null;
+      this.WebHTMLContainer1 = null;
+    };
+    this.$final = function () {
+      this.Panel1 = undefined;
+      this.WebButton1 = undefined;
+      this.WebHTMLDiv1 = undefined;
+      this.WebScrollBox1 = undefined;
+      this.btnRenglones = undefined;
+      this.btnTabular = undefined;
+      this.btnEditor = undefined;
+      this.btnSalir = undefined;
+      this.WebResponsiveGridPanel1 = undefined;
+      this.txtBuscar = undefined;
+      this.WebHTMLContainer1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      this.txtBuscar.SetElementClassName("rounded-input");
+      var sheets = [
+          {
+            name:'huno',
+            title:"Renglones",
+            key:"uno",
+            rows:50,
+            //rows:0,
+           // columns:7,
+            columns:2,
+            data:[],
+        }
+      ];
+      function customEditor(cell, onRendered, success, cancel) {
+       // const input = document.createElement('input')
+        const input = document.createElement('textarea')
+      
+        input.style.width = "100%";
+        //input.style.height = "100%";
+        //input.style.boxSizing = "border-box";
+        input.value = cell.getValue()
+        //input.selectionStart = input.value.length
+        //input.selectionEnd = input.value.length;
+      
+        input.value= input.value.trim()
+         if (input.value === 'undefined')
+        {
+           //console.log('undefined');
+           input.value='';
+        }
+        onRendered(() => {
+        console.log('onRender');
+          //input.focus()
+          //input.select()
+      
+         setTimeout(function() {
+                  input.focus();            // FOCUS INPUT
+              }, 10); // A short delay (e.g., 10ms) is often sufficient
+        })
+      
+        function onChange() {
+          if (input.value != cell.getValue()) {
+            success(input.value)
+          } else {
+            cancel()
+          }
+        }
+      
+        var successFunc = function(){
+              success(input.value);
+      
+          };
+      
+          input.addEventListener('blur', onChange)
+         // input.addEventListener("blur", successFunc);
+      
+        input.addEventListener('keydown', (e) => {
+         // alert(e.keyCode);
+          if (e.keyCode == 13) {
+            table.navigateNext()
+      
+            onChange()
+          }
+      
+          if (e.keyCode == 27) {
+            cancel()
+          }
+        })
+      
+        return input
+      }
+       var editCheck = function(cell){
+          //cell - the cell component for the editable cell
+          //get row data
+          var data = cell.getRow().getData();
+         // return data.age > 18; // only allow the name cell to be edited if the age is over 18
+        // return false // no editable
+        return true // editable
+      }
+      
+      var table = new Tabulator("#ttabulator", {
+          //data:tabledata2,           //load row data from array
+          spreadsheet:true,
+        //spreadsheetData:sheetData,
+        spreadsheetSheets:sheets,        // DEFINICION HOJAS ARREGLO
+        spreadsheetSheetTabs:true,
+      
+        rowHeader:{field:"_id", hozAlign:"center", headerSort:false, frozen:true},
+      
+        editorEmptyValue:undefined, //ensure empty values are set to undefined so they arent included in spreadsheet output data
+      
+      
+       spreadsheetColumnDefinition:{editable:editCheck,editor:customEditor},
+      
+      
+        // enable clipboard functionality
+          clipboard: true,
+          clipboardCopyRowRange:"range",
+          clipboardPasteParser:"range",
+          clipboardPasteAction:"range",
+          clipboardCopyConfig:{
+              rowHeaders:false, //do not include row headers in clipboard output
+              columnHeaders:false, //do not include column headers in clipboard output
+          },
+          rangeSelection: true,
+      
+          clipboardCopyCellRange: "selected",
+          cellRangeSelection :true,
+      
+          //selectableRange:true,
+          //selectableRangeColumns:true,
+          //selectableRangeRows:true,
+          //selectableRangeClearCells:true,
+          editTriggerEvent: "click", // Trigger edit on single click
+      
+          selectableRows:true,
+      
+           clipboard: true,                // Enable clipboard functionality
+          selectable: true,               // Enable row selection
+          clipboardCopyRowRange: "selected", // Copy only selected rows
+      
+          layout:"fitColumns",      //fit columns to width of table
+          responsiveLayout:"hide",  //hide columns that don't fit on the table
+          addRowPos:"top",          //when adding a new row, add it to the top of the table
+          history:true,             //allow undo and redo actions on the table
+      
+         // pagination:"local",       //paginate the data
+         // paginationSize:7,         //allow 7 rows per page of data
+         // paginationCounter:"rows", //display count of paginated rows in footer
+         // movableColumns:true,      //allow column order to be changed
+          initialSort:[             //set the initial sort order of the data
+              {column:"tipo", dir:"asc"},
+          ],
+      
+          //locale:true,
+            langs:{
+              "espaniol":{
+                  "columns":{
+                      "name":"Name", //replace the title of column name with the value "Name"
+                  },
+                  "data":{
+                      "loading":"Loading", //data loader text
+                      "error":"Error", //data error text
+                  },
+                  "groups":{ //copy for the auto generated item count in group header
+                      "item":"item", //the singular  for item
+                      "items":"items", //the plural for items
+                  },
+                  "pagination":{
+                      "page_size":"Tam.Pag.", //label for the page size select element
+                      "page_title":"Ver Pag.",//tooltip text for the numeric page button, appears in front of the page number (eg. "Show Page" will result in a tool tip of "Show Page 1" on the page 1 button)
+                      "first":"Prim.", //text for the first page button
+                      "first_title":"Prim.Pag", //tooltip text for the first page button
+                      "last":"Ultim.",
+                      "last_title":"Ult.Pag.",
+                      "prev":"Prev.",
+                      "prev_title":"Pag.Ant.",
+                      "next":"Sig.",
+                      "next_title":"Pag.Sig.",
+                      "all":"All",
+                      "counter":{
+                          "showing": "Ver",
+                          "of": "de",
+                          "rows": "rengs",
+                          "pages": "paginas",
+                      }
+                  },
+                  "headerFilters":{
+                      "default":"filter column...", //default header filter placeholder text
+                      "columns":{
+                          "name":"filter name...", //replace default header filter text for column name
+                      }
+                  }
+              }
+          },
+      
+      });
+      
+      table.on("tableBuilt", function(){
+      
+         table.setLocale("espaniol"); //set locale to espaniol
+      
+         var tableElement = table.element;
+          var tableWidth = tableElement.offsetWidth;
+          console.log("Table width:", tableWidth + "px");
+          var activeSheet = table.getSheet();
+          var key = activeSheet.getKey();
+          if (key =='uno')
+          {
+           console.log('update column definition');
+           table.updateColumnDefinition("A", {title:"", width: tableWidth-50 }) //change the column title
+           table.updateColumnDefinition("B", {title:"", visible:false }) //change the column title
+         }
+      
+         let firstRow = table.getRowFromPosition(1);
+         //console.log('firstRow',firstRow);
+          if (firstRow) {
+              // Get the cell in the 'name' column and trigger edit/focus
+              let firstCell = firstRow.getCell('A');
+              if (firstCell) {
+                // ********************* FIRST CELL EDIT    ***********************
+                  console.log('FIRST CELL EDIT');
+                  firstCell.edit();
+              }
+          }
+      
+             });
+    };
+    this.btnSalirClick = function (Sender) {
+      this.Close();
+      window.history.pushState(null, '', 'LibretaDigital.html#frmMenu');
+    };
+    this.btnRenglonesClick = function (Sender) {
+      var $Self = this;
+      var i = 0;
+      function AfterShowModal(AValue) {
+      };
+      function AfterCreate(AForm) {
+      };
+    };
+    this.WebButton2Click = function (Sender) {
+      var table = Tabulator.findTable("#ttabulator")[0];
+      // Forces a full re-render of the entire table, including all data
+      table.redraw(true);
+    };
+    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+      window.console.log("Navigated from2 " + oldURL + " to " + newURL);
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu1")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu2")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else {
+        this.Close();
+        window.history.pushState(null, '', newURL);
+      };
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.Panel1 = pas["WEBLib.ExtCtrls"].TPanel.$create("Create$1",[this]);
+      this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.txtBuscar = pas["WEBLib.StdCtrls"].TEdit.$create("Create$1",[this]);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["ttabulator"]);
+      this.WebScrollBox1 = pas["WEBLib.ExtCtrls"].TScrollBox.$create("Create$1",[this]);
+      this.btnRenglones = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnTabular = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnEditor = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnSalir = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
+      this.Panel1.BeforeLoadDFMValues();
+      this.WebButton1.BeforeLoadDFMValues();
+      this.txtBuscar.BeforeLoadDFMValues();
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebScrollBox1.BeforeLoadDFMValues();
+      this.btnRenglones.BeforeLoadDFMValues();
+      this.btnTabular.BeforeLoadDFMValues();
+      this.btnEditor.BeforeLoadDFMValues();
+      this.btnSalir.BeforeLoadDFMValues();
+      this.WebHTMLContainer1.BeforeLoadDFMValues();
+      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmRLibretaResponsive");
+        this.SetWidth(640);
+        this.SetHeight(480);
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnHashChange","WebFormHashChange");
+        this.Panel1.SetParentComponent(this);
+        this.Panel1.SetName("Panel1");
+        this.Panel1.SetLeft(0);
+        this.Panel1.SetTop(10);
+        this.Panel1.SetWidth(640);
+        this.Panel1.SetHeight(60);
+        this.Panel1.SetElementClassName("card");
+        this.Panel1.FElementBodyClassName = "card-body";
+        this.Panel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.Panel1.SetTabOrder(0);
+        this.Panel1.SetVisible(false);
+        this.WebButton1.SetParentComponent(this.Panel1);
+        this.WebButton1.SetName("WebButton1");
+        this.WebButton1.SetLeft(544);
+        this.WebButton1.SetTop(0);
+        this.WebButton1.SetWidth(96);
+        this.WebButton1.SetHeight(60);
+        this.WebButton1.SetAlign(pas["WEBLib.Controls"].TAlign.alRight);
+        this.WebButton1.SetCaption("Buscar");
+        this.WebButton1.SetChildOrderEx(1);
+        this.WebButton1.SetElementClassName("btn btn-primary");
+        this.WebButton1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton1.SetHeightPercent(100.000000000000000000);
+        this.WebButton1.SetWidthPercent(100.000000000000000000);
+        this.txtBuscar.SetParentComponent(this.Panel1);
+        this.txtBuscar.SetName("txtBuscar");
+        this.txtBuscar.SetLeft(0);
+        this.txtBuscar.SetTop(0);
+        this.txtBuscar.SetWidth(544);
+        this.txtBuscar.SetHeight(60);
+        this.txtBuscar.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.txtBuscar.SetChildOrderEx(1);
+        this.txtBuscar.SetElementClassName("form-control");
+        this.txtBuscar.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.txtBuscar.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.txtBuscar.SetHeightPercent(100.000000000000000000);
+        this.txtBuscar.SetWidthPercent(100.000000000000000000);
+        this.WebHTMLDiv1.SetParentComponent(this);
+        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
+        this.WebHTMLDiv1.SetLeft(0);
+        this.WebHTMLDiv1.SetTop(165);
+        this.WebHTMLDiv1.SetWidth(640);
+        this.WebHTMLDiv1.SetHeight(227);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetChildOrderEx(1);
+        this.WebHTMLDiv1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv1.SetRole("");
+        this.WebScrollBox1.SetParentComponent(this);
+        this.WebScrollBox1.SetName("WebScrollBox1");
+        this.WebScrollBox1.SetLeft(0);
+        this.WebScrollBox1.SetTop(392);
+        this.WebScrollBox1.SetWidth(640);
+        this.WebScrollBox1.SetHeight(88);
+        this.WebScrollBox1.SetElementClassName("card");
+        this.WebScrollBox1.SetAlign(pas["WEBLib.Controls"].TAlign.alBottom);
+        this.WebScrollBox1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
+        this.WebScrollBox1.SetChildOrderEx(2);
+        this.WebScrollBox1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.btnRenglones.SetParentComponent(this.WebScrollBox1);
+        this.btnRenglones.SetName("btnRenglones");
+        this.btnRenglones.SetLeft(16);
+        this.btnRenglones.SetTop(16);
+        this.btnRenglones.SetWidth(96);
+        this.btnRenglones.SetHeight(25);
+        this.btnRenglones.SetCaption("Renglones");
+        this.btnRenglones.SetElementClassName("btn btn-primary");
+        this.btnRenglones.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnRenglones.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnRenglones.SetHeightPercent(100.000000000000000000);
+        this.btnRenglones.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.btnRenglones,this,"OnClick","btnRenglonesClick");
+        this.btnTabular.SetParentComponent(this.WebScrollBox1);
+        this.btnTabular.SetName("btnTabular");
+        this.btnTabular.SetLeft(118);
+        this.btnTabular.SetTop(16);
+        this.btnTabular.SetWidth(96);
+        this.btnTabular.SetHeight(25);
+        this.btnTabular.SetCaption("Tabular");
+        this.btnTabular.SetChildOrderEx(1);
+        this.btnTabular.SetElementClassName("btn btn-primary");
+        this.btnTabular.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnTabular.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnTabular.SetHeightPercent(100.000000000000000000);
+        this.btnTabular.SetWidthPercent(100.000000000000000000);
+        this.btnEditor.SetParentComponent(this.WebScrollBox1);
+        this.btnEditor.SetName("btnEditor");
+        this.btnEditor.SetLeft(220);
+        this.btnEditor.SetTop(16);
+        this.btnEditor.SetWidth(96);
+        this.btnEditor.SetHeight(25);
+        this.btnEditor.SetCaption("Editor");
+        this.btnEditor.SetChildOrderEx(2);
+        this.btnEditor.SetElementClassName("btn btn-primary");
+        this.btnEditor.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnEditor.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnEditor.SetHeightPercent(100.000000000000000000);
+        this.btnEditor.SetWidthPercent(100.000000000000000000);
+        this.btnSalir.SetParentComponent(this.WebScrollBox1);
+        this.btnSalir.SetName("btnSalir");
+        this.btnSalir.SetLeft(330);
+        this.btnSalir.SetTop(16);
+        this.btnSalir.SetWidth(96);
+        this.btnSalir.SetHeight(25);
+        this.btnSalir.SetCaption("Salir");
+        this.btnSalir.SetChildOrderEx(3);
+        this.btnSalir.SetElementClassName("btn btn-primary");
+        this.btnSalir.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnSalir.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnSalir.SetHeightPercent(100.000000000000000000);
+        this.btnSalir.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.btnSalir,this,"OnClick","btnSalirClick");
+        this.WebHTMLContainer1.SetParentComponent(this);
+        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
+        this.WebHTMLContainer1.SetLeft(0);
+        this.WebHTMLContainer1.SetTop(0);
+        this.WebHTMLContainer1.SetWidth(640);
+        this.WebHTMLContainer1.SetHeight(165);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLContainer1.SetChildOrderEx(4);
+        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer1.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer1.FHTML.Clear();
+          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
+          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
+          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
+          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
+          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
+          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
+          this.WebHTMLContainer1.FHTML.Add("    </button>");
+          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
+          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu1">Opcion Menu 1</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu2">Opcion Menu 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
+          this.WebHTMLContainer1.FHTML.Add("        </div>");
+          this.WebHTMLContainer1.FHTML.Add("      </div>");
+          this.WebHTMLContainer1.FHTML.Add("    </div>");
+          this.WebHTMLContainer1.FHTML.Add("  </nav>");
+        } finally {
+          this.WebHTMLContainer1.FHTML.EndUpdate();
+        };
+        this.WebResponsiveGridPanel1.SetParentComponent(this);
+        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
+        this.WebResponsiveGridPanel1.SetLeft(0);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(480);
+        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
+        this.WebResponsiveGridPanel1.FControlCollection.Clear();
+        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with.FColumn = 0;
+        $with.FRow = 0;
+        $with.FControl = this.WebHTMLContainer1;
+        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with1.FColumn = 0;
+        $with1.FRow = 0;
+        $with1.FControl = this.WebHTMLDiv1;
+        var $with2 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with2.FColumn = 0;
+        $with2.FRow = 0;
+        $with2.FControl = this.WebScrollBox1;
+        this.WebResponsiveGridPanel1.SetColor(16777215);
+        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebResponsiveGridPanel1.FLayout.Clear();
+        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with3.FDescription = "Smartphone";
+        $with3.SetRowGap("10");
+        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with3.SetStyle("1fr");
+        $with3.SetWidth(575);
+        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with4.FDescription = "Tablet";
+        $with4.SetRowGap("10");
+        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with4.SetStyle("1fr 1fr");
+        $with4.SetWidth(768);
+        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with5.FDescription = "Desktop";
+        $with5.SetRowGap("10");
+        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with5.SetStyle("1fr 1fr 1fr");
+        $with5.SetWidth(991);
+        var $with6 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with6.FDescription = "Large Desktop";
+        $with6.SetRowGap("10");
+        $with6.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with6.SetStyle("1fr 1fr 1fr 1fr");
+        $with6.SetWidth(1199);
+      } finally {
+        this.Panel1.AfterLoadDFMValues();
+        this.WebButton1.AfterLoadDFMValues();
+        this.txtBuscar.AfterLoadDFMValues();
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebScrollBox1.AfterLoadDFMValues();
+        this.btnRenglones.AfterLoadDFMValues();
+        this.btnTabular.AfterLoadDFMValues();
+        this.btnEditor.AfterLoadDFMValues();
+        this.btnSalir.AfterLoadDFMValues();
+        this.WebHTMLContainer1.AfterLoadDFMValues();
+        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("Panel1",pas["WEBLib.ExtCtrls"].$rtti["TPanel"]);
+    $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebScrollBox1",pas["WEBLib.ExtCtrls"].$rtti["TScrollBox"]);
+    $r.addField("btnRenglones",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnTabular",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnEditor",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnSalir",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
+    $r.addField("txtBuscar",pas["WEBLib.StdCtrls"].$rtti["TEdit"]);
+    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnSalirClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnRenglonesClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton2Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+  });
+  this.frmRLibretaResponsive = null;
+});
+rtl.module("uLibretaResponsiveT",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.Controls","WEBLib.ExtCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmTLibretaResponsive",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.Panel1 = null;
+      this.WebButton1 = null;
+      this.WebHTMLDiv1 = null;
+      this.WebScrollBox1 = null;
+      this.btnRenglones = null;
+      this.btnTabular = null;
+      this.btnEditor = null;
+      this.btnSalir = null;
+      this.WebResponsiveGridPanel1 = null;
+      this.txtBuscar = null;
+      this.WebHTMLContainer1 = null;
+    };
+    this.$final = function () {
+      this.Panel1 = undefined;
+      this.WebButton1 = undefined;
+      this.WebHTMLDiv1 = undefined;
+      this.WebScrollBox1 = undefined;
+      this.btnRenglones = undefined;
+      this.btnTabular = undefined;
+      this.btnEditor = undefined;
+      this.btnSalir = undefined;
+      this.WebResponsiveGridPanel1 = undefined;
+      this.txtBuscar = undefined;
+      this.WebHTMLContainer1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      this.txtBuscar.SetElementClassName("rounded-input");
+      var sheets = [
+          {
+            name:'huno',
+            title:"Tabular",
+            key:"dos",
+            rows:50,
+            //rows:0,
+           // columns:7,
+            columns:10,
+            data:[],
+        }
+      ];
+      function customEditor(cell, onRendered, success, cancel) {
+       // const input = document.createElement('input')
+        const input = document.createElement('textarea')
+      
+        input.style.width = "100%";
+        //input.style.height = "100%";
+        //input.style.boxSizing = "border-box";
+        input.value = cell.getValue()
+        //input.selectionStart = input.value.length
+        //input.selectionEnd = input.value.length;
+      
+        input.value= input.value.trim()
+         if (input.value === 'undefined')
+        {
+           //console.log('undefined');
+           input.value='';
+        }
+        onRendered(() => {
+        console.log('onRender');
+          //input.focus()
+          //input.select()
+      
+         setTimeout(function() {
+                  input.focus();            // FOCUS INPUT
+              }, 10); // A short delay (e.g., 10ms) is often sufficient
+        })
+      
+        function onChange() {
+          if (input.value != cell.getValue()) {
+            success(input.value)
+          } else {
+            cancel()
+          }
+        }
+      
+        var successFunc = function(){
+              success(input.value);
+      
+          };
+      
+          input.addEventListener('blur', onChange)
+         // input.addEventListener("blur", successFunc);
+      
+        input.addEventListener('keydown', (e) => {
+         // alert(e.keyCode);
+          if (e.keyCode == 13) {
+            table.navigateNext()
+      
+            onChange()
+          }
+      
+          if (e.keyCode == 27) {
+            cancel()
+          }
+        })
+      
+        return input
+      }
+       var editCheck = function(cell){
+          //cell - the cell component for the editable cell
+          //get row data
+          var data = cell.getRow().getData();
+         // return data.age > 18; // only allow the name cell to be edited if the age is over 18
+        // return false // no editable
+        return true // editable
+      }
+      
+      var table = new Tabulator("#ttabulator", {
+          //data:tabledata2,           //load row data from array
+          spreadsheet:true,
+        //spreadsheetData:sheetData,
+        spreadsheetSheets:sheets,        // DEFINICION HOJAS ARREGLO
+        spreadsheetSheetTabs:true,
+      
+        rowHeader:{field:"_id", hozAlign:"center", headerSort:false, frozen:true},
+      
+        editorEmptyValue:undefined, //ensure empty values are set to undefined so they arent included in spreadsheet output data
+      
+      
+       spreadsheetColumnDefinition:{editable:editCheck,editor:customEditor},
+      
+      
+        // enable clipboard functionality
+          clipboard: true,
+          clipboardCopyRowRange:"range",
+          clipboardPasteParser:"range",
+          clipboardPasteAction:"range",
+          clipboardCopyConfig:{
+              rowHeaders:false, //do not include row headers in clipboard output
+              columnHeaders:false, //do not include column headers in clipboard output
+          },
+          rangeSelection: true,
+      
+          clipboardCopyCellRange: "selected",
+          cellRangeSelection :true,
+      
+          //selectableRange:true,
+          //selectableRangeColumns:true,
+          //selectableRangeRows:true,
+          //selectableRangeClearCells:true,
+          editTriggerEvent: "click", // Trigger edit on single click
+      
+          selectableRows:true,
+      
+           clipboard: true,                // Enable clipboard functionality
+          selectable: true,               // Enable row selection
+          clipboardCopyRowRange: "selected", // Copy only selected rows
+      
+          layout:"fitColumns",      //fit columns to width of table
+         // responsiveLayout:"hide",  //hide columns that don't fit on the table
+          addRowPos:"top",          //when adding a new row, add it to the top of the table
+          history:true,             //allow undo and redo actions on the table
+      
+         // pagination:"local",       //paginate the data
+         // paginationSize:7,         //allow 7 rows per page of data
+         // paginationCounter:"rows", //display count of paginated rows in footer
+         // movableColumns:true,      //allow column order to be changed
+          initialSort:[             //set the initial sort order of the data
+              {column:"tipo", dir:"asc"},
+          ],
+      
+          //locale:true,
+            langs:{
+              "espaniol":{
+                  "columns":{
+                      "name":"Name", //replace the title of column name with the value "Name"
+                  },
+                  "data":{
+                      "loading":"Loading", //data loader text
+                      "error":"Error", //data error text
+                  },
+                  "groups":{ //copy for the auto generated item count in group header
+                      "item":"item", //the singular  for item
+                      "items":"items", //the plural for items
+                  },
+                  "pagination":{
+                      "page_size":"Tam.Pag.", //label for the page size select element
+                      "page_title":"Ver Pag.",//tooltip text for the numeric page button, appears in front of the page number (eg. "Show Page" will result in a tool tip of "Show Page 1" on the page 1 button)
+                      "first":"Prim.", //text for the first page button
+                      "first_title":"Prim.Pag", //tooltip text for the first page button
+                      "last":"Ultim.",
+                      "last_title":"Ult.Pag.",
+                      "prev":"Prev.",
+                      "prev_title":"Pag.Ant.",
+                      "next":"Sig.",
+                      "next_title":"Pag.Sig.",
+                      "all":"All",
+                      "counter":{
+                          "showing": "Ver",
+                          "of": "de",
+                          "rows": "rengs",
+                          "pages": "paginas",
+                      }
+                  },
+                  "headerFilters":{
+                      "default":"filter column...", //default header filter placeholder text
+                      "columns":{
+                          "name":"filter name...", //replace default header filter text for column name
+                      }
+                  }
+              }
+          },
+      
+      });
+      
+      table.on("tableBuilt", function(){
+      
+         table.setLocale("espaniol"); //set locale to espaniol
+      
+         var tableElement = table.element;
+          var tableWidth = tableElement.offsetWidth;
+          console.log("Table width:", tableWidth + "px");
+          var activeSheet = table.getSheet();
+          var key = activeSheet.getKey();
+          if (key =='uno')
+          {
+           console.log('update column definition');
+           table.updateColumnDefinition("A", {title:"", width: tableWidth-50 }) //change the column title
+           table.updateColumnDefinition("B", {title:"", visible:false }) //change the column title
+         }
+      
+         let firstRow = table.getRowFromPosition(1);
+         //console.log('firstRow',firstRow);
+          if (firstRow) {
+              // Get the cell in the 'name' column and trigger edit/focus
+              let firstCell = firstRow.getCell('A');
+              if (firstCell) {
+                // ********************* FIRST CELL EDIT    ***********************
+                  console.log('FIRST CELL EDIT');
+                  firstCell.edit();
+              }
+          }
+      
+             });
+    };
+    this.btnSalirClick = function (Sender) {
+      this.Close();
+      window.history.pushState(null, '', 'LibretaDigital.html#frmMenu');
+    };
+    this.btnRenglonesClick = function (Sender) {
+      var $Self = this;
+      var i = 0;
+      function AfterShowModal(AValue) {
+      };
+      function AfterCreate(AForm) {
+      };
+    };
+    this.WebButton2Click = function (Sender) {
+      var table = Tabulator.findTable("#ttabulator")[0];
+      // Forces a full re-render of the entire table, including all data
+      table.redraw(true);
+    };
+    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+      window.console.log("Navigated from2 " + oldURL + " to " + newURL);
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu1")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu2")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else {
+        this.Close();
+        window.history.pushState(null, '', newURL);
+      };
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.Panel1 = pas["WEBLib.ExtCtrls"].TPanel.$create("Create$1",[this]);
+      this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.txtBuscar = pas["WEBLib.StdCtrls"].TEdit.$create("Create$1",[this]);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["ttabulator"]);
+      this.WebScrollBox1 = pas["WEBLib.ExtCtrls"].TScrollBox.$create("Create$1",[this]);
+      this.btnRenglones = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnTabular = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnEditor = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.btnSalir = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
+      this.Panel1.BeforeLoadDFMValues();
+      this.WebButton1.BeforeLoadDFMValues();
+      this.txtBuscar.BeforeLoadDFMValues();
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebScrollBox1.BeforeLoadDFMValues();
+      this.btnRenglones.BeforeLoadDFMValues();
+      this.btnTabular.BeforeLoadDFMValues();
+      this.btnEditor.BeforeLoadDFMValues();
+      this.btnSalir.BeforeLoadDFMValues();
+      this.WebHTMLContainer1.BeforeLoadDFMValues();
+      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmTLibretaResponsive");
+        this.SetWidth(640);
+        this.SetHeight(480);
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnHashChange","WebFormHashChange");
+        this.Panel1.SetParentComponent(this);
+        this.Panel1.SetName("Panel1");
+        this.Panel1.SetLeft(0);
+        this.Panel1.SetTop(10);
+        this.Panel1.SetWidth(640);
+        this.Panel1.SetHeight(60);
+        this.Panel1.SetElementClassName("card");
+        this.Panel1.FElementBodyClassName = "card-body";
+        this.Panel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.Panel1.SetTabOrder(0);
+        this.Panel1.SetVisible(false);
+        this.WebButton1.SetParentComponent(this.Panel1);
+        this.WebButton1.SetName("WebButton1");
+        this.WebButton1.SetLeft(544);
+        this.WebButton1.SetTop(0);
+        this.WebButton1.SetWidth(96);
+        this.WebButton1.SetHeight(60);
+        this.WebButton1.SetAlign(pas["WEBLib.Controls"].TAlign.alRight);
+        this.WebButton1.SetCaption("Buscar");
+        this.WebButton1.SetChildOrderEx(1);
+        this.WebButton1.SetElementClassName("btn btn-primary");
+        this.WebButton1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton1.SetHeightPercent(100.000000000000000000);
+        this.WebButton1.SetWidthPercent(100.000000000000000000);
+        this.txtBuscar.SetParentComponent(this.Panel1);
+        this.txtBuscar.SetName("txtBuscar");
+        this.txtBuscar.SetLeft(0);
+        this.txtBuscar.SetTop(0);
+        this.txtBuscar.SetWidth(544);
+        this.txtBuscar.SetHeight(60);
+        this.txtBuscar.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.txtBuscar.SetChildOrderEx(1);
+        this.txtBuscar.SetElementClassName("form-control");
+        this.txtBuscar.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.txtBuscar.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.txtBuscar.SetHeightPercent(100.000000000000000000);
+        this.txtBuscar.SetWidthPercent(100.000000000000000000);
+        this.WebHTMLDiv1.SetParentComponent(this);
+        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
+        this.WebHTMLDiv1.SetLeft(0);
+        this.WebHTMLDiv1.SetTop(165);
+        this.WebHTMLDiv1.SetWidth(640);
+        this.WebHTMLDiv1.SetHeight(227);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetChildOrderEx(1);
+        this.WebHTMLDiv1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv1.SetRole("");
+        this.WebScrollBox1.SetParentComponent(this);
+        this.WebScrollBox1.SetName("WebScrollBox1");
+        this.WebScrollBox1.SetLeft(0);
+        this.WebScrollBox1.SetTop(392);
+        this.WebScrollBox1.SetWidth(640);
+        this.WebScrollBox1.SetHeight(88);
+        this.WebScrollBox1.SetElementClassName("card");
+        this.WebScrollBox1.SetAlign(pas["WEBLib.Controls"].TAlign.alBottom);
+        this.WebScrollBox1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
+        this.WebScrollBox1.SetChildOrderEx(2);
+        this.WebScrollBox1.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.btnRenglones.SetParentComponent(this.WebScrollBox1);
+        this.btnRenglones.SetName("btnRenglones");
+        this.btnRenglones.SetLeft(16);
+        this.btnRenglones.SetTop(16);
+        this.btnRenglones.SetWidth(96);
+        this.btnRenglones.SetHeight(25);
+        this.btnRenglones.SetCaption("Renglones");
+        this.btnRenglones.SetElementClassName("btn btn-primary");
+        this.btnRenglones.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnRenglones.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnRenglones.SetHeightPercent(100.000000000000000000);
+        this.btnRenglones.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.btnRenglones,this,"OnClick","btnRenglonesClick");
+        this.btnTabular.SetParentComponent(this.WebScrollBox1);
+        this.btnTabular.SetName("btnTabular");
+        this.btnTabular.SetLeft(118);
+        this.btnTabular.SetTop(16);
+        this.btnTabular.SetWidth(96);
+        this.btnTabular.SetHeight(25);
+        this.btnTabular.SetCaption("Tabular");
+        this.btnTabular.SetChildOrderEx(1);
+        this.btnTabular.SetElementClassName("btn btn-primary");
+        this.btnTabular.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnTabular.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnTabular.SetHeightPercent(100.000000000000000000);
+        this.btnTabular.SetWidthPercent(100.000000000000000000);
+        this.btnEditor.SetParentComponent(this.WebScrollBox1);
+        this.btnEditor.SetName("btnEditor");
+        this.btnEditor.SetLeft(220);
+        this.btnEditor.SetTop(16);
+        this.btnEditor.SetWidth(96);
+        this.btnEditor.SetHeight(25);
+        this.btnEditor.SetCaption("Editor");
+        this.btnEditor.SetChildOrderEx(2);
+        this.btnEditor.SetElementClassName("btn btn-primary");
+        this.btnEditor.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnEditor.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnEditor.SetHeightPercent(100.000000000000000000);
+        this.btnEditor.SetWidthPercent(100.000000000000000000);
+        this.btnSalir.SetParentComponent(this.WebScrollBox1);
+        this.btnSalir.SetName("btnSalir");
+        this.btnSalir.SetLeft(330);
+        this.btnSalir.SetTop(16);
+        this.btnSalir.SetWidth(96);
+        this.btnSalir.SetHeight(25);
+        this.btnSalir.SetCaption("Salir");
+        this.btnSalir.SetChildOrderEx(3);
+        this.btnSalir.SetElementClassName("btn btn-primary");
+        this.btnSalir.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.btnSalir.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.btnSalir.SetHeightPercent(100.000000000000000000);
+        this.btnSalir.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.btnSalir,this,"OnClick","btnSalirClick");
+        this.WebHTMLContainer1.SetParentComponent(this);
+        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
+        this.WebHTMLContainer1.SetLeft(0);
+        this.WebHTMLContainer1.SetTop(0);
+        this.WebHTMLContainer1.SetWidth(640);
+        this.WebHTMLContainer1.SetHeight(165);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLContainer1.SetChildOrderEx(4);
+        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer1.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer1.FHTML.Clear();
+          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
+          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
+          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
+          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
+          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
+          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
+          this.WebHTMLContainer1.FHTML.Add("    </button>");
+          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
+          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu1">Opcion Menu 1</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu2">Opcion Menu 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
+          this.WebHTMLContainer1.FHTML.Add("        </div>");
+          this.WebHTMLContainer1.FHTML.Add("      </div>");
+          this.WebHTMLContainer1.FHTML.Add("    </div>");
+          this.WebHTMLContainer1.FHTML.Add("  </nav>");
+        } finally {
+          this.WebHTMLContainer1.FHTML.EndUpdate();
+        };
+        this.WebResponsiveGridPanel1.SetParentComponent(this);
+        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
+        this.WebResponsiveGridPanel1.SetLeft(0);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(480);
+        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
+        this.WebResponsiveGridPanel1.FControlCollection.Clear();
+        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with.FColumn = 0;
+        $with.FRow = 0;
+        $with.FControl = this.WebHTMLContainer1;
+        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with1.FColumn = 0;
+        $with1.FRow = 0;
+        $with1.FControl = this.WebHTMLDiv1;
+        var $with2 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with2.FColumn = 0;
+        $with2.FRow = 0;
+        $with2.FControl = this.WebScrollBox1;
+        this.WebResponsiveGridPanel1.SetColor(16777215);
+        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebResponsiveGridPanel1.FLayout.Clear();
+        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with3.FDescription = "Smartphone";
+        $with3.SetRowGap("10");
+        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with3.SetStyle("1fr");
+        $with3.SetWidth(575);
+        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with4.FDescription = "Tablet";
+        $with4.SetRowGap("10");
+        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with4.SetStyle("1fr 1fr");
+        $with4.SetWidth(768);
+        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with5.FDescription = "Desktop";
+        $with5.SetRowGap("10");
+        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with5.SetStyle("1fr 1fr 1fr");
+        $with5.SetWidth(991);
+        var $with6 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with6.FDescription = "Large Desktop";
+        $with6.SetRowGap("10");
+        $with6.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with6.SetStyle("1fr 1fr 1fr 1fr");
+        $with6.SetWidth(1199);
+      } finally {
+        this.Panel1.AfterLoadDFMValues();
+        this.WebButton1.AfterLoadDFMValues();
+        this.txtBuscar.AfterLoadDFMValues();
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebScrollBox1.AfterLoadDFMValues();
+        this.btnRenglones.AfterLoadDFMValues();
+        this.btnTabular.AfterLoadDFMValues();
+        this.btnEditor.AfterLoadDFMValues();
+        this.btnSalir.AfterLoadDFMValues();
+        this.WebHTMLContainer1.AfterLoadDFMValues();
+        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("Panel1",pas["WEBLib.ExtCtrls"].$rtti["TPanel"]);
+    $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebScrollBox1",pas["WEBLib.ExtCtrls"].$rtti["TScrollBox"]);
+    $r.addField("btnRenglones",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnTabular",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnEditor",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("btnSalir",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
+    $r.addField("txtBuscar",pas["WEBLib.StdCtrls"].$rtti["TEdit"]);
+    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnSalirClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("btnRenglonesClick",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton2Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+  });
+  this.frmTLibretaResponsive = null;
+});
+rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.ExtCtrls","WEBLib.WebCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmMenu",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.WebHTMLContainer1 = null;
+      this.WebHTMLContainer2 = null;
+      this.WebResponsiveGridPanel1 = null;
+      this.WebHTMLDiv1 = null;
+    };
+    this.$final = function () {
+      this.WebHTMLContainer1 = undefined;
+      this.WebHTMLContainer2 = undefined;
+      this.WebResponsiveGridPanel1 = undefined;
+      this.WebHTMLDiv1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      this.WebHTMLDiv1.GetElementHandle().classList.add("scrollable-div");
+    };
+    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+      var $Self = this;
+      var newform = null;
+      var mr = 0;
+      function AfterShowModal(AValue) {
+      };
+      function AfterCreate(AForm) {
+      };
+      window.console.log("Navigated from " + oldURL + " to " + newURL);
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#form2")) {}
+      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#form3")) {}
+      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmLibretaResponsive")) {
+        window.console.log("entro a abrir frmLibretaResponsive");
+        newform = pas.uLibretaResponsive.TfrmLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmRLibretaResponsive")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uLibretaResponsiveR.TfrmRLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmTLibretaResponsive")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uLibretaResponsiveT.TfrmTLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmEditor")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uEditor.TfrmEditor.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      };
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divMenu"]);
+      this.WebHTMLContainer2 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebHTMLContainer1.BeforeLoadDFMValues();
+      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebHTMLContainer2.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmMenu");
+        this.SetWidth(640);
+        this.SetHeight(480);
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnHashChange","WebFormHashChange");
+        this.WebHTMLContainer1.SetParentComponent(this);
+        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
+        this.WebHTMLContainer1.SetLeft(0);
+        this.WebHTMLContainer1.SetTop(0);
+        this.WebHTMLContainer1.SetWidth(640);
+        this.WebHTMLContainer1.SetHeight(165);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer1.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer1.FHTML.Clear();
+          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
+          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
+          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
+          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
+          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
+          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
+          this.WebHTMLContainer1.FHTML.Add("    </button>");
+          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
+          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
+          this.WebHTMLContainer1.FHTML.Add("        </div>");
+          this.WebHTMLContainer1.FHTML.Add("      </div>");
+          this.WebHTMLContainer1.FHTML.Add("    </div>");
+          this.WebHTMLContainer1.FHTML.Add("  </nav>");
+        } finally {
+          this.WebHTMLContainer1.FHTML.EndUpdate();
+        };
+        this.WebResponsiveGridPanel1.SetParentComponent(this);
+        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
+        this.WebResponsiveGridPanel1.SetLeft(0);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(472);
+        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
+        this.WebResponsiveGridPanel1.FControlCollection.Clear();
+        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with.FColumn = 0;
+        $with.FRow = 0;
+        $with.FControl = this.WebHTMLContainer1;
+        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with1.FColumn = 0;
+        $with1.FRow = 0;
+        $with1.FControl = this.WebHTMLDiv1;
+        this.WebResponsiveGridPanel1.SetColor(16777215);
+        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebResponsiveGridPanel1.FLayout.Clear();
+        var $with2 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with2.FDescription = "Smartphone";
+        $with2.SetRowGap("10");
+        $with2.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with2.SetStyle("1fr");
+        $with2.SetWidth(575);
+        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with3.FDescription = "Tablet";
+        $with3.SetRowGap("10");
+        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with3.SetStyle("1fr 1fr");
+        $with3.SetWidth(768);
+        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with4.FDescription = "Desktop";
+        $with4.SetRowGap("10");
+        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with4.SetStyle("1fr 1fr 1fr");
+        $with4.SetWidth(991);
+        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with5.FDescription = "Large Desktop";
+        $with5.SetRowGap("10");
+        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with5.SetStyle("1fr 1fr 1fr 1fr");
+        $with5.SetWidth(1199);
+        this.WebHTMLDiv1.SetParentComponent(this.WebResponsiveGridPanel1);
+        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
+        this.WebHTMLDiv1.SetLeft(226);
+        this.WebHTMLDiv1.SetTop(10);
+        this.WebHTMLDiv1.SetWidth(223);
+        this.WebHTMLDiv1.SetHeight(186);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv1.SetRole("");
+        this.WebHTMLContainer2.SetParentComponent(this.WebHTMLDiv1);
+        this.WebHTMLContainer2.SetName("WebHTMLContainer2");
+        this.WebHTMLContainer2.SetLeft(0);
+        this.WebHTMLContainer2.SetTop(0);
+        this.WebHTMLContainer2.SetWidth(223);
+        this.WebHTMLContainer2.SetHeight(186);
+        this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer2.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLContainer2.SetChildOrderEx(1);
+        this.WebHTMLContainer2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.WebHTMLContainer2.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer2.FHTML.Clear();
+          this.WebHTMLContainer2.FHTML.Add(" <!--  PRUEBAS bg-secondary");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card  bg-secondary  text-bg-secondary mb-3" style="max-width: 18rem;">');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-header">Header</div>');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
+          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Secondary card title</h5>');
+          this.WebHTMLContainer2.FHTML.Add('    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>');
+          this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-auto" style="max-height: calc(100vh - 150px);"> -->');
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
+          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio (mis archivos)</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto ');
+          this.WebHTMLContainer2.FHTML.Add("editados.</p>");
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add(" </div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones (notas rápidas)</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmRLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja Tabular con columnas y renglones</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones registro de información de manera');
+          this.WebHTMLContainer2.FHTML.Add(" tabular, encabezado columnas, formulas etc.              </p>");
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmTLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!-- <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmEditor" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!--   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div> ");
+          this.WebHTMLContainer2.FHTML.Add(" <!-- </div>-->");
+        } finally {
+          this.WebHTMLContainer2.FHTML.EndUpdate();
+        };
+      } finally {
+        this.WebHTMLContainer1.AfterLoadDFMValues();
+        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebHTMLContainer2.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addField("WebHTMLContainer2",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
+    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+  });
+  this.frmMenu = null;
+},["uLibretaResponsive","uEditor","uLibretaResponsiveR","uLibretaResponsiveT"]);
 rtl.module("editorDiv",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.ExtCtrls"],function () {
   "use strict";
   var $mod = this;
@@ -57749,76 +59748,5068 @@ rtl.module("editorDiv",["System","SysUtils","Classes","JS","Web","WEBLib.Graphic
   });
   this.frmEditorDiv = null;
 });
-rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.ExtCtrls","WEBLib.WebCtrls"],function () {
+rtl.module("WEBLib.TreeNodes",["System","Classes","Types","SysUtils","Web"],function () {
   "use strict";
   var $mod = this;
-  rtl.createClass(this,"TfrmMenu",pas["WEBLib.Forms"].TForm,function () {
+  this.$rtti.$Class("TTreeNode");
+  this.$rtti.$Class("TTreeNodes");
+  rtl.createClass(this,"TDbgList",pas.Classes.TList,function () {
+    this.GetItemsEx = function (Index) {
+      var Result = null;
+      if (Index >= this.GetCount()) {
+        throw pas.SysUtils.Exception.$create("Create$1",["Index out of bounds in list read access"]);
+      };
+      if (Index < this.GetCount()) {
+        Result = rtl.getObject(this.Get(Index))}
+       else Result = null;
+      return Result;
+    };
+    this.SetItemsEx = function (Index, Value) {
+      if (Index >= this.GetCount()) {
+        throw pas.SysUtils.Exception.$create("Create$1",["Index out of bounds in list write access"]);
+      };
+      if (Index < this.GetCount()) this.Put(Index,Value);
+    };
+    this.AssignList = function (ListA) {
+      var I = 0;
+      this.Clear();
+      for (var $l = 0, $end = ListA.GetCount() - 1; $l <= $end; $l++) {
+        I = $l;
+        this.Add(ListA.Get(I));
+      };
+    };
+  });
+  this.TNodeType = {"0": "ntText", ntText: 0, "1": "ntCheckbox", ntCheckbox: 1, "2": "ntRadioButton", ntRadioButton: 2};
+  this.$rtti.$Enum("TNodeType",{minvalue: 0, maxvalue: 2, ordtype: 1, enumtype: this.TNodeType});
+  this.$rtti.$Pointer("PNodeInfo",{reftype: this.$rtti["TNodeInfo"]});
+  rtl.recNewT(this,"TNodeInfo",function () {
+    this.SelectedIndex = 0;
+    this.StateIndex = 0;
+    this.OverlayIndex = 0;
+    this.Data = null;
+    this.Count = 0;
+    this.Text = "";
+    this.NodeType = 0;
+    this.Checked = false;
+    this.ImageURL = "";
+    this.ImageCollapsedURL = "";
+    this.URL = "";
+    this.Tag = 0;
+    this.Hint = "";
+    this.IsExpanded = false;
+    this.$eq = function (b) {
+      return (this.SelectedIndex === b.SelectedIndex) && (this.StateIndex === b.StateIndex) && (this.OverlayIndex === b.OverlayIndex) && (this.Data === b.Data) && (this.Count === b.Count) && (this.Text === b.Text) && (this.NodeType === b.NodeType) && (this.Checked === b.Checked) && (this.ImageURL === b.ImageURL) && (this.ImageCollapsedURL === b.ImageCollapsedURL) && (this.URL === b.URL) && (this.Tag === b.Tag) && (this.Hint === b.Hint) && (this.IsExpanded === b.IsExpanded);
+    };
+    this.$assign = function (s) {
+      this.SelectedIndex = s.SelectedIndex;
+      this.StateIndex = s.StateIndex;
+      this.OverlayIndex = s.OverlayIndex;
+      this.Data = s.Data;
+      this.Count = s.Count;
+      this.Text = s.Text;
+      this.NodeType = s.NodeType;
+      this.Checked = s.Checked;
+      this.ImageURL = s.ImageURL;
+      this.ImageCollapsedURL = s.ImageCollapsedURL;
+      this.URL = s.URL;
+      this.Tag = s.Tag;
+      this.Hint = s.Hint;
+      this.IsExpanded = s.IsExpanded;
+      return this;
+    };
+    var $r = $mod.$rtti.$Record("TNodeInfo",{});
+    $r.addField("SelectedIndex",rtl.longint);
+    $r.addField("StateIndex",rtl.longint);
+    $r.addField("OverlayIndex",rtl.longint);
+    $r.addField("Data",rtl.pointer);
+    $r.addField("Count",rtl.longint);
+    $r.addField("Text",rtl.string);
+    $r.addField("NodeType",$mod.$rtti["TNodeType"]);
+    $r.addField("Checked",rtl.boolean);
+    $r.addField("ImageURL",rtl.string);
+    $r.addField("ImageCollapsedURL",rtl.string);
+    $r.addField("URL",rtl.string);
+    $r.addField("Tag",rtl.longint);
+    $r.addField("Hint",rtl.string);
+    $r.addField("IsExpanded",rtl.boolean);
+  });
+  rtl.recNewT(this,"TNodeDataInfo",function () {
+    this.SelectedIndex = 0;
+    this.StateIndex = 0;
+    this.OverlayIndex = 0;
+    this.Data = null;
+    this.Count = 0;
+    this.NodeType = 0;
+    this.Checked = false;
+    this.Tag = 0;
+    this.IsExpanded = false;
+    this.TextLen = 0;
+    this.HintLen = 0;
+    this.URLLen = 0;
+    this.ImageURLLen = 0;
+    this.ImageCollapsedURLLen = 0;
+    this.$eq = function (b) {
+      return (this.SelectedIndex === b.SelectedIndex) && (this.StateIndex === b.StateIndex) && (this.OverlayIndex === b.OverlayIndex) && (this.Data === b.Data) && (this.Count === b.Count) && (this.NodeType === b.NodeType) && (this.Checked === b.Checked) && (this.Tag === b.Tag) && (this.IsExpanded === b.IsExpanded) && (this.TextLen === b.TextLen) && (this.HintLen === b.HintLen) && (this.URLLen === b.URLLen) && (this.ImageURLLen === b.ImageURLLen) && (this.ImageCollapsedURLLen === b.ImageCollapsedURLLen);
+    };
+    this.$assign = function (s) {
+      this.SelectedIndex = s.SelectedIndex;
+      this.StateIndex = s.StateIndex;
+      this.OverlayIndex = s.OverlayIndex;
+      this.Data = s.Data;
+      this.Count = s.Count;
+      this.NodeType = s.NodeType;
+      this.Checked = s.Checked;
+      this.Tag = s.Tag;
+      this.IsExpanded = s.IsExpanded;
+      this.TextLen = s.TextLen;
+      this.HintLen = s.HintLen;
+      this.URLLen = s.URLLen;
+      this.ImageURLLen = s.ImageURLLen;
+      this.ImageCollapsedURLLen = s.ImageCollapsedURLLen;
+      return this;
+    };
+    var $r = $mod.$rtti.$Record("TNodeDataInfo",{});
+    $r.addField("SelectedIndex",rtl.longint);
+    $r.addField("StateIndex",rtl.longint);
+    $r.addField("OverlayIndex",rtl.longint);
+    $r.addField("Data",rtl.pointer);
+    $r.addField("Count",rtl.longint);
+    $r.addField("NodeType",$mod.$rtti["TNodeType"]);
+    $r.addField("Checked",rtl.boolean);
+    $r.addField("Tag",rtl.longint);
+    $r.addField("IsExpanded",rtl.boolean);
+    $r.addField("TextLen",rtl.byte);
+    $r.addField("HintLen",rtl.byte);
+    $r.addField("URLLen",rtl.byte);
+    $r.addField("ImageURLLen",rtl.byte);
+    $r.addField("ImageCollapsedURLLen",rtl.byte);
+  });
+  this.$rtti.$ClassRef("TTreeNodeClass",{instancetype: this.$rtti["TTreeNode"]});
+  rtl.createClass(this,"TTreeNode",pas.Classes.TPersistent,function () {
     this.$init = function () {
-      pas["WEBLib.Forms"].TForm.$init.call(this);
-      this.WebHTMLContainer1 = null;
-      this.WebHTMLContainer2 = null;
-      this.WebResponsiveGridPanel1 = null;
-      this.WebHTMLDiv1 = null;
+      pas.Classes.TPersistent.$init.call(this);
+      this.FOwner = null;
+      this.FText = "";
+      this.FData = null;
+      this.FDeleting = false;
+      this.FIsExpanded = false;
+      this.FFirstChild = null;
+      this.FNextSibling = null;
+      this.FPrevSibling = null;
+      this.FParentNode = null;
+      this.FShowText = false;
+      this.FImageCollapsedURL = "";
+      this.FImageURL = "";
+      this.FNodeType = 0;
+      this.FURL = "";
+      this.FChecked = false;
+      this.FTag = 0;
+      this.FHint = "";
+      this.FSelected = false;
     };
     this.$final = function () {
-      this.WebHTMLContainer1 = undefined;
-      this.WebHTMLContainer2 = undefined;
-      this.WebResponsiveGridPanel1 = undefined;
-      this.WebHTMLDiv1 = undefined;
-      pas["WEBLib.Forms"].TForm.$final.call(this);
+      this.FOwner = undefined;
+      this.FData = undefined;
+      this.FFirstChild = undefined;
+      this.FNextSibling = undefined;
+      this.FPrevSibling = undefined;
+      this.FParentNode = undefined;
+      pas.Classes.TPersistent.$final.call(this);
     };
-    this.WebFormCreate = function (Sender) {
-      this.WebHTMLDiv1.GetElementHandle().classList.add("scrollable-div");
+    this.GetLevel = function () {
+      var Result = 0;
+      var Node = null;
+      Result = 0;
+      Node = this.GetParent();
+      while (Node !== null) {
+        Result += 1;
+        Node = Node.GetParent();
+      };
+      return Result;
     };
-    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+    this.GetParent = function () {
+      var Result = null;
+      Result = this.FParentNode;
+      return Result;
+    };
+    this.GetIndex = function () {
+      var Result = 0;
+      var Node = null;
+      Result = -1;
+      Node = this;
+      while (Node != null) {
+        Result += 1;
+        Node = Node.GetPrevSibling();
+      };
+      return Result;
+    };
+    this.GetItem = function (Index) {
+      var Result = null;
+      Result = this.GetFirstChild();
+      while ((Result !== null) && (Index > 0)) {
+        Result = this.GetNextChild(Result);
+        Index -= 1;
+      };
+      if (Result === null) throw pas.SysUtils.Exception.$create("Create$1",["Invalid index"]);
+      return Result;
+    };
+    this.GetCount = function () {
+      var Result = 0;
+      var Node = null;
+      Result = 0;
+      Node = this.GetFirstChild();
+      while (Node != null) {
+        Result += 1;
+        Node = Node.GetNextChild(Node);
+      };
+      return Result;
+    };
+    this.SetData = function (Value) {
+      if (!this.FDeleting && (Value !== this.FData)) {
+        this.FData = Value;
+      };
+    };
+    this.SetItem = function (Index, Value) {
+      this.GetItem(Index).Assign(Value);
+    };
+    this.SetText = function (S) {
+      if (!this.FDeleting && (S !== this.FText)) {
+        this.FText = S;
+      };
+    };
+    this.GetHasChildren = function () {
+      var Result = false;
+      Result = this.FFirstChild != null;
+      return Result;
+    };
+    this.SetShowText = function (Value) {
+      this.FShowText = Value;
+    };
+    this.SetChecked = function (Value) {
+      this.FChecked = Value;
+    };
+    this.SetImageCollapsedURL = function (Value) {
+      this.FImageCollapsedURL = Value;
+    };
+    this.SetImageURL = function (Value) {
+      this.FImageURL = Value;
+    };
+    this.SetNodeType = function (Value) {
+      this.FNodeType = Value;
+    };
+    this.SetURL = function (Value) {
+      this.FURL = Value;
+    };
+    this.SetTag = function (Value) {
+      this.FTag = Value;
+    };
+    this.SetHint = function (Value) {
+      this.FHint = Value;
+    };
+    this.SetIsExpanded = function (Value) {
+      if (this.FIsExpanded !== Value) {
+        this.FIsExpanded = Value;
+        if (this.FOwner != null) if (this.FOwner.FOnExpandedChange != null) this.FOwner.FOnExpandedChange(this.FOwner,this);
+      };
+    };
+    this.SetSelected = function (Value) {
+      if (this.FSelected !== Value) {
+        this.FSelected = Value;
+        this.FOwner.SelectionChange(this,Value);
+      };
+    };
+    this.GetAbsoluteIndex = function () {
+      var Result = 0;
+      var Node = null;
+      if (this.IsFirstNode()) {
+        Result = 0}
+       else {
+        Result = -1;
+        Node = this;
+        while (Node !== null) {
+          Result += 1;
+          Node = Node.GetPrev();
+        };
+      };
+      return Result;
+    };
+    this.CompareCount = function (CompareMe) {
+      var Result = false;
+      var Count = 0;
+      var Node = null;
+      Count = 0;
+      Result = false;
+      Node = this.GetFirstChild();
+      while (Node !== null) {
+        Count += 1;
+        Node = Node.GetNextChild(Node);
+        if (Count > CompareMe) return Result;
+      };
+      if (Count === CompareMe) Result = true;
+      return Result;
+    };
+    this.IsEqual = function (Node) {
+      var Result = false;
+      Result = (this.FText === Node.FText) && (this.FData === Node.FData);
+      return Result;
+    };
+    this.Select = function () {
+      this.FSelected = true;
+    };
+    this.UnSelect = function () {
+      this.FSelected = false;
+    };
+    this.IndexOf = function (Value) {
+      var Result = 0;
+      var Node = null;
+      Result = -1;
+      Node = this.GetFirstChild();
+      while (Node !== null) {
+        Result += 1;
+        if (Node === Value) break;
+        Node = this.GetNextChild(Node);
+      };
+      if (Node === null) Result = -1;
+      return Result;
+    };
+    this.Create$1 = function (AOwner) {
+      pas.System.TObject.Create.call(this);
+      this.FOwner = AOwner;
+      this.FShowText = true;
+      this.FNodeType = $mod.TNodeType.ntText;
+      this.FChecked = false;
+      this.FIsExpanded = false;
+      this.FTag = 0;
+      return this;
+    };
+    this.Destroy = function () {
+      var N = null;
+      var PN = null;
+      var NN = null;
+      var i = 0;
+      this.FDeleting = true;
+      this.DeleteChildren();
+      N = this.GetParent();
+      if ((((N !== null) && !N.FDeleting) || (N === null)) && !this.FOwner.FDeleting && (this.FOwner != null) && (this.FOwner.FOwner != null) && !(pas.Classes.TComponentStateItem.csDestroying in this.FOwner.FOwner.FComponentState)) {
+        PN = this.GetPrevSibling();
+        NN = this.GetNextSibling();
+        if (!(NN != null)) {
+          if (this.IsFirstNode()) {
+            this.FOwner.FFirstNode = null}
+           else if ((this.GetParent() != null) && this.IsFirstChild()) {
+            this.GetParent().FFirstChild = null}
+           else {
+            if (PN != null) PN.FNextSibling = null;
+          };
+        } else if (!(PN != null)) {
+          if (this.IsFirstNode()) {
+            this.FOwner.FFirstNode = NN;
+            NN.FPrevSibling = PN;
+          } else if ((this.GetParent() != null) && this.IsFirstChild()) this.GetParent().FFirstChild = NN;
+        } else {
+          PN.FNextSibling = NN;
+          NN.FPrevSibling = PN;
+        };
+      };
+      if (!(this.GetParent() != null)) {
+        i = this.FOwner.FNodeList.IndexOf(this);
+        if (i >= 0) {
+          this.FOwner.FNodeList.Delete(i);
+        };
+      };
+      this.SetData(null);
+      pas.System.TObject.Destroy.call(this);
+    };
+    this.AddFirstChild = function (S) {
+      var Result = null;
+      Result = this.AddFirstChild$1(S,null);
+      return Result;
+    };
+    this.AddFirstChild$1 = function (S, Data) {
+      var Result = null;
+      if (!(this.FFirstChild != null)) {
+        Result = this.FOwner.InsertNode(this,null,true)}
+       else Result = this.FOwner.InsertNode(null,this.FFirstChild,true);
+      Result.SetText(S);
+      Result.SetData(Data);
+      return Result;
+    };
+    this.AddChild = function (S) {
+      var Result = null;
+      Result = this.AddChild$1(S,null);
+      return Result;
+    };
+    this.AddChild$1 = function (S, Data) {
+      var Result = null;
+      var N = null;
+      N = this.GetLastChild();
+      if (N != null) {
+        Result = this.FOwner.InsertNode(null,N,false)}
+       else Result = this.FOwner.InsertNode(this,null,false);
+      Result.SetText(S);
+      Result.SetData(Data);
+      return Result;
+    };
+    this.Assign = function (Source) {
+      var Node = null;
+      if (!this.FDeleting && $mod.TTreeNode.isPrototypeOf(Source)) {
+        Node = Source;
+        this.SetText(Node.FText);
+        this.SetData(Node.FData);
+        this.SetShowText(Node.FShowText);
+        this.SetNodeType(Node.FNodeType);
+        this.SetChecked(Node.FChecked);
+        this.SetURL(Node.FURL);
+        this.SetHint(Node.FHint);
+        this.SetImageURL(Node.FImageURL);
+        this.SetImageCollapsedURL(Node.FImageCollapsedURL);
+        this.SetTag(Node.FTag);
+        this.FIsExpanded = Node.FIsExpanded;
+      } else pas.Classes.TPersistent.Assign.call(this,Source);
+    };
+    this.Expand = function (Recurse) {
+      var i = 0;
+      this.SetIsExpanded(true);
+      if (Recurse) {
+        for (var $l = 0, $end = this.GetCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          this.GetItem(i).Expand(Recurse);
+        };
+      };
+    };
+    this.Collapse = function (Recurse) {
+      var i = 0;
+      this.SetIsExpanded(false);
+      if (Recurse) {
+        for (var $l = 0, $end = this.GetCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          this.GetItem(i).Collapse(Recurse);
+        };
+      };
+    };
+    this.Delete = function () {
+      if (!this.FDeleting) this.Free();
+    };
+    this.DeleteChildren = function () {
+      var ChildList = null;
+      var N = null;
+      var i = 0;
+      ChildList = $mod.TDbgList.$create("Create$1");
+      N = this.GetFirstChild();
+      if (N !== null) {
+        do {
+          ChildList.Add(N);
+          N = N.GetNextSibling();
+        } while (!(N === null));
+      };
+      for (var $l = ChildList.GetCount() - 1; $l >= 0; $l--) {
+        i = $l;
+        N = ChildList.GetItemsEx(i);
+        N = rtl.freeLoc(N);
+        ChildList.GetItemsEx(i).Delete();
+      };
+      ChildList = rtl.freeLoc(ChildList);
+    };
+    this.GetFirstChild = function () {
+      var Result = null;
+      Result = this.FFirstChild;
+      return Result;
+    };
+    this.GetLastChild = function () {
+      var Result = null;
+      var Node = null;
+      Result = this.GetFirstChild();
+      if (Result !== null) {
+        Node = Result;
+        do {
+          Result = Node;
+          Node = Result.GetNextSibling();
+        } while (!(Node === null));
+      };
+      return Result;
+    };
+    this.GetNextChild = function (Value) {
+      var Result = null;
+      if (Value !== null) {
+        Result = Value.GetNextSibling()}
+       else Result = null;
+      return Result;
+    };
+    this.GetNextSibling = function () {
+      var Result = null;
+      Result = this.FNextSibling;
+      return Result;
+    };
+    this.GetPrevChild = function (Value) {
+      var Result = null;
+      if (Value !== null) {
+        Result = Value.GetPrevSibling()}
+       else Result = null;
+      return Result;
+    };
+    this.GetPrevSibling = function () {
+      var Result = null;
+      Result = this.FPrevSibling;
+      return Result;
+    };
+    this.HasAsParent = function (Value) {
+      var Result = false;
+      if (Value !== null) {
+        if (this.GetParent() === null) {
+          Result = false}
+         else if (this.GetParent() === Value) {
+          Result = true}
+         else Result = this.GetParent().HasAsParent(Value);
+      } else Result = true;
+      return Result;
+    };
+    this.IsFirstNode = function () {
+      var Result = false;
+      Result = this === this.FOwner.FFirstNode;
+      return Result;
+    };
+    this.IsFirstChild = function () {
+      var Result = false;
+      Result = this.IsFirstNode() || ((this.GetParent() != null) && (this.GetParent().GetFirstChild() === this));
+      return Result;
+    };
+    this.GetNext = function () {
+      var Result = null;
+      var p = null;
+      Result = null;
+      if (this.GetCount() > 0) {
+        Result = this.GetItem(0)}
+       else {
+        Result = this.GetNextSibling();
+        if (!(Result != null)) {
+          p = this;
+          do {
+            p = p.GetParent();
+            if (p != null) Result = p.GetNextSibling();
+          } while (!(!(p != null) || (Result != null)));
+        };
+      };
+      return Result;
+    };
+    this.GetPrev = function () {
+      var Result = null;
+      var cn = null;
+      Result = this.GetPrevSibling();
+      if (Result != null) {
+        cn = Result;
+        do {
+          if (cn.GetCount() > 0) {
+            Result = cn.GetItem(cn.GetCount() - 1);
+            cn = Result;
+          };
+        } while (!(cn.GetCount() === 0));
+      } else Result = this.GetParent();
+      return Result;
+    };
+    var $r = this.$rtti;
+    $r.addMethod("Create$1",2,[["AOwner",$mod.$rtti["TTreeNodes"]]]);
+  });
+  this.$rtti.$MethodVar("TSelectNodeEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["ANode",this.$rtti["TTreeNode"]],["IsSelected",rtl.boolean]]), methodkind: 0});
+  this.$rtti.$MethodVar("TNodeEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["ANode",this.$rtti["TTreeNode"]]]), methodkind: 0});
+  rtl.createClass(this,"TTreeNodes",pas.Classes.TPersistent,function () {
+    this.$init = function () {
+      pas.Classes.TPersistent.$init.call(this);
+      this.FOwner = null;
+      this.FFirstNode = null;
+      this.FNodeList = null;
+      this.FDeleting = false;
+      this.FReading = false;
+      this.FOnChange = null;
+      this.FOnExpandedChange = null;
+      this.FOnSelectionChange = null;
+    };
+    this.$final = function () {
+      this.FOwner = undefined;
+      this.FFirstNode = undefined;
+      this.FNodeList = undefined;
+      this.FOnChange = undefined;
+      this.FOnExpandedChange = undefined;
+      this.FOnSelectionChange = undefined;
+      pas.Classes.TPersistent.$final.call(this);
+    };
+    this.GetNodeFromIndex = function (Index) {
+      var Result = null;
+      var i = 0;
+      var idx = 0;
+      var child = null;
+      Result = null;
+      idx = 0;
+      for (var $l = 0, $end = this.FNodeList.GetCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        child = this.FNodeList.GetItemsEx(i);
+        do {
+          if (Index === idx) {
+            Result = child;
+            return Result;
+          };
+          child = child.GetNext();
+          idx += 1;
+        } while (!(child === null));
+      };
+      return Result;
+    };
+    this.GetSiblingCount = function () {
+      var Result = 0;
+      Result = this.FNodeList.GetCount();
+      return Result;
+    };
+    this.GetSiblingFromIndex = function (Index) {
+      var Result = null;
+      Result = null;
+      if ((Index >= 0) && (Index < this.FNodeList.GetCount())) Result = this.FNodeList.GetItemsEx(Index);
+      return Result;
+    };
+    this.SetItem = function (Index, Value) {
+      if ((Index >= 0) && (Index < this.FNodeList.GetCount())) this.GetNodeFromIndex(Index).Assign(Value);
+    };
+    this.GetCount = function () {
       var $Self = this;
-      var newform = null;
-      var mr = 0;
-      function AfterShowModal(AValue) {
+      var Result = 0;
+      var i = 0;
+      function GetChildCount(tn) {
+        var Result = 0;
+        var j = 0;
+        Result = tn.GetCount();
+        for (var $l = 0, $end = tn.GetCount() - 1; $l <= $end; $l++) {
+          j = $l;
+          Result = Result + GetChildCount(tn.GetItem(j));
+        };
+        return Result;
       };
-      function AfterCreate(AForm) {
+      Result = this.FNodeList.GetCount();
+      for (var $l = 0, $end = this.FNodeList.GetCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        Result = Result + GetChildCount(this.FNodeList.GetItemsEx(i));
       };
-      window.console.log("Navigated from " + oldURL + " to " + newURL);
-      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#form2")) {}
-      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#form3")) {}
-      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmLibretaResponsive")) {
-        window.console.log("entro a abrir frmLibretaResponsive");
-        newform = pas.uLibretaResponsive.TfrmLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
-      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmEditorDiv")) {
-        window.console.log("entro a abrir frmEditorDiv");
-        newform = pas.editorDiv.TfrmEditorDiv.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
+      return Result;
+    };
+    this.InsertNode = function (ParentNode, DesNode, InsertBefore) {
+      var Result = null;
+      var N = null;
+      Result = null;
+      if (!(DesNode != null)) {
+        if (ParentNode != null) {
+          N = ParentNode.GetLastChild();
+          if (N != null) {
+            this.InsertNode(null,N,false);
+            return Result;
+          } else {
+            Result = this.CreateNode();
+            ParentNode.FFirstChild = Result;
+            Result.FParentNode = ParentNode;
+            return Result;
+          };
+        } else {
+          if (!(this.FFirstNode != null)) {
+            Result = this.CreateNode();
+            this.FFirstNode = Result;
+            this.FNodeList.Add(Result);
+          };
+        };
+      } else {
+        Result = this.CreateNode();
+        if (InsertBefore) {
+          if (this.IsVeryFirstNode(DesNode)) {
+            this.FFirstNode = Result;
+            Result.FNextSibling = DesNode;
+            DesNode.FPrevSibling = Result;
+            this.FNodeList.Insert(0,Result);
+          } else {
+            if (DesNode.IsFirstChild() && (DesNode.GetParent() != null)) {
+              DesNode.GetParent().FFirstChild = Result;
+              Result.FNextSibling = DesNode;
+              DesNode.FPrevSibling = Result;
+              Result.FParentNode = DesNode.GetParent();
+            } else {
+              Result.FPrevSibling = DesNode.FPrevSibling;
+              Result.FNextSibling = DesNode;
+              DesNode.FPrevSibling = Result;
+              Result.FParentNode = DesNode.GetParent();
+              if (Result.FPrevSibling != null) Result.FPrevSibling.FNextSibling = Result;
+            };
+          };
+        } else {
+          Result.FNextSibling = DesNode.FNextSibling;
+          Result.FPrevSibling = DesNode;
+          DesNode.FNextSibling = Result;
+          if (Result.FNextSibling != null) Result.FNextSibling.FPrevSibling = Result;
+          Result.FParentNode = DesNode.GetParent();
+          if (!(DesNode.GetParent() != null)) this.FNodeList.Add(Result);
+        };
       };
+      return Result;
+    };
+    this.IsVeryFirstNode = function (Node) {
+      var Result = false;
+      Result = (Node != null) && (Node === this.FFirstNode);
+      return Result;
+    };
+    this.SelectionChange = function (Node, IsSelected) {
+      if (this.FOnSelectionChange != null) this.FOnSelectionChange(this,Node,IsSelected);
+    };
+    this.CreateNode = function () {
+      var Result = null;
+      var LClass = null;
+      LClass = $mod.TTreeNode;
+      Result = LClass.$create("Create$1",[this]);
+      return Result;
+    };
+    this.Create$1 = function (AOwner) {
+      pas.System.TObject.Create.call(this);
+      this.FOwner = AOwner;
+      this.FFirstNode = null;
+      this.FNodeList = $mod.TDbgList.$create("Create$1");
+      return this;
+    };
+    this.Destroy = function () {
+      this.FDeleting = true;
+      this.Clear();
+      rtl.free(this,"FNodeList");
+      pas.System.TObject.Destroy.call(this);
+    };
+    this.AddFirst = function (S) {
+      var Result = null;
+      Result = this.AddFirst$1(null,S);
+      return Result;
+    };
+    this.AddFirst$1 = function (Data, S) {
+      var Result = null;
+      if (!(this.FFirstNode != null)) {
+        Result = this.InsertNode(null,null,true);
+      } else {
+        Result = this.InsertNode(null,this.FFirstNode,true);
+      };
+      Result.SetText(S);
+      Result.SetData(Data);
+      return Result;
+    };
+    this.Add = function (Sibling, S) {
+      var Result = null;
+      Result = this.Add$1(Sibling,S,null);
+      return Result;
+    };
+    this.Add$1 = function (Sibling, S, Data) {
+      var Result = null;
+      Result = this.InsertNode(Sibling,this.GetLastNode(),false);
+      Result.SetText(S);
+      Result.SetData(Data);
+      return Result;
+    };
+    this.Add$2 = function (S) {
+      var Result = null;
+      Result = this.Add$3(S,null);
+      return Result;
+    };
+    this.Add$3 = function (S, Data) {
+      var Result = null;
+      Result = this.InsertNode(null,this.GetLastNode(),false);
+      Result.SetText(S);
+      Result.SetData(Data);
+      return Result;
+    };
+    this.AddChild = function (Parent, S) {
+      var Result = null;
+      if (Parent === null) {
+        Result = this.Add$3(S,null)}
+       else Result = this.AddChild$1(Parent,S,null);
+      return Result;
+    };
+    this.AddChild$1 = function (Parent, S, Data) {
+      var Result = null;
+      Result = null;
+      if (Parent != null) {
+        Result = Parent.AddChild$1(S,Data)}
+       else Result = this.Add$3(S,Data);
+      return Result;
+    };
+    this.AddChildFirst = function (Parent, S) {
+      var Result = null;
+      Result = this.AddChildFirst$1(Parent,S,null);
+      return Result;
+    };
+    this.AddChildFirst$1 = function (Parent, S, Data) {
+      var Result = null;
+      Result = null;
+      if (Parent != null) Result = Parent.AddFirstChild$1(S,Data);
+      return Result;
+    };
+    this.Assign = function (Source) {
+      if ($mod.TTreeNodes.isPrototypeOf(Source)) {
+        this.Clear();
+      } else pas.Classes.TPersistent.Assign.call(this,Source);
+    };
+    this.BeginUpdate = function () {
+    };
+    this.EndUpdate = function () {
+    };
+    this.Clear = function () {
+      var i = 0;
+      for (var $l = this.FNodeList.GetCount() - 1; $l >= 0; $l--) {
+        i = $l;
+        this.FNodeList.GetItemsEx(i).Delete();
+      };
+      this.FNodeList.Clear();
+    };
+    this.Delete = function (Node) {
+      Node.Delete();
+    };
+    this.GetFirstNode = function () {
+      var Result = null;
+      Result = this.FFirstNode;
+      return Result;
+    };
+    this.GetLastNode = function () {
+      var Result = null;
+      Result = this.FFirstNode;
+      if (Result != null) while (Result.GetNextSibling() !== null) Result = Result.GetNextSibling();
+      return Result;
+    };
+    this.Insert = function (Sibling, S) {
+      var Result = null;
+      Result = this.InsertObject(Sibling,S,null);
+      return Result;
+    };
+    this.InsertObject = function (Sibling, S, Data) {
+      var Result = null;
+      Result = this.InsertNode(null,Sibling,true);
+      if (Result != null) {
+        Result.SetText(S);
+        Result.SetData(Data);
+      };
+      return Result;
+    };
+    this.Changed = function () {
+      if (this.FOnChange != null) this.FOnChange(this);
+    };
+    var $r = this.$rtti;
+    $r.addMethod("Create$1",2,[["AOwner",pas.Classes.$rtti["TComponent"]]]);
+  });
+},["Math"]);
+rtl.module("WEBLib.Buttons",["System","Classes","SysUtils","WEBLib.Controls","Web","WEBLib.Graphics","WEBLib.StdCtrls","WEBLib.ComCtrls","WEBLib.ExtCtrls","WEBLib.Forms","WEBLib.Menus"],function () {
+  "use strict";
+  var $mod = this;
+  var $impl = $mod.$impl;
+  this.TButtonLayout = {"0": "blGlyphLeft", blGlyphLeft: 0, "1": "blGlyphRight", blGlyphRight: 1, "2": "blGlyphTop", blGlyphTop: 2, "3": "blGlyphBottom", blGlyphBottom: 3};
+  this.$rtti.$Enum("TButtonLayout",{minvalue: 0, maxvalue: 3, ordtype: 1, enumtype: this.TButtonLayout});
+  rtl.createClass(this,"TCustomSpeedButton",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FMaterialGlyph = "";
+      this.FColor$1 = 0;
+      this.FIntColor = 0;
+      this.FDown = false;
+      this.FFlat = false;
+      this.FGroupIndex = 0;
+      this.FAllowAllUp = false;
+      this.FGlyph = null;
+      this.FLayout = 0;
+      this.FGlyphURL = "";
+      this.FMaterialGlyphSize = 0;
+      this.FMaterialGlyphColor = 0;
+      this.FMaterialGlyphType = 0;
+      this.FGlyphSize = 0;
+    };
+    this.$final = function () {
+      this.FGlyph = undefined;
+      pas["WEBLib.Menus"].TWebCustomControl.$final.call(this);
+    };
+    this.SetMaterialGlyph = function (AValue) {
+      if (this.FMaterialGlyph !== AValue) {
+        this.FMaterialGlyph = AValue;
+        this.UpdateElement();
+      };
+    };
+    this.SetColorEx = function (AValue) {
+      if (this.FColor$1 !== AValue) {
+        this.FColor$1 = AValue;
+        this.FIntColor = AValue;
+        this.UpdateElement();
+      };
+    };
+    this.SetIntColor = function (AValue) {
+      if (this.FIntColor !== AValue) {
+        this.FIntColor = AValue;
+        this.UpdateElement();
+      };
+    };
+    this.SetGroupIndex = function (AValue) {
+      this.FGroupIndex = AValue;
+    };
+    this.SetDown = function (AValue) {
+      if (this.FDown !== AValue) {
+        this.FDown = AValue;
+        this.UpdateElement();
+      };
+    };
+    this.SetFlat = function (Value) {
+      if (this.FFlat !== Value) {
+        this.FFlat = Value;
+        this.RecreateElement();
+      };
+    };
+    this.SetGlyph = function (Value) {
+      this.FGlyph.Assign(Value);
+      this.UpdateElement();
+    };
+    this.SetGlyphURL = function (Value) {
+      if (this.FGlyphURL !== Value) {
+        this.FGlyphURL = Value;
+        this.RecreateElement();
+      };
+    };
+    this.SetMaterialGlyphSize = function (Value) {
+      if ((Value > 0) && (Value < 100)) {
+        this.FMaterialGlyphSize = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGyphColor = function (Value) {
+      if (this.FMaterialGlyphColor !== Value) {
+        this.FMaterialGlyphColor = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGlyphType = function (Value) {
+      if (this.FMaterialGlyphType !== Value) {
+        this.FMaterialGlyphType = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetGlyphSize = function (Value) {
+      if (this.FGlyphSize !== Value) {
+        this.FGlyphSize = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetEnabled = function (Value) {
+      pas["WEBLib.Controls"].TControl.SetEnabled.apply(this,arguments);
+      this.UpdateElement();
+    };
+    this.SetCaption = function (AValue) {
+      if (this.FCaption !== AValue) {
+        pas["WEBLib.Controls"].TCustomControl.SetCaption.call(this,AValue);
+        this.UpdateElement();
+      };
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      if (this.FFlat) {
+        Result = document.createElement("SPAN")}
+       else {
+        Result = document.createElement("BUTTON");
+        Result.setAttribute("type","BUTTON");
+      };
+      return Result;
+    };
+    this.UpdateElement = function () {
+      var s = "";
+      var inactive = "";
+      var noptr = "";
+      var icn = "";
+      var imgsrc = "";
+      var gs = "";
+      var matclr = "";
+      var cap = "";
+      var acc = "";
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+      if (!this.IsUpdating() && (this.FMaterialGlyph !== "")) this.AddControlLink("googlematerial","https://fonts.googleapis.com/icon?family=Material+Icons");
+      if (this.GetElementHandle() != null) {
+        this.GetElementHandle().style.setProperty("vertical-align","middle");
+        this.GetElementHandle().style.setProperty("overflow","hidden");
+        this.GetElementHandle().style.setProperty("padding","0px");
+        this.GetElementHandle().style.setProperty("text-align","center");
+        if (this.FFlat && this.FVisible) {
+          this.GetElementHandle().style.setProperty("display","flex");
+          this.GetElementHandle().style.setProperty("justify-content","center");
+        };
+        s = "";
+        inactive = "";
+        noptr = "";
+        if (!this.FEnabled) inactive = " md-light md-inactive";
+        noptr = "pointer-events:none";
+        if (this.FMaterialGlyph !== "") {
+          matclr = "";
+          if (this.FMaterialGlyphColor !== -1) {
+            if (this.FEnabled) {
+              matclr = ";color:" + pas["WEBLib.Graphics"].ColorToHTML(this.FMaterialGlyphColor)}
+             else matclr = ";color:" + pas["WEBLib.Graphics"].ColorToHTML(0xA0A0A0);
+          };
+          icn = '<i class="' + pas["WEBLib.Controls"].GetMaterialClass(this.FMaterialGlyphType) + inactive + '" style="' + noptr + ";font-size:" + pas.SysUtils.IntToStr(this.FMaterialGlyphSize) + "px" + matclr + '">' + this.FMaterialGlyph + "</i>";
+        };
+        if (this.FGlyph.GetData() !== "") {
+          imgsrc = "data:image/jpeg;base64," + pas["WEBLib.WebTools"].HexImageDecodeAsBase64(this.FGlyph.GetData())}
+         else if (this.FGlyph.FFilename !== "") {
+          imgsrc = this.FGlyph.FFilename}
+         else if (this.FGlyphURL !== "") imgsrc = this.FGlyphURL;
+        gs = "";
+        if (this.FGlyphSize !== 0) gs = "width:" + pas.SysUtils.TIntegerHelper.ToString$1.call({p: this, get: function () {
+            return this.p.FGlyphSize;
+          }, set: function (v) {
+            this.p.FGlyphSize = v;
+          }}) + "px";
+        if (imgsrc !== "") icn = '<img style="' + noptr + ";vertical-align:middle;" + gs + '" src="' + imgsrc + '">';
+        if ((this.GetElementHandle().childElementCount === 0) || !this.GetIsLinked()) cap = pas["WEBLib.WebTools"].ProcessAccelerator(this.FCaption,{get: function () {
+            return acc;
+          }, set: function (v) {
+            acc = v;
+          }});
+        if (acc !== "") this.GetElementHandle().setAttribute("accesskey",acc);
+        if (this.FTabStop) {
+          this.GetElementHandle().setAttribute("tabindex",pas.SysUtils.IntToStr(this.FTabOrder))}
+         else this.GetElementHandle().setAttribute("tabindex","-1");
+        var $tmp = this.FLayout;
+        if ($tmp === $mod.TButtonLayout.blGlyphLeft) {
+          s = '<table border="0" align="center" style="' + noptr + '"><tr><td style="border:none">' + icn + '</td><td style="border:none">' + cap + "</td></tr></table>"}
+         else if ($tmp === $mod.TButtonLayout.blGlyphRight) {
+          s = '<table border="0" align="center" style="' + noptr + '"><tr><td style="border:none">' + cap + '</td><td style="border:none">' + icn + "</td></tr></table>"}
+         else if ($tmp === $mod.TButtonLayout.blGlyphTop) {
+          s = '<table border="0" align="center" style="' + noptr + '"><tr><td style="border:none">' + icn + '</td></tr><tr><td style="border:none">' + cap + "</td></tr></table>"}
+         else if ($tmp === $mod.TButtonLayout.blGlyphBottom) s = '<table border="0" align="center" style="' + noptr + '"><tr><td style="border:none">' + cap + '</td></tr><tr><td style="border:none">' + icn + "</td></tr></table>";
+        this.GetElementHandle().innerHTML = s;
+        pas["WEBLib.Controls"].SetHTMLElementFont(this.GetElementHandle().firstChild,this.FFont,!((this.FElementClassName === "") && (this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty)));
+        if (!this.IsEnabled()) {
+          this.GetElementHandle().style.removeProperty("color")}
+         else if ((this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty) && (this.FElementClassName === "")) {
+          this.GetElementHandle().style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FFont.FColor));
+          if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) this.GetElementHandle().firstChild.style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FFont.FColor));
+        };
+      };
+    };
+    this.UpdateElementVisual = function () {
+      var clr = 0;
+      pas["WEBLib.Controls"].TCustomControl.UpdateElementVisual.call(this);
+      if (this.GetElementHandle() != null) {
+        if (this.FDown) {
+          clr = 8421504}
+         else clr = this.FIntColor;
+        if ((clr !== -1) && (this.FElementClassName === "")) {
+          this.GetElementHandle().style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(clr))}
+         else this.GetElementHandle().style.setProperty("background-color","");
+        if (this.GetElementHandle().firstChild != null) pas["WEBLib.Controls"].SetHTMLElementFont(this.GetElementHandle().firstChild,this.FFont,!((this.FElementClassName === "") && (this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty)));
+        if (!this.IsEnabled()) {
+          this.GetElementHandle().style.removeProperty("color")}
+         else if ((this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty) && (this.FElementClassName === "")) {
+          this.GetElementHandle().style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FFont.FColor));
+          if ((pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) && (this.GetElementHandle().firstChild != null)) this.GetElementHandle().firstChild.style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FFont.FColor));
+        };
+      };
+    };
+    this.UpdateGroup = function () {
+      var i = 0;
+      if (this.FParent != null) {
+        for (var $l = 0, $end = this.FParent.GetControlsCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          if ((this.FParent.GetControls(i) !== this) && $mod.TSpeedButton.isPrototypeOf(this.FParent.GetControls(i)) && (rtl.as(this.FParent.GetControls(i),$mod.TSpeedButton).FGroupIndex === this.FGroupIndex)) rtl.as(this.FParent.GetControls(i),$mod.TSpeedButton).SetDown(false);
+        };
+      };
+    };
+    this.DoMouseLeave = function () {
+      var frm = null;
+      pas["WEBLib.Controls"].TControl.DoMouseLeave.call(this);
+      frm = pas["WEBLib.Forms"].GetParentForm(this);
+      if ((frm != null) && (frm.FCSSLibrary === pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap) && this.FShowHint && (this.FHint !== "")) return;
+      this.SetIntColor(this.FColor$1);
+    };
+    this.DoMouseEnter = function () {
+      var frm = null;
+      pas["WEBLib.Controls"].TControl.DoMouseEnter.call(this);
+      frm = pas["WEBLib.Forms"].GetParentForm(this);
+      if ((frm != null) && (frm.FCSSLibrary === pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap) && this.FShowHint && (this.FHint !== "")) return;
+      if (this.FEnabled) this.SetIntColor(12632256);
+    };
+    this.MouseUp = function (Button, Shift, X, Y) {
+      pas["WEBLib.Controls"].TControl.MouseUp.apply(this,arguments);
+      if (this.FEnabled) this.SetIntColor(12632256);
+    };
+    this.MouseDown = function (Button, Shift, X, Y) {
+      pas["WEBLib.Controls"].TControl.MouseDown.apply(this,arguments);
+      if (!this.FEnabled) return;
+      this.SetIntColor(8421504);
+      if (this.FGroupIndex > 0) {
+        if (this.FDown && this.FAllowAllUp) {
+          this.SetDown(false)}
+         else {
+          this.SetDown(true);
+          this.UpdateGroup();
+        };
+      };
+    };
+    this.GlyphChanged = function (Sender) {
+      this.UpdateElement();
+    };
+    this.InitCSSLibrary = function (ALibrary) {
+      if (ALibrary === pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap) {
+        this.SetElementClassName("btn btn-light");
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+      };
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FGlyph");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FColor$1 = -1;
+      this.FIntColor = -1;
+      this.FGroupIndex = 0;
+      this.FDown = false;
+      this.FFlat = false;
+      this.FGlyph = pas["WEBLib.Graphics"].TURLPicture.$create("Create");
+      this.FGlyph.FOnChange = rtl.createCallback(this,"GlyphChanged");
+      this.FGlyph.FOnDataChange = rtl.createCallback(this,"GlyphChanged");
+      this.FLayout = $mod.TButtonLayout.blGlyphLeft;
+      this.FMaterialGlyphSize = 18;
+      this.FMaterialGlyphColor = -1;
+      this.FMaterialGlyphType = pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal;
+    };
+    this.CanFocus = function () {
+      var Result = false;
+      Result = false;
+      return Result;
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TSpeedButton",this.TCustomSpeedButton,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("AllowAllUp",0,rtl.boolean,"FAllowAllUp","FAllowAllUp");
+    $r.addProperty("Caption",2,rtl.string,"FCaption","SetCaption");
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor$1","SetColorEx",{Default: -1});
+    $r.addProperty("Down",2,rtl.boolean,"FDown","SetDown");
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Enabled",2,rtl.boolean,"FEnabled","SetEnabled",{Default: true});
+    $r.addProperty("Flat",2,rtl.boolean,"FFlat","SetFlat",{Default: false});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("Glyph",2,pas["WEBLib.Graphics"].$rtti["TURLPicture"],"FGlyph","SetGlyph");
+    $r.addProperty("GlyphURL",2,rtl.string,"FGlyphURL","SetGlyphURL");
+    $r.addProperty("GlyphSize",2,rtl.longint,"FGlyphSize","SetGlyphSize",{Default: 0});
+    $r.addProperty("GroupIndex",2,rtl.longint,"FGroupIndex","SetGroupIndex");
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Hint",2,rtl.string,"FHint","SetHint");
+    $r.addProperty("Layout",0,$mod.$rtti["TButtonLayout"],"FLayout","FLayout",{Default: $mod.TButtonLayout.blGlyphLeft});
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("MaterialGlyph",2,rtl.string,"FMaterialGlyph","SetMaterialGlyph");
+    $r.addProperty("MaterialGlyphColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FMaterialGlyphColor","SetMaterialGyphColor",{Default: -1});
+    $r.addProperty("MaterialGlyphSize",2,rtl.longint,"FMaterialGlyphSize","SetMaterialGlyphSize",{Default: 18});
+    $r.addProperty("MaterialGlyphType",2,pas["WEBLib.Controls"].$rtti["TMaterialGlyphType"],"FMaterialGlyphType","SetMaterialGlyphType",{Default: pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal});
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("ShowHint",2,rtl.boolean,"FShowHint","SetShowHint",{Default: false});
+    $r.addProperty("TabOrder",2,rtl.longint,"FTabOrder","SetTabOrder");
+    $r.addProperty("TabStop",2,rtl.boolean,"FTabStop","SetTabStop",{Default: true});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnKeyDown",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyDown","FOnKeyDown");
+    $r.addProperty("OnKeyPress",0,pas["WEBLib.Controls"].$rtti["TKeyPressEvent"],"FOnKeyPress","FOnKeyPress");
+    $r.addProperty("OnKeyUp",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyUp","FOnKeyUp");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+  });
+  rtl.createClass(this,"TWebSpeedButton",this.TSpeedButton,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TCustomBitBtn",pas["WEBLib.Controls"].TCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Controls"].TCustomControl.$init.call(this);
+      this.FMaterialGlyph = "";
+      this.FLayout = 0;
+      this.FFlat = false;
+      this.FGlyph = null;
+      this.FColor$1 = 0;
+      this.FIntColor = 0;
+      this.FAlignment = 0;
+      this.FGlyphURL = "";
+      this.FMaterialGlyphSize = 0;
+      this.FMaterialGlyphColor = 0;
+      this.FMaterialGlyphType = 0;
+      this.FGlyphSize = 0;
+      this.FModalResult = 0;
+      this.FDefault = false;
+      this.FCancel = false;
+    };
+    this.$final = function () {
+      this.FGlyph = undefined;
+      pas["WEBLib.Controls"].TCustomControl.$final.call(this);
+    };
+    this.SetFlat = function (Value) {
+      if (this.FFlat !== Value) {
+        this.FFlat = Value;
+        this.RecreateElement();
+      };
+    };
+    this.SetGlyph = function (Value) {
+      this.FGlyph.Assign(Value);
+      this.UpdateElement();
+    };
+    this.SetLayout = function (Value) {
+      if (this.FLayout !== Value) {
+        this.FLayout = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGlyph = function (Value) {
+      if (this.FMaterialGlyph !== Value) {
+        this.FMaterialGlyph = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetColorEx = function (Value) {
+      if (this.FColor$1 !== Value) {
+        this.FColor$1 = Value;
+        this.SetColor(Value);
+        this.UpdateElement();
+      };
+    };
+    this.SetIntColor = function (Value) {
+      this.FIntColor = Value;
+    };
+    this.SetAlignment = function (Value) {
+      if (this.FAlignment !== Value) {
+        this.FAlignment = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetGlyphURL = function (Value) {
+      if (this.FGlyphURL !== Value) {
+        this.FGlyphURL = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGlyphSize = function (Value) {
+      if ((Value > 0) && (Value < 100)) {
+        this.FMaterialGlyphSize = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGyphColor = function (Value) {
+      if (this.FMaterialGlyphColor !== Value) {
+        this.FMaterialGlyphColor = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetMaterialGlyphType = function (Value) {
+      if (this.FMaterialGlyphType !== Value) {
+        this.FMaterialGlyphType = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetGlyphSize = function (Value) {
+      if (this.FGlyphSize !== Value) {
+        this.FGlyphSize = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetCaption = function (AValue) {
+      if (this.FCaption !== AValue) {
+        pas["WEBLib.Controls"].TCustomControl.SetCaption.call(this,AValue);
+        this.UpdateElement();
+      };
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      if (this.FFlat) {
+        Result = document.createElement("SPAN")}
+       else {
+        Result = document.createElement("BUTTON");
+        Result.setAttribute("type","BUTTON");
+      };
+      return Result;
+    };
+    this.UpdateElement = function () {
+      var s = "";
+      var inactive = "";
+      var noptr = "";
+      var matgl = "";
+      var imgsrc = "";
+      var matclr = "";
+      var cap = "";
+      var acc = "";
+      var gs = "";
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+      if (this.GetElementHandle() != null) {
+        if ((this.FColor$1 !== -1) && !this.FFlat) {
+          this.GetElementHandle().style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(this.FColor$1))}
+         else this.GetElementHandle().style.setProperty("background-color","");
+        this.GetElementHandle().style.setProperty("vertical-align","middle");
+        if (this.FVisible) this.GetElementHandle().style.setProperty("display","table");
+        this.GetElementHandle().style.setProperty("overflow","hidden");
+        this.GetElementHandle().style.setProperty("padding","0px");
+        var $tmp = this.FAlignment;
+        if ($tmp === pas.Classes.TAlignment.taLeftJustify) {
+          this.GetElementHandle().style.setProperty("text-align","left")}
+         else if ($tmp === pas.Classes.TAlignment.taCenter) {
+          this.GetElementHandle().style.setProperty("text-align","center")}
+         else if ($tmp === pas.Classes.TAlignment.taRightJustify) this.GetElementHandle().style.setProperty("text-align","right");
+        s = "";
+        inactive = "";
+        noptr = "";
+        matgl = "";
+        if (!this.FEnabled) inactive = " md-light md-inactive";
+        noptr = "pointer-events:none";
+        if (this.FMaterialGlyph !== "") {
+          matclr = "";
+          if (this.FMaterialGlyphColor !== -1) matclr = ";color:" + pas["WEBLib.Graphics"].ColorToHTML(this.FMaterialGlyphColor);
+          matgl = '<i class="' + pas["WEBLib.Controls"].GetMaterialClass(this.FMaterialGlyphType) + inactive + '" style="vertical-align:middle;' + noptr + ";font-size:" + pas.SysUtils.IntToStr(this.FMaterialGlyphSize) + "px" + matclr + '">' + this.FMaterialGlyph + "</i>";
+        };
+        if ((this.GetElementHandle().childElementCount === 0) || !this.GetIsLinked()) cap = pas["WEBLib.WebTools"].ProcessAccelerator(this.FCaption,{get: function () {
+            return acc;
+          }, set: function (v) {
+            acc = v;
+          }});
+        if (acc !== "") this.GetElementHandle().setAttribute("accesskey",acc);
+        if (cap !== "") s = '<span style="' + noptr + '">' + cap + "</span>";
+        gs = "";
+        if (this.FGlyphSize !== 0) gs = "width:" + pas.SysUtils.TIntegerHelper.ToString$1.call({p: this, get: function () {
+            return this.p.FGlyphSize;
+          }, set: function (v) {
+            this.p.FGlyphSize = v;
+          }}) + "px;";
+        if (this.FGlyph.GetData() !== "") {
+          imgsrc = "data:image/jpeg;base64," + pas["WEBLib.WebTools"].HexImageDecodeAsBase64(this.FGlyph.GetData())}
+         else if (this.FGlyph.FFilename !== "") {
+          imgsrc = this.FGlyph.FFilename}
+         else if (this.FGlyphURL !== "") imgsrc = this.FGlyphURL;
+        var $tmp1 = this.FLayout;
+        if ($tmp1 === $mod.TButtonLayout.blGlyphLeft) {
+          if (matgl !== "") {
+            if (cap !== "") {
+              s = matgl + "&nbsp;" + s}
+             else s = matgl;
+          };
+          if (imgsrc !== "") s = '<img style="vertical-align:middle;' + gs + '" src="' + imgsrc + '">&nbsp;' + s;
+        } else if ($tmp1 === $mod.TButtonLayout.blGlyphRight) {
+          if (matgl !== "") {
+            if (cap !== "") {
+              s = s + "&nbsp;" + matgl}
+             else s = matgl;
+          };
+          if (imgsrc !== "") s = s + '&nbsp;<img style="' + gs + '" src="' + imgsrc + '">';
+        } else if ($tmp1 === $mod.TButtonLayout.blGlyphTop) {
+          if (matgl !== "") {
+            if (cap !== "") {
+              s = matgl + "<br>" + s}
+             else s = matgl;
+          };
+          if (imgsrc !== "") s = '<img style="' + gs + '" src="' + imgsrc + '"><br>' + s;
+        } else if ($tmp1 === $mod.TButtonLayout.blGlyphBottom) {
+          if (matgl !== "") {
+            if (cap !== "") {
+              s = s + "<br>" + matgl}
+             else s = matgl;
+          };
+          if (imgsrc !== "") s = s + '<br><img style="' + gs + '" src="' + imgsrc + '">';
+        };
+        this.GetElementHandle().innerHTML = s;
+        pas["WEBLib.Controls"].SetHTMLElementFont(this.GetElementHandle(),this.FFont,!((this.FElementClassName === "") && (this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty)));
+      };
+    };
+    this.UpdateElementVisual = function () {
+      pas["WEBLib.Controls"].TCustomControl.UpdateElementVisual.call(this);
+      if (this.GetElementHandle() != null) {
+        this.GetElementHandle().style.removeProperty("outline");
+        this.GetElementHandle().style.removeProperty("user-select");
+      };
+    };
+    this.Click = function () {
+      var frm = null;
+      pas["WEBLib.Controls"].TControl.Click.call(this);
+      if (this.FModalResult !== 0) {
+        frm = pas["WEBLib.Forms"].GetParentForm(this);
+        if (frm != null) frm.SetModalResult(this.FModalResult);
+      };
+    };
+    this.GlyphChanged = function (Sender) {
+      this.UpdateElement();
+    };
+    this.HandleKeyPreview = function (Key) {
+      pas["WEBLib.Controls"].TControl.HandleKeyPreview.apply(this,arguments);
+      if (this.FDefault && (Key === 13)) {
+        this.Click();
+      };
+      if (this.FCancel && (Key === 27)) {
+        this.Click();
+      };
+    };
+    this.InitCSSLibrary = function (ALibrary) {
+      if (ALibrary === pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap) {
+        this.SetElementClassName("btn btn-light");
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+      };
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FGlyph");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FColor$1 = -1;
+      this.FIntColor = -1;
+      this.FFlat = false;
+      this.SetWidth(80);
+      this.SetHeight(25);
+      this.FAlignment = pas.Classes.TAlignment.taCenter;
+      this.FGlyph = pas["WEBLib.Graphics"].TURLPicture.$create("Create");
+      this.FGlyph.FOnChange = rtl.createCallback(this,"GlyphChanged");
+      this.FGlyph.FOnDataChange = rtl.createCallback(this,"GlyphChanged");
+      this.FGlyphSize = 0;
+      this.FMaterialGlyphSize = 18;
+      this.FMaterialGlyphColor = -1;
+      this.FMaterialGlyphType = pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal;
+      this.FModalResult = 0;
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TBitBtn",this.TCustomBitBtn,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Alignment",2,pas.Classes.$rtti["TAlignment"],"FAlignment","SetAlignment",{Default: pas.Classes.TAlignment.taCenter});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("Cancel",0,rtl.boolean,"FCancel","FCancel",{Default: false});
+    $r.addProperty("Caption",2,rtl.string,"FCaption","SetCaption");
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor$1","SetColorEx");
+    $r.addProperty("Default",0,rtl.boolean,"FDefault","FDefault",{Default: false});
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Enabled",2,rtl.boolean,"FEnabled","SetEnabled",{Default: true});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("Flat",2,rtl.boolean,"FFlat","SetFlat",{Default: false});
+    $r.addProperty("Glyph",2,pas["WEBLib.Graphics"].$rtti["TURLPicture"],"FGlyph","SetGlyph");
+    $r.addProperty("GlyphURL",2,rtl.string,"FGlyphURL","SetGlyphURL");
+    $r.addProperty("GlyphSize",2,rtl.longint,"FGlyphSize","SetGlyphSize",{Default: 0});
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Hint",2,rtl.string,"FHint","SetHint");
+    $r.addProperty("Layout",2,$mod.$rtti["TButtonLayout"],"FLayout","SetLayout",{Default: $mod.TButtonLayout.blGlyphLeft});
+    $r.addProperty("MaterialGlyph",2,rtl.string,"FMaterialGlyph","SetMaterialGlyph");
+    $r.addProperty("MaterialGlyphColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FMaterialGlyphColor","SetMaterialGyphColor",{Default: -1});
+    $r.addProperty("MaterialGlyphSize",2,rtl.longint,"FMaterialGlyphSize","SetMaterialGlyphSize",{Default: 18});
+    $r.addProperty("MaterialGlyphType",2,pas["WEBLib.Controls"].$rtti["TMaterialGlyphType"],"FMaterialGlyphType","SetMaterialGlyphType",{Default: pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal});
+    $r.addProperty("ModalResult",0,rtl.longint,"FModalResult","FModalResult",{Default: 0});
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("ShowHint",2,rtl.boolean,"FShowHint","SetShowHint",{Default: false});
+    $r.addProperty("TabOrder",2,rtl.longint,"FTabOrder","SetTabOrder");
+    $r.addProperty("TabStop",2,rtl.boolean,"FTabStop","SetTabStop",{Default: true});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnKeyDown",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyDown","FOnKeyDown");
+    $r.addProperty("OnKeyPress",0,pas["WEBLib.Controls"].$rtti["TKeyPressEvent"],"FOnKeyPress","FOnKeyPress");
+    $r.addProperty("OnKeyUp",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyUp","FOnKeyUp");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebBitBtn",this.TBitBtn,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TCustomToolBar",pas["WEBLib.Controls"].TCustomControl,function () {
+    this.CreateElement = function () {
+      var Result = null;
+      var el = null;
+      Result = document.createElement("SPAN");
+      if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+        el = document.createElement("DIV");
+        el.style.setProperty("z-index","10");
+        el.style.setProperty("width","100%");
+        el.style.setProperty("height","100%");
+        el.style.setProperty("webkit-user-select","none");
+        el.style.setProperty("moz-user-select","none");
+        el.style.setProperty("khtml-user-select","none");
+        el.style.setProperty("ms-user-select","none");
+        el.style.setProperty("user-select","none");
+        el.style.setProperty("position","absolute");
+        Result.appendChild(el);
+      };
+      return Result;
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.SetColor(0xCFCFCF);
+      this.FControlStyle = rtl.unionSet(this.FControlStyle,rtl.createSet(pas["WEBLib.Controls"].TControlStyleValue.csAcceptsControls));
+      this.SetWidth(300);
+      this.SetHeight(32);
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TToolBar",this.TCustomToolBar,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor","SetColor",{Default: 13619151});
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("Enabled",2,rtl.boolean,"FEnabled","SetEnabled",{Default: true});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Hint",2,rtl.string,"FHint","SetHint");
+    $r.addProperty("Left",3,rtl.longint,"GetLeft","SetLeft");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("ShowHint",2,rtl.boolean,"FShowHint","SetShowHint",{Default: false});
+    $r.addProperty("Top",3,rtl.longint,"GetTop","SetTop");
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebToolBar",this.TToolBar,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  this.TRichEditBtn = {"0": "reFont", reFont: 0, "1": "reFontSize", reFontSize: 1, "2": "reBold", reBold: 2, "3": "reItalic", reItalic: 3, "4": "reUnderline", reUnderline: 4, "5": "reStrikeThrough", reStrikeThrough: 5, "6": "reAlignLeft", reAlignLeft: 6, "7": "reAlignCenter", reAlignCenter: 7, "8": "reAlignRight", reAlignRight: 8, "9": "reUnorderedList", reUnorderedList: 9, "10": "reOrderedList", reOrderedList: 10, "11": "reForegroundColor", reForegroundColor: 11, "12": "reBackgroundColor", reBackgroundColor: 12, "13": "reHyperlink", reHyperlink: 13, "14": "reImageInsert", reImageInsert: 14, "15": "reLineSpacing", reLineSpacing: 15};
+  this.$rtti.$Enum("TRichEditBtn",{minvalue: 0, maxvalue: 15, ordtype: 1, enumtype: this.TRichEditBtn});
+  this.$rtti.$Set("TRichEditButtonSet",{comptype: this.$rtti["TRichEditBtn"]});
+  rtl.createClass(this,"TRichEditToolBar",this.TToolBar,function () {
+    this.$init = function () {
+      $mod.TToolBar.$init.call(this);
+      this.FBold = null;
+      this.FItalic = null;
+      this.FUnderline = null;
+      this.FStrikeThrough = null;
+      this.FAlignLeft = null;
+      this.FAlignCenter = null;
+      this.FAlignRight = null;
+      this.FUList = null;
+      this.FOList = null;
+      this.FURL = null;
+      this.FRichEdit = null;
+      this.FFnt = null;
+      this.FFntSize = null;
+      this.FFgClr = null;
+      this.FBkClr = null;
+      this.FImage = null;
+      this.FLineSpacing = null;
+      this.FOnSpeedButtonClick = null;
+      this.FTextColor = 0;
+      this.FBackgroundColor = 0;
+      this.FVisibleButtons = {};
+      this.FHints = null;
+      this.FBtnID = "";
+      this.FFilePicker = null;
+      this.FPtrFileLoad = null;
+    };
+    this.$final = function () {
+      this.FBold = undefined;
+      this.FItalic = undefined;
+      this.FUnderline = undefined;
+      this.FStrikeThrough = undefined;
+      this.FAlignLeft = undefined;
+      this.FAlignCenter = undefined;
+      this.FAlignRight = undefined;
+      this.FUList = undefined;
+      this.FOList = undefined;
+      this.FURL = undefined;
+      this.FRichEdit = undefined;
+      this.FFnt = undefined;
+      this.FFntSize = undefined;
+      this.FFgClr = undefined;
+      this.FBkClr = undefined;
+      this.FImage = undefined;
+      this.FLineSpacing = undefined;
+      this.FOnSpeedButtonClick = undefined;
+      this.FVisibleButtons = undefined;
+      this.FHints = undefined;
+      this.FFilePicker = undefined;
+      $mod.TToolBar.$final.call(this);
+    };
+    this.SetRichEdit = function (AValue) {
+      if (AValue != null) {
+        this.FRichEdit = AValue;
+        this.FRichEdit.FOwner$1 = this;
+        this.FRichEdit.FOnAttributesChanged = rtl.createCallback(this,"HandleAttributeChanged");
+      };
+    };
+    this.GetRichEdit = function () {
+      var Result = null;
+      Result = this.FRichEdit;
+      return Result;
+    };
+    this.SetTextColor = function (Value) {
+      this.FTextColor = Value;
+      this.FFgClr.SetColor$1(Value);
+    };
+    this.SetBackgroundColor = function (Value) {
+      this.FBackgroundColor = Value;
+      this.FBkClr.SetColor$1(Value);
+    };
+    this.SetVisibleButtons = function (Value) {
+      this.FVisibleButtons = rtl.refSet(Value);
+      this.UpdateButtons();
+    };
+    this.SetHints = function (Value) {
+      this.FHints.Assign(Value);
+    };
+    this.HandleDoFileLoad = function (Event) {
+      var $Self = this;
+      var Result = false;
+      function InsertImage(DataURL) {
+        $Self.GetRichEdit().InsertImage(DataURL);
+      };
+      if (1 < 0) InsertImage("");
+      var file = this.FFilePicker.files[0];
+          var reader  = new FileReader();
+      
+          reader.addEventListener("load", function () {
+              InsertImage(reader.result);
+          }, false);
+      
+          if (file)
+              reader.readAsDataURL(file);
+      Result = true;
+      return Result;
+    };
+    this.Notification = function (AComponent, Operation) {
+      pas.Classes.TComponent.Notification.apply(this,arguments);
+      if ((Operation === pas.Classes.TOperation.opRemove) && (AComponent === this.FRichEdit)) {
+        this.FRichEdit = null;
+      };
+    };
+    this.CreateButton = function (btn, BtnID, Glyph, Hint) {
+      btn.set($mod.TSpeedButton.$create("Create$2",[BtnID]));
+      btn.get().SetName(BtnID);
+      btn.get().SetParent(this);
+      btn.get().SetMaterialGlyph(Glyph);
+      btn.get().SetTop(0);
+      btn.get().SetWidth(32);
+      btn.get().SetHeight(24);
+      btn.get().SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      btn.get().SetFlat(true);
+      btn.get().SetHint(Hint);
+      btn.get().SetShowHint(Hint !== "");
+      btn.get().SetEnabled(true);
+      btn.get().FOnClick = rtl.createCallback(this,"HandleSpeedButtonClick");
+    };
+    this.HandleSpeedButtonClick = function (Sender) {
+      var BID = "";
+      if (this.GetRichEdit() != null) {
+        BID = Sender.GetID();
+        if (BID === (this.FBtnID + "_bold")) {
+          if (pas["WEBLib.Graphics"].TFontStyle.fsBold in this.GetRichEdit().FSelAttributes.FStyle) {
+            this.GetRichEdit().FSelAttributes.SetStyle(rtl.diffSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsBold)))}
+           else this.GetRichEdit().FSelAttributes.SetStyle(rtl.unionSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsBold)));
+        } else if (BID === (this.FBtnID + "_italic")) {
+          if (pas["WEBLib.Graphics"].TFontStyle.fsItalic in this.GetRichEdit().FSelAttributes.FStyle) {
+            this.GetRichEdit().FSelAttributes.SetStyle(rtl.diffSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsItalic)))}
+           else this.GetRichEdit().FSelAttributes.SetStyle(rtl.unionSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsItalic)));
+        } else if (BID === (this.FBtnID + "_underline")) {
+          if (pas["WEBLib.Graphics"].TFontStyle.fsUnderline in this.GetRichEdit().FSelAttributes.FStyle) {
+            this.GetRichEdit().FSelAttributes.SetStyle(rtl.diffSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsUnderline)))}
+           else this.GetRichEdit().FSelAttributes.SetStyle(rtl.unionSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsUnderline)));
+        } else if (BID === (this.FBtnID + "_strikethrough")) {
+          if (pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut in this.GetRichEdit().FSelAttributes.FStyle) {
+            this.GetRichEdit().FSelAttributes.SetStyle(rtl.diffSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut)))}
+           else this.GetRichEdit().FSelAttributes.SetStyle(rtl.unionSet(this.GetRichEdit().FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut)));
+        } else if (BID === (this.FBtnID + "_alignleft")) {
+          this.GetRichEdit().FSelAttributes.SetAlignment(pas.Classes.TAlignment.taLeftJustify)}
+         else if (BID === (this.FBtnID + "_aligncenter")) {
+          this.GetRichEdit().FSelAttributes.SetAlignment(pas.Classes.TAlignment.taCenter)}
+         else if (BID === (this.FBtnID + "_alignright")) {
+          this.GetRichEdit().FSelAttributes.SetAlignment(pas.Classes.TAlignment.taRightJustify)}
+         else if (BID === (this.FBtnID + "_olist")) {
+          this.GetRichEdit().FSelAttributes.SetOrderedList(!this.GetRichEdit().FSelAttributes.FOrderedList)}
+         else if (BID === (this.FBtnID + "_ulist")) {
+          this.GetRichEdit().FSelAttributes.SetUnOrderedList(!this.GetRichEdit().FSelAttributes.FUnOrderedList)}
+         else if (BID === (this.FBtnID + "_url")) {
+          this.GetRichEdit().FSelAttributes.Link()}
+         else if (BID === (this.FBtnID + "_image")) this.FFilePicker.click();
+      };
+      if (this.FOnSpeedButtonClick != null) this.FOnSpeedButtonClick(Sender);
+    };
+    this.FgSelect = function (Sender) {
+      if (this.GetRichEdit() != null) this.GetRichEdit().FSelAttributes.SetColor(this.FFgClr.GetColor());
+    };
+    this.BkSelect = function (Sender) {
+      if (this.GetRichEdit() != null) this.GetRichEdit().FSelAttributes.SetBackColor(this.FBkClr.GetColor());
+    };
+    this.FntChange = function (Sender) {
+      if (this.GetRichEdit() != null) this.GetRichEdit().FSelAttributes.SetName(this.FFnt.FItems.Get(this.FFnt.GetItemIndex()));
+    };
+    this.FntSizeChange = function (Sender) {
+      if (this.GetRichEdit() != null) this.GetRichEdit().FSelAttributes.SetHeight(this.FFntSize.GetItemIndex() + 1);
+    };
+    this.LineSpacingChange = function (Sender) {
+      var spacing = 0.0;
+      var $tmp = this.FLineSpacing.GetItemIndex();
+      if ($tmp === 0) {
+        spacing = 1}
+       else if ($tmp === 1) {
+        spacing = 1.5}
+       else if ($tmp === 2) spacing = 2;
+      this.FRichEdit.SetSelectionSpacing(spacing);
+    };
+    this.UpdateButtons = function () {
+      if (this.IsUpdating()) return;
+      this.FBold.SetVisible($mod.TRichEditBtn.reBold in this.FVisibleButtons);
+      this.FItalic.SetVisible($mod.TRichEditBtn.reItalic in this.FVisibleButtons);
+      this.FUnderline.SetVisible($mod.TRichEditBtn.reUnderline in this.FVisibleButtons);
+      this.FStrikeThrough.SetVisible($mod.TRichEditBtn.reStrikeThrough in this.FVisibleButtons);
+      this.FAlignLeft.SetVisible($mod.TRichEditBtn.reAlignLeft in this.FVisibleButtons);
+      this.FAlignCenter.SetVisible($mod.TRichEditBtn.reAlignCenter in this.FVisibleButtons);
+      this.FAlignRight.SetVisible($mod.TRichEditBtn.reAlignRight in this.FVisibleButtons);
+      this.FUList.SetVisible($mod.TRichEditBtn.reUnorderedList in this.FVisibleButtons);
+      this.FOList.SetVisible($mod.TRichEditBtn.reOrderedList in this.FVisibleButtons);
+      this.FFnt.SetVisible($mod.TRichEditBtn.reFont in this.FVisibleButtons);
+      this.FFntSize.SetVisible($mod.TRichEditBtn.reFontSize in this.FVisibleButtons);
+      this.FFgClr.SetVisible($mod.TRichEditBtn.reForegroundColor in this.FVisibleButtons);
+      this.FBkClr.SetVisible($mod.TRichEditBtn.reBackgroundColor in this.FVisibleButtons);
+      this.FURL.SetVisible($mod.TRichEditBtn.reHyperlink in this.FVisibleButtons);
+      this.FImage.SetVisible($mod.TRichEditBtn.reImageInsert in this.FVisibleButtons);
+      this.FLineSpacing.SetVisible($mod.TRichEditBtn.reLineSpacing in this.FVisibleButtons);
+      if (this.FElementPosition === pas["WEBLib.Controls"].TElementPosition.epRelative) {
+        if (this.GetElementHandle() != null) this.GetElementHandle().style.setProperty("display","flex");
+      };
+      this.FFnt.SetElementPosition(this.FElementPosition);
+      this.FFntSize.SetElementPosition(this.FElementPosition);
+      this.FBold.SetElementPosition(this.FElementPosition);
+      this.FItalic.SetElementPosition(this.FElementPosition);
+      this.FUnderline.SetElementPosition(this.FElementPosition);
+      this.FStrikeThrough.SetElementPosition(this.FElementPosition);
+      this.FFgClr.SetElementPosition(this.FElementPosition);
+      this.FBkClr.SetElementPosition(this.FElementPosition);
+      this.FAlignLeft.SetElementPosition(this.FElementPosition);
+      this.FAlignCenter.SetElementPosition(this.FElementPosition);
+      this.FAlignRight.SetElementPosition(this.FElementPosition);
+      this.FUList.SetElementPosition(this.FElementPosition);
+      this.FOList.SetElementPosition(this.FElementPosition);
+      this.FURL.SetElementPosition(this.FElementPosition);
+      this.FImage.SetElementPosition(this.FElementPosition);
+      this.FLineSpacing.SetElementPosition(this.FElementPosition);
+      while (this.FHints.GetCount() < 14) this.FHints.Add("");
+      this.FBold.SetHint(this.FHints.Get(0));
+      this.FItalic.SetHint(this.FHints.Get(1));
+      this.FUnderline.SetHint(this.FHints.Get(2));
+      this.FStrikeThrough.SetHint(this.FHints.Get(3));
+      this.FFgClr.SetHint(this.FHints.Get(4));
+      this.FBkClr.SetHint(this.FHints.Get(5));
+      this.FAlignLeft.SetHint(this.FHints.Get(6));
+      this.FAlignCenter.SetHint(this.FHints.Get(7));
+      this.FAlignRight.SetHint(this.FHints.Get(8));
+      this.FUList.SetHint(this.FHints.Get(9));
+      this.FOList.SetHint(this.FHints.Get(10));
+      this.FURL.SetHint(this.FHints.Get(11));
+      this.FImage.SetHint(this.FHints.Get(12));
+      this.FLineSpacing.SetHint(this.FHints.Get(13));
+    };
+    this.UpdateElement = function () {
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+      if (this.GetElementHandle() != null) {
+        this.GetElementHandle().style.setProperty("height","32px");
+      };
+    };
+    this.Loaded = function () {
+      pas["WEBLib.Controls"].TCustomControl.Loaded.call(this);
+      this.UpdateButtons();
+      this.InitButtons();
+    };
+    this.HandleAttributeChanged = function (Sender, Attributes) {
+      this.FFnt.SetItemIndex(Math.max(0,this.FFnt.FItems.IndexOf(Attributes.FontName)));
+      this.FFntSize.SetItemIndex(Math.max(0,this.FFntSize.FItems.IndexOf(Attributes.FontSize)));
+      this.FBold.SetDown(Attributes.IsBold);
+      this.FItalic.SetDown(Attributes.IsItalic);
+      this.FUnderline.SetDown(Attributes.IsUnderline);
+      this.FStrikeThrough.SetDown(Attributes.IsStrikeOut);
+      this.FAlignLeft.SetDown(Attributes.IsLeft);
+      this.FAlignRight.SetDown(Attributes.IsRight);
+      this.FAlignCenter.SetDown(Attributes.IsCenter);
+      if (Attributes.FontColor !== "") {
+        this.FFgClr.SetColor$1(pas["WEBLib.Graphics"].HexToColor(Attributes.FontColor));
+      };
+      if (Attributes.BkColor !== "") {
+        this.FBkClr.SetColor$1(pas["WEBLib.Graphics"].RGBToColor(Attributes.BkColor));
+      };
+    };
+    this.GetChildren = function (Proc, Root) {
+    };
+    this.InitButtons = function () {
+      var $Self = this;
+      var Result = false;
+      function HandleTimeOut() {
+        var i = 0;
+        for (var $l = 0, $end = $Self.GetControlsCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          $Self.GetControls(i).UpdateElement();
+        };
+      };
+      Result = true;
+      if (!this.GetIsLinked()) return Result;
+      if (1 < 0) HandleTimeOut();
+      setTimeout(function() {HandleTimeOut();}, 10);
+      return Result;
+    };
+    this.SetParent = function (AValue) {
+      pas["WEBLib.Controls"].TControl.SetParent.apply(this,arguments);
+      if (!(pas.Classes.TComponentStateItem.csLoading in this.FComponentState)) this.InitButtons();
+    };
+    this.CreateInitialize = function () {
+      $mod.TCustomToolBar.CreateInitialize.call(this);
+      this.FPtrFileLoad = rtl.createCallback(this,"HandleDoFileLoad");
+      this.FControlStyle = rtl.diffSet(this.FControlStyle,rtl.createSet(pas["WEBLib.Controls"].TControlStyleValue.csAcceptsControls));
+      this.FTextColor = 0;
+      this.FBackgroundColor = 16777215;
+      this.FBtnID = pas["WEBLib.Controls"].FindUniqueName("RETBBtn");
+      this.FFnt = pas["WEBLib.StdCtrls"].TFontPicker.$create("Create$1",[this]);
+      this.FFnt.SetName(this.FBtnID + "_fontname");
+      this.FFnt.SetParent(this);
+      this.FFnt.SetWidth(150);
+      this.FFnt.SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      this.FFnt.SetItemIndex(0);
+      this.FFnt.FOnChange = rtl.createCallback(this,"FntChange");
+      this.FFntSize = pas["WEBLib.StdCtrls"].TFontSizePicker.$create("Create$1",[this]);
+      this.FFntSize.SetName(this.FBtnID + "_fontsize");
+      this.FFntSize.SetParent(this);
+      this.FFntSize.SetWidth(50);
+      this.FFntSize.SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      this.FFntSize.SetPickerMode(pas["WEBLib.StdCtrls"].TFontSizePickerMode.fmRelativeSize);
+      this.FFntSize.SetItemIndex(0);
+      this.FFntSize.FOnChange = rtl.createCallback(this,"FntSizeChange");
+      this.FHints = pas.Classes.TStringList.$create("Create$1");
+      this.FHints.Add("Bold");
+      this.FHints.Add("Italic");
+      this.FHints.Add("Underline");
+      this.FHints.Add("Strike Throught");
+      this.FHints.Add("Text Color");
+      this.FHints.Add("Background Color");
+      this.FHints.Add("Align left");
+      this.FHints.Add("Align center");
+      this.FHints.Add("Align right");
+      this.FHints.Add("Numbered list");
+      this.FHints.Add("List");
+      this.FHints.Add("Hyperlink");
+      this.FHints.Add("Insert image");
+      this.FHints.Add("Line spacing");
+      this.CreateButton({p: this, get: function () {
+          return this.p.FBold;
+        }, set: function (v) {
+          this.p.FBold = v;
+        }},this.FBtnID + "_bold","&#xE238;",this.FHints.Get(0));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FItalic;
+        }, set: function (v) {
+          this.p.FItalic = v;
+        }},this.FBtnID + "_italic","&#xE23F;",this.FHints.Get(1));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FUnderline;
+        }, set: function (v) {
+          this.p.FUnderline = v;
+        }},this.FBtnID + "_underline","&#xE249;",this.FHints.Get(2));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FStrikeThrough;
+        }, set: function (v) {
+          this.p.FStrikeThrough = v;
+        }},this.FBtnID + "_strikethrough","&#xE257;",this.FHints.Get(3));
+      this.FFgClr = pas["WEBLib.StdCtrls"].TWebColorPicker.$create("Create$1",[this]);
+      this.FFgClr.SetName(this.FBtnID + "_fgclr");
+      this.FFgClr.SetParent(this);
+      this.FFgClr.SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      this.FFgClr.SetHint(this.FHints.Get(4));
+      this.FFgClr.SetWidth(32);
+      this.FFgClr.SetHeight(24);
+      this.FFgClr.SetColor$1(0);
+      this.FFgClr.FOnSelect = rtl.createCallback(this,"FgSelect");
+      this.FFgClr.SetShowHint(true);
+      this.FBkClr = pas["WEBLib.StdCtrls"].TWebColorPicker.$create("Create$1",[this]);
+      this.FBkClr.SetName(this.FBtnID + "_bkclr");
+      this.FBkClr.SetParent(this);
+      this.FBkClr.SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      this.FBkClr.SetHint(this.FHints.Get(5));
+      this.FBkClr.SetWidth(32);
+      this.FBkClr.SetHeight(24);
+      this.FBkClr.SetColor$1(16777215);
+      this.FBkClr.FOnSelect = rtl.createCallback(this,"BkSelect");
+      this.FBkClr.SetShowHint(true);
+      this.CreateButton({p: this, get: function () {
+          return this.p.FAlignLeft;
+        }, set: function (v) {
+          this.p.FAlignLeft = v;
+        }},this.FBtnID + "_alignleft","&#xE236;",this.FHints.Get(6));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FAlignCenter;
+        }, set: function (v) {
+          this.p.FAlignCenter = v;
+        }},this.FBtnID + "_aligncenter","&#xE234;",this.FHints.Get(7));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FAlignRight;
+        }, set: function (v) {
+          this.p.FAlignRight = v;
+        }},this.FBtnID + "_alignright","&#xE237;",this.FHints.Get(8));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FOList;
+        }, set: function (v) {
+          this.p.FOList = v;
+        }},this.FBtnID + "_olist","&#xE242;",this.FHints.Get(9));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FUList;
+        }, set: function (v) {
+          this.p.FUList = v;
+        }},this.FBtnID + "_ulist","&#xE241;",this.FHints.Get(10));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FURL;
+        }, set: function (v) {
+          this.p.FURL = v;
+        }},this.FBtnID + "_url","&#xE250;",this.FHints.Get(11));
+      this.CreateButton({p: this, get: function () {
+          return this.p.FImage;
+        }, set: function (v) {
+          this.p.FImage = v;
+        }},this.FBtnID + "_image","&#xE3f4;",this.FHints.Get(12));
+      this.FVisibleButtons = rtl.createSet($mod.TRichEditBtn.reFont,$mod.TRichEditBtn.reFontSize,$mod.TRichEditBtn.reBold,$mod.TRichEditBtn.reItalic,$mod.TRichEditBtn.reUnderline,$mod.TRichEditBtn.reStrikeThrough,$mod.TRichEditBtn.reAlignLeft,$mod.TRichEditBtn.reAlignCenter,$mod.TRichEditBtn.reAlignRight,$mod.TRichEditBtn.reUnorderedList,$mod.TRichEditBtn.reOrderedList,$mod.TRichEditBtn.reForegroundColor,$mod.TRichEditBtn.reBackgroundColor,$mod.TRichEditBtn.reHyperlink,$mod.TRichEditBtn.reImageInsert,$mod.TRichEditBtn.reLineSpacing);
+      this.SetWidth(540);
+      this.SetHeight(32);
+      this.SetRichEdit(null);
+      this.FFilePicker = document.createElement("INPUT");
+      this.FFilePicker.setAttribute("type","file");
+      this.FFilePicker.style.setProperty("visibility","hidden");
+      this.FFilePicker.addEventListener("change",this.FPtrFileLoad);
+      this.GetElementHandle().appendChild(this.FFilePicker);
+      this.FLineSpacing = pas["WEBLib.StdCtrls"].TLineSpacingPicker.$create("Create$1",[this]);
+      this.FLineSpacing.SetName(this.FBtnID + "_linespacing");
+      this.FLineSpacing.SetParent(this);
+      this.FLineSpacing.SetWidth(40);
+      this.FLineSpacing.SetAlign(pas["WEBLib.Controls"].TAlign.alLeft);
+      this.FLineSpacing.SetItemIndex(0);
+      this.FLineSpacing.SetShowHint(true);
+      this.FLineSpacing.SetHint(this.FHints.Get(13));
+      this.FLineSpacing.FOnChange = rtl.createCallback(this,"LineSpacingChange");
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FHints");
+      if (this.FRichEdit != null) this.FRichEdit.FOnAttributesChanged = null;
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("BackgroundColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FBackgroundColor","SetBackgroundColor",{Default: 16777215});
+    $r.addProperty("Hints",2,pas.Classes.$rtti["TStrings"],"FHints","SetHints");
+    $r.addProperty("RichEdit",3,pas["WEBLib.ComCtrls"].$rtti["TRichEdit"],"GetRichEdit","SetRichEdit");
+    $r.addProperty("TextColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FTextColor","SetTextColor",{Default: 0});
+    $r.addProperty("VisibleButtons",2,$mod.$rtti["TRichEditButtonSet"],"FVisibleButtons","SetVisibleButtons");
+    $r.addProperty("OnSpeedButtonClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnSpeedButtonClick","FOnSpeedButtonClick");
+  });
+  rtl.createClass(this,"TWebRichEditToolBar",this.TRichEditToolBar,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  this.TToggleButtonStyle = {"0": "tsRectangular", tsRectangular: 0, "1": "tsRounded", tsRounded: 1};
+  this.$rtti.$Enum("TToggleButtonStyle",{minvalue: 0, maxvalue: 1, ordtype: 1, enumtype: this.TToggleButtonStyle});
+  rtl.createClass(this,"TToggleButton",pas["WEBLib.Controls"].TCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Controls"].TCustomControl.$init.call(this);
+      this.FChecked = false;
+      this.FLabel = null;
+      this.FInput = null;
+      this.FSlider = null;
+      this.FStyle = 0;
+    };
+    this.$final = function () {
+      this.FLabel = undefined;
+      this.FInput = undefined;
+      this.FSlider = undefined;
+      pas["WEBLib.Controls"].TCustomControl.$final.call(this);
+    };
+    this.SetStyle = function (Value) {
+      if (this.FStyle !== Value) {
+        this.FStyle = Value;
+        this.UpdateElement();
+      };
+    };
+    this.GetChecked = function () {
+      var Result = false;
+      if (this.GetContainer() != null) this.FChecked = this.FInput.checked;
+      Result = this.FChecked;
+      return Result;
+    };
+    this.SetChecked = function (Value) {
+      this.FChecked = Value;
+      this.UpdateElement();
+    };
+    this.HandleDoClick = function (Event) {
+      var Result = false;
+      this.FElementEvent = Event;
+      this.StopPropagation();
+      if (Event.target === this.FInput) {
+        if (this.FOnClick != null) this.FOnClick(this);
+      };
+      Result = true;
+      this.FElementEvent = null;
+      return Result;
+    };
+    this.UpdateElement = function () {
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+      if (!this.IsUpdating() && (this.FLabel != null)) {
+        this.UpdateCSS();
+        this.InjectCSS();
+        this.FLabel.setAttribute("class",this.FName + "_switch");
+        this.FInput.checked = this.FChecked;
+        if (this.FStyle === $mod.TToggleButtonStyle.tsRectangular) {
+          this.FSlider.setAttribute("class",this.FName + "_slider")}
+         else this.FSlider.setAttribute("class",this.FName + "_slider round");
+      };
+    };
+    this.UpdateCSS = function () {
+      var css = "";
+      var wpx = "";
+      var hpx = "";
+      var hwpx = "";
+      var wspx = "";
+      var hspx = "";
+      wpx = pas.SysUtils.TIntegerHelper.ToString$1.call({p: this.GetWidth(), get: function () {
+          return this.p;
+        }, set: function (v) {
+          this.p = v;
+        }}) + "px";
+      hpx = pas.SysUtils.TIntegerHelper.ToString$1.call({p: this.GetHeight(), get: function () {
+          return this.p;
+        }, set: function (v) {
+          this.p = v;
+        }}) + "px";
+      hwpx = pas.SysUtils.TIntegerHelper.ToString$1.call({a: rtl.trunc(this.GetWidth() / 2), get: function () {
+          return this.a;
+        }, set: function (v) {
+          this.a = v;
+        }}) + "px";
+      wspx = pas.SysUtils.TIntegerHelper.ToString$1.call({a: rtl.trunc(this.GetWidth() / 2) - 8, get: function () {
+          return this.a;
+        }, set: function (v) {
+          rtl.raiseE("EPropReadOnly");
+        }}) + "px";
+      hspx = pas.SysUtils.TIntegerHelper.ToString$1.call({a: this.GetHeight() - 8, get: function () {
+          return this.a;
+        }, set: function (v) {
+          rtl.raiseE("EPropReadOnly");
+        }}) + "px";
+      css = "." + this.FName + "_switch {" + "position: relative;" + "display: inline-block;" + "width: " + wpx + ";" + "height: " + hpx + ";" + "}" + ".switch input {display:none;}" + "." + this.FName + "_slider {" + "position: absolute;" + "cursor: pointer;" + "top: 0;" + "left: 0;" + "right: 0;" + "bottom: 0;" + "background-color: #ccc;" + "-webkit-transition: .4s;" + "transition: .4s;" + "}" + "." + this.FName + "_slider:before {" + "position: absolute;" + 'content: "";' + "height: " + hspx + ";" + "width: " + wspx + ";" + "left: 4px;" + "bottom: 4px;" + "background-color: white;" + "-webkit-transition: .4s;" + "transition: .4s;" + "}" + "input:checked + ." + this.FName + "_slider {" + "background-color: #2196F3;" + "}" + "input:focus + ." + this.FName + "_slider {" + "box-shadow: 0 0 1px #2196F3;" + "}" + "input:checked + ." + this.FName + "_slider:before {" + "-webkit-transform: translateX(" + hwpx + ");" + "-ms-transform: translateX(" + hwpx + ");" + "transform: translateX(" + hwpx + ");" + "}" + "/* Rounded sliders */" + "." + this.FName + "_slider.round {" + "border-radius: " + wspx + ";" + "}" + "." + this.FName + "_slider.round:before {" + "border-radius: 50%;" + "}";
+      this.AddInstanceStyle(css);
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      Result = document.createElement("span");
+      this.FLabel = document.createElement("label");
+      this.FInput = document.createElement("input");
+      this.FSlider = document.createElement("span");
+      this.FInput.setAttribute("type","checkbox");
+      this.FInput.style.setProperty("display","none");
+      Result.appendChild(this.FLabel);
+      this.FLabel.appendChild(this.FInput);
+      this.FLabel.appendChild(this.FSlider);
+      return Result;
+    };
+    this.Loaded = function () {
+      pas["WEBLib.Controls"].TCustomControl.Loaded.call(this);
+    };
+    this.Resize = function () {
+      pas["WEBLib.Controls"].TCustomControl.Resize.call(this);
+      this.UpdateCSS();
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.SetWidth(48);
+      this.SetHeight(24);
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("Checked",3,rtl.boolean,"GetChecked","SetChecked");
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Style",2,$mod.$rtti["TToggleButtonStyle"],"FStyle","SetStyle",{Default: $mod.TToggleButtonStyle.tsRectangular});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebToggleButton",this.TToggleButton,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  $mod.$implcode = function () {
+    rtl.createClass($impl,"TRichEditorCracker",pas["WEBLib.ComCtrls"].TRichEdit,function () {
+      rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+      rtl.addIntf(this,pas.System.IUnknown);
+    });
+  };
+},["WEBLib.WebTools","Math"]);
+rtl.module("WEBLib.ComCtrls",["System","Classes","SysUtils","Web","WEBLib.Controls","WEBLib.Graphics","WEBLib.ExtCtrls","WEBLib.TreeNodes","WEBLib.Menus"],function () {
+  "use strict";
+  var $mod = this;
+  var $impl = $mod.$impl;
+  this.$rtti.$Class("TCustomRichEdit");
+  rtl.createClass(this,"TTextAttributes",pas.Classes.TPersistent,function () {
+    this.$init = function () {
+      pas.Classes.TPersistent.$init.call(this);
+      this.RichEdit = null;
+      this.FAlignment = 0;
+      this.FIsBold = false;
+      this.FIsItalic = false;
+      this.FIsUnderline = false;
+      this.FIsStrikeOut = false;
+      this.FBackColor = 0;
+      this.FColor = 0;
+      this.FHeight = 0;
+      this.FName = "";
+      this.FOrderedList = false;
+      this.FSize = 0;
+      this.FStyle = {};
+      this.FUnOrderedList = false;
+    };
+    this.$final = function () {
+      this.RichEdit = undefined;
+      this.FStyle = undefined;
+      pas.Classes.TPersistent.$final.call(this);
+    };
+    this.SetAlignment = function (Value) {
+      this.FAlignment = Value;
+      var $tmp = this.FAlignment;
+      if ($tmp === pas.Classes.TAlignment.taLeftJustify) {
+        this.RichEdit.DoEditAction("justifyleft")}
+       else if ($tmp === pas.Classes.TAlignment.taCenter) {
+        this.RichEdit.DoEditAction("justifycenter")}
+       else if ($tmp === pas.Classes.TAlignment.taRightJustify) this.RichEdit.DoEditAction("justifyright");
+    };
+    this.SetBackColor = function (Value) {
+      this.FColor = Value;
+      this.RichEdit.DoEditAction$1("hiliteColor",pas["WEBLib.Graphics"].ColorToHTML(Value));
+    };
+    this.SetColor = function (Value) {
+      this.FColor = Value;
+      this.RichEdit.DoEditAction$1("foreColor",pas["WEBLib.Graphics"].ColorToHTML(Value));
+    };
+    this.SetHeight = function (Value) {
+      var eh = null;
+      var fs = "";
+      if ((Value > 0) && (Value < 8)) {
+        this.FSize = Value;
+        this.FHeight = Value;
+        fs = pas.SysUtils.IntToStr(Value);
+        this.RichEdit.DoEditAction$1("fontSize",fs);
+        fs = this.FontSizeToEM(Value);
+        eh = this.RichEdit.GetElementHandle();
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          var range = selection.getRangeAt(0);
+          const selectedElements = eh.querySelectorAll('*');
+          selectedElements.forEach(element => {
+            if (range.intersectsNode(element)) {
+              if (element.tagName == "LI") {
+                element.style.setProperty("font-size",fs);
+              }
+            }
+          });
+        };
+      };
+    };
+    this.SetName = function (Value) {
+      this.FName = Value;
+      this.RichEdit.DoEditAction$1("fontName",Value);
+    };
+    this.SetOrderedList = function (Value) {
+      if (this.FOrderedList !== Value) this.RichEdit.DoEditAction("insertorderedlist");
+      this.FOrderedList = Value;
+    };
+    this.SetSize = function (Value) {
+      if ((Value > 0) && (Value < 8)) {
+        this.FSize = Value;
+        this.FHeight = Value;
+        this.RichEdit.DoEditAction$1("fontSize",pas.SysUtils.IntToStr(Value));
+        var selection = window.getSelection();
+      };
+    };
+    this.SetStyle = function (Value) {
+      this.FStyle = rtl.refSet(Value);
+      if ((pas["WEBLib.Graphics"].TFontStyle.fsBold in this.FStyle) && !this.FIsBold) {
+        this.RichEdit.DoEditAction("bold");
+        this.FIsBold = true;
+      };
+      if (!(pas["WEBLib.Graphics"].TFontStyle.fsBold in this.FStyle) && this.FIsBold) {
+        this.RichEdit.DoEditAction("bold");
+        this.FIsBold = false;
+      };
+      if ((pas["WEBLib.Graphics"].TFontStyle.fsItalic in this.FStyle) && !this.FIsItalic) {
+        this.RichEdit.DoEditAction("italic");
+        this.FIsItalic = true;
+      };
+      if (!(pas["WEBLib.Graphics"].TFontStyle.fsItalic in this.FStyle) && this.FIsItalic) {
+        this.RichEdit.DoEditAction("italic");
+        this.FIsItalic = false;
+      };
+      if ((pas["WEBLib.Graphics"].TFontStyle.fsUnderline in this.FStyle) && !this.FIsUnderline) {
+        this.RichEdit.DoEditAction("underline");
+        this.FIsUnderline = true;
+      };
+      if (!(pas["WEBLib.Graphics"].TFontStyle.fsUnderline in this.FStyle) && this.FIsUnderline) {
+        this.RichEdit.DoEditAction("underline");
+        this.FIsUnderline = false;
+      };
+      if ((pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut in this.FStyle) && !this.FIsStrikeOut) {
+        this.RichEdit.DoEditAction("strikethrough");
+        this.FIsStrikeOut = true;
+      };
+      if (!(pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut in this.FStyle) && this.FIsStrikeOut) {
+        this.RichEdit.DoEditAction("strikethrough");
+        this.FIsStrikeOut = false;
+      };
+    };
+    this.SetUnOrderedList = function (Value) {
+      if (this.FUnOrderedList !== Value) this.RichEdit.DoEditAction("insertunorderedlist");
+      this.FUnOrderedList = Value;
+    };
+    this.AssignTo = function (Dest) {
+      if (pas["WEBLib.Graphics"].TFont.isPrototypeOf(Dest)) {
+        Dest.SetColor(this.FColor);
+        Dest.SetName(this.FName);
+        Dest.SetStyle(rtl.refSet(this.FStyle));
+        Dest.SetSize(this.FSize);
+      } else if ($mod.TTextAttributes.isPrototypeOf(Dest)) {
+        Dest.SetColor(this.FColor);
+        Dest.SetName(this.FName);
+        Dest.SetStyle(rtl.refSet(this.FStyle));
+      } else pas.Classes.TPersistent.AssignTo.call(this,Dest);
+    };
+    this.FontSizeToEM = function (Value) {
+      var Result = "";
+      Result = "0.63";
+      var $tmp = Value;
+      if ($tmp === 1) {
+        Result = "0.63em"}
+       else if ($tmp === 2) {
+        Result = "0.82em"}
+       else if ($tmp === 3) {
+        Result = "1.0em"}
+       else if ($tmp === 4) {
+        Result = "1.13em"}
+       else if ($tmp === 5) {
+        Result = "1.5em"}
+       else if ($tmp === 6) {
+        Result = "2em"}
+       else if ($tmp === 7) Result = "3em";
+      return Result;
+    };
+    this.Create$1 = function (AOwner) {
+      pas.System.TObject.Create.call(this);
+      this.RichEdit = AOwner;
+      this.FAlignment = pas.Classes.TAlignment.taLeftJustify;
+      this.FIsBold = false;
+      this.FIsItalic = false;
+      this.FIsUnderline = false;
+      this.FIsStrikeOut = false;
+      this.FOrderedList = false;
+      this.FUnOrderedList = false;
+      return this;
+    };
+    this.Assign = function (Source) {
+      if (pas["WEBLib.Graphics"].TFont.isPrototypeOf(Source)) {
+        this.SetColor(Source.FColor);
+        this.SetName(Source.FName);
+        this.SetStyle(rtl.refSet(Source.FStyle));
+        this.SetSize(Source.FSize);
+      } else if ($mod.TTextAttributes.isPrototypeOf(Source)) {
+        this.SetColor(Source.FColor);
+        this.SetName(Source.FName);
+        this.SetStyle(rtl.refSet(Source.FStyle));
+        this.SetSize(Source.FSize);
+      } else pas.Classes.TPersistent.Assign.call(this,Source);
+    };
+    this.Cut = function () {
+      this.RichEdit.DoEditAction("cut");
+    };
+    this.Copy = function () {
+      this.RichEdit.DoEditAction("copy");
+    };
+    this.Paste = function () {
+      this.RichEdit.DoEditAction("paste");
+    };
+    this.Image = function () {
+      this.RichEdit.DoImageAction();
+    };
+    this.Link = function () {
+      this.RichEdit.DoLinkAction();
+    };
+    var $r = this.$rtti;
+    $r.addMethod("Create$1",2,[["AOwner",$mod.$rtti["TCustomRichEdit"]]]);
+  });
+  rtl.recNewT(this,"TSelAttributes",function () {
+    this.FontName = "";
+    this.FontSize = "";
+    this.FontColor = "";
+    this.BkColor = "";
+    this.IsBold = false;
+    this.IsItalic = false;
+    this.IsStrikeOut = false;
+    this.IsUnderline = false;
+    this.IsLeft = false;
+    this.IsRight = false;
+    this.IsCenter = false;
+    this.$eq = function (b) {
+      return (this.FontName === b.FontName) && (this.FontSize === b.FontSize) && (this.FontColor === b.FontColor) && (this.BkColor === b.BkColor) && (this.IsBold === b.IsBold) && (this.IsItalic === b.IsItalic) && (this.IsStrikeOut === b.IsStrikeOut) && (this.IsUnderline === b.IsUnderline) && (this.IsLeft === b.IsLeft) && (this.IsRight === b.IsRight) && (this.IsCenter === b.IsCenter);
+    };
+    this.$assign = function (s) {
+      this.FontName = s.FontName;
+      this.FontSize = s.FontSize;
+      this.FontColor = s.FontColor;
+      this.BkColor = s.BkColor;
+      this.IsBold = s.IsBold;
+      this.IsItalic = s.IsItalic;
+      this.IsStrikeOut = s.IsStrikeOut;
+      this.IsUnderline = s.IsUnderline;
+      this.IsLeft = s.IsLeft;
+      this.IsRight = s.IsRight;
+      this.IsCenter = s.IsCenter;
+      return this;
+    };
+    var $r = $mod.$rtti.$Record("TSelAttributes",{});
+    $r.addField("FontName",rtl.string);
+    $r.addField("FontSize",rtl.string);
+    $r.addField("FontColor",rtl.string);
+    $r.addField("BkColor",rtl.string);
+    $r.addField("IsBold",rtl.boolean);
+    $r.addField("IsItalic",rtl.boolean);
+    $r.addField("IsStrikeOut",rtl.boolean);
+    $r.addField("IsUnderline",rtl.boolean);
+    $r.addField("IsLeft",rtl.boolean);
+    $r.addField("IsRight",rtl.boolean);
+    $r.addField("IsCenter",rtl.boolean);
+  });
+  this.$rtti.$MethodVar("TAttributesChangeEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["Attributes",this.$rtti["TSelAttributes"]]]), methodkind: 0});
+  rtl.createClass(this,"TCustomRichEdit",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FOwner$1 = null;
+      this.FLines = null;
+      this.FSelAttributes = null;
+      this.FAutoSize = false;
+      this.FOnSelectionChange = null;
+      this.FShowFocus$1 = false;
+      this.FInsertLineBreaks = false;
+      this.FWantTabs = false;
+      this.FReadOnly = false;
+      this.FOnChange = null;
+      this.FOnAttributesChanged = null;
+      this.FWantImages = false;
+    };
+    this.$final = function () {
+      this.FOwner$1 = undefined;
+      this.FLines = undefined;
+      this.FSelAttributes = undefined;
+      this.FOnSelectionChange = undefined;
+      this.FOnChange = undefined;
+      this.FOnAttributesChanged = undefined;
+      pas["WEBLib.Menus"].TWebCustomControl.$final.call(this);
+    };
+    this.GetText = function () {
+      var Result = "";
+      if (this.GetElementHandle() != null) this.FLines.SetTextStr(this.GetElementHandle().innerHTML);
+      Result = this.FLines.GetTextStr();
+      return Result;
+    };
+    this.GetPlainText = function () {
+      var Result = "";
+      Result = "";
+      if (this.GetElementHandle() != null) Result = this.GetElementHandle().innerText;
+      return Result;
+    };
+    this.SetText = function (Value) {
+      this.FLines.SetTextStr(Value);
+      this.UpdateElement();
+    };
+    this.SetSelAttributes = function (Value) {
+      this.FSelAttributes.Assign(Value);
+    };
+    this.SetAutoSize = function (Value) {
+      if (this.FAutoSize !== Value) {
+        this.FAutoSize = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetShowFocus$1 = function (Value) {
+      if (this.FShowFocus$1 !== Value) {
+        this.FShowFocus$1 = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetReadOnly = function (Value) {
+      if (this.FReadOnly !== Value) {
+        this.FReadOnly = Value;
+        if (this.GetElementHandle() != null) {
+          if (this.FReadOnly) {
+            this.GetElementHandle().contentEditable = "false"}
+           else this.GetElementHandle().contentEditable = "true";
+        };
+      };
+    };
+    this.GetLines = function () {
+      var Result = null;
+      Result = this.FLines;
+      return Result;
+    };
+    this.GetSelStart = function () {
+      var Result = 0;
+      var res = 0;
+      var el = null;
+      el = this.GetElementHandle();
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const preSelectionRange = range.cloneRange();
+      preSelectionRange.selectNodeContents(el);
+      preSelectionRange.setEnd(range.startContainer, range.startOffset);
+      res = preSelectionRange.toString().length;
+      Result = res;
+      return Result;
+    };
+    this.SetSelStart = function (Value) {
+      var el = null;
+      el = this.GetElementHandle();
+      const range = document.createRange();
+          const sel = window.getSelection();
+      
+          var i = 0;
+          while (i < el.childNodes.length) {
+            if (Value <=el.childNodes[i].textContent.length) {
+              range.setStart(el.childNodes[i], Value);
+            }
+            else {
+               Value = Value - el.childNodes[i].textContent.length;
+            }
+            i++;
+          }
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      Result = document.createElement("DIV");
+      Result.style.setProperty("white-space","normal");
+      return Result;
+    };
+    this.ElementIFrameHandle = function () {
+      var Result = null;
+      Result = null;
+      if (this.GetElementHandle() != null) {
+        Result = document;
+      };
+      return Result;
+    };
+    this.UpdateElement = function () {
+      var i = 0;
+      var s = "";
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+      if (this.ElementIFrameHandle() != null) ;
+      if (this.GetElementHandle() != null) {
+        s = "";
+        for (var $l = 0, $end = this.FLines.GetCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          if (i > 0) s = s + "<br>";
+          s = s + this.FLines.Get(i);
+        };
+        this.GetElementHandle().innerHTML = s;
+        if (this.FReadOnly) {
+          this.GetElementHandle().contentEditable = "false"}
+         else this.GetElementHandle().contentEditable = "true";
+        this.GetElementHandle().style.setProperty("overflow","auto");
+        this.GetElementHandle().style.setProperty("padding","3px");
+        if (this.FBorderStyle === pas["WEBLib.Controls"].TBorderStyle.bsSingle) {
+          this.GetElementHandle().style.setProperty("border","1px solid silver")}
+         else this.GetElementHandle().style.setProperty("border","");
+      };
+    };
+    this.Loaded = function () {
+      var doc = null;
+      var el = null;
+      pas["WEBLib.Controls"].TCustomControl.Loaded.call(this);
+      if (this.ElementIFrameHandle() != null) {
+        doc = this.ElementIFrameHandle();
+        el = this.GetElementHandle();
+        el.onclick = rtl.createSafeCallback(this,"HandleDoClick");
+        el.ondblclick = rtl.createSafeCallback(this,"HandleDoDblClick");
+        el.onmousedown = rtl.createSafeCallback(this,"HandleDoMouseDown");
+        el.onmouseup = rtl.createSafeCallback(this,"HandleDoMouseUp");
+        el.onmousemove = rtl.createSafeCallback(this,"HandleDoMouseMove");
+        el.onkeydown = rtl.createSafeCallback(this,"HandleDoKeyDown");
+        el.onkeyup = rtl.createSafeCallback(this,"HandleDoKeyUp");
+        el.onkeypress = rtl.createSafeCallback(this,"HandleDoKeyPress");
+        el.onfocus = rtl.createSafeCallback(this,"HandleDoEnter");
+        el.onblur = rtl.createSafeCallback(this,"HandleDoExit");
+        doc.onselectionchange = rtl.createSafeCallback(this,"HandleDoSelectionChange");
+      };
+    };
+    this.CanShowFocus = function () {
+      var Result = false;
+      Result = this.FShowFocus$1;
+      return Result;
+    };
+    this.DoHandleInput = function (Event) {
+      this.DoChange();
+    };
+    this.DoHandlePaste = function (Event) {
+      if (this.FWantImages) return;
+      var pastedData = Event.clipboardData.getData('text');
+      var regex = /^[a-zA-Z0-9@  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      if (regex.test(pastedData) !== true) {
+              Event.preventDefault();
+      };
+    };
+    this.HandleDoSelectionChange = function (Event) {
+      var Result = false;
+      var Attr = $mod.TSelAttributes.$new();
+      if (this.FOwner$1 != null) {
+        rtl.as(this.FOwner$1,pas["WEBLib.Buttons"].TRichEditToolBar).SetTextColor(0x1);
+        rtl.as(this.FOwner$1,pas["WEBLib.Buttons"].TRichEditToolBar).SetBackgroundColor(0x1);
+      };
+      Attr.$assign(this.GetSelectionAttributes(document.getSelection()));
+      this.FSelAttributes.SetStyle({});
+      if (Attr.IsBold) this.FSelAttributes.SetStyle(rtl.unionSet(this.FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsBold)));
+      if (Attr.IsItalic) this.FSelAttributes.SetStyle(rtl.unionSet(this.FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsItalic)));
+      if (Attr.IsUnderline) this.FSelAttributes.SetStyle(rtl.unionSet(this.FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsUnderline)));
+      if (Attr.IsStrikeOut) this.FSelAttributes.SetStyle(rtl.unionSet(this.FSelAttributes.FStyle,rtl.createSet(pas["WEBLib.Graphics"].TFontStyle.fsStrikeOut)));
+      if (this.FOnSelectionChange != null) this.FOnSelectionChange(this);
+      Result = true;
+      return Result;
+    };
+    this.HandleDoKeyDown = function (Event) {
+      var Result = false;
+      Result = false;
+      if ((Event.ctrlKey === true) && (Event.key === "Control") && this.FReadOnly) {
+        this.GetElementHandle().contentEditable = "false";
+      };
+      if ((this.GetKeyCode(Event.key,true) === 13) && this.FInsertLineBreaks) {
+        this.InsertHTML("<br>")}
+       else if ((this.GetKeyCode(Event.key,true) === 9) && this.FWantTabs) {
+        this.InsertHTML("<span style=white-space:pre>&#9;</span>")}
+       else {
+        Result = true;
+      };
+      pas["WEBLib.Controls"].TControl.HandleDoKeyDown.apply(this,arguments);
+      return Result;
+    };
+    this.HandleDoKeyUp = function (Event) {
+      var Result = false;
+      Result = false;
+      if ((Event.ctrlKey === false) && (Event.key === "Control") && !this.FReadOnly) {
+        this.GetElementHandle().contentEditable = "true";
+      };
+      pas["WEBLib.Controls"].TControl.HandleDoKeyUp.apply(this,arguments);
+      return Result;
+    };
+    this.SetLines = function (ALines) {
+      this.FLines.Assign(ALines);
+    };
+    this.DoLinesChange = function (Sender) {
+      this.UpdateElement();
+    };
+    this.DoChange = function () {
+      if (this.FOnChange != null) this.FOnChange(this);
+    };
+    this.BindEvents = function () {
+      pas["WEBLib.Controls"].TCustomControl.BindEvents.call(this);
+      this.GetContainer().addEventListener("input",rtl.createSafeCallback(this,"DoHandleInput"));
+      this.GetContainer().addEventListener("paste",rtl.createSafeCallback(this,"DoHandlePaste"));
+    };
+    this.GetSelectionAttributes = function (selnode) {
+      var Result = $mod.TSelAttributes.$new();
+      var el = null;
+      var fn = "";
+      var fs = "";
+      var fc = "";
+      var fbk = "";
+      var found = false;
+      var Attr = $mod.TSelAttributes.$new();
+      el = null;
+      if (selnode.focusNode) {
+        el = selnode.focusNode.parentElement;
+      };
+      do {
+        found = false;
+        if (el != null) {
+          if (el.tagName === "B") {
+            found = true;
+            Attr.IsBold = true;
+          };
+          if (el.tagName === "I") {
+            found = true;
+            Attr.IsItalic = true;
+          };
+          if (el.tagName === "U") {
+            found = true;
+            Attr.IsUnderline = true;
+          };
+          if (el.tagName === "STRIKE") {
+            found = true;
+            Attr.IsStrikeOut = true;
+          };
+          if (el.tagName === "SPAN") {
+            fbk = el.style.getPropertyValue("background-color");
+            if (fbk == null) {
+            fbk = ''; };
+            Attr.BkColor = fbk;
+            found = true;
+          };
+          if (el.tagName === "DIV") {
+            fbk = el.style.getPropertyValue("text-align");
+            if (fbk == null) {
+            fbk = ''; };
+            if (fbk === "center") Attr.IsCenter = true;
+            if (fbk === "right") Attr.IsRight = true;
+            if (fbk === "left") Attr.IsLeft = true;
+            found = true;
+          };
+          if (el.tagName === "FONT") {
+            fn = el.getAttribute("face");
+            if (fn == null) {
+            fn = ''; };
+            fs = el.getAttribute("size");
+            if (fs == null) {
+            fs = ''; };
+            fc = el.getAttribute("color");
+            if (fc == null) {
+            fc = ''; };
+            fbk = el.style.getPropertyValue("background-color");
+            if (fbk == null) {
+            fbk = ''; };
+            found = true;
+            Attr.FontName = fn;
+            Attr.FontColor = fc;
+            if (fs !== "") {
+              if (fs === "7") fs = "36";
+              if (fs === "6") fs = "24";
+              if (fs === "5") fs = "18";
+              if (fs === "4") fs = "14";
+              if (fs === "3") fs = "10";
+              if (fs === "2") fs = "9";
+              if (fs === "1") fs = "8";
+            };
+            Attr.FontSize = fs;
+            Attr.BkColor = fbk;
+          };
+          el = el.parentElement;
+          if (el === this.GetElementHandle()) found = false;
+        };
+      } while (found);
+      Result.$assign(Attr);
+      if (this.FOnAttributesChanged != null) this.FOnAttributesChanged(this,$mod.TSelAttributes.$clone(Attr));
+      return Result;
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FLines = pas.Classes.TStringList.$create("Create$1");
+      this.FLines.FOnChange = rtl.createCallback(this,"DoLinesChange");
+      this.FSelAttributes = $mod.TTextAttributes.$create("Create$1",[this]);
+      this.FShowFocus$1 = true;
+      this.FWantImages = true;
+      this.FInsertLineBreaks = false;
+      if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+        this.SetWidth(400);
+        this.SetHeight(300);
+      };
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FLines");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.GetContent = function () {
+      var Result = "";
+      Result = this.GetText();
+      return Result;
+    };
+    this.GetSelection = function () {
+      var Result = "";
+      var res = "";
+      res = "";
+      // window.getSelection() gives you a Selection object representing the range of text selected by the user or the current position of the caret.
+      if (window.getSelection) {
+        res = window.getSelection().toString();
+      };
+      Result = res;
+      return Result;
+    };
+    this.DoSelectAction = function (StartPosition, EndPosition) {
+      var s = "";
+      var sstart = 0;
+      var send = 0;
+      var el = null;
+      var range = null;
+      var textNodes = null;
+      var textNode = null;
+      var i = 0;
+      var foundStart = false;
+      var charCount = 0;
+      var endCharCount = 0;
+      var sel = null;
+      s = this.GetID();
+      sstart = StartPosition;
+      send = EndPosition;
+      el = document.getElementById(s);
+      if (el != null) {
+        range = document.createRange();
+        range.selectNodeContents(el);
+        textNodes = pas.Classes.TList.$create("Create$1");
+        $impl.GetTextNodes(el,textNodes);
+        foundStart = false;
+        charCount = 0;
+        endCharCount = 0;
+        for (var $l = 0, $end = textNodes.GetCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          textNode = textNodes.Get(i);
+          endCharCount = charCount + textNode.nodeValue.length;
+          if (!foundStart && (sstart >= charCount) && ((sstart < endCharCount) || ((sstart === endCharCount) && (i <= textNodes.GetCount())))) {
+            range.setStart(textNode,sstart - charCount);
+            foundStart = true;
+          };
+          if (foundStart && (send <= endCharCount)) {
+            range.setEnd(textNode,send - charCount);
+            break;
+          };
+          charCount = endCharCount;
+        };
+        sel = document.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        textNodes = rtl.freeLoc(textNodes);
+      };
+    };
+    this.DoEditAction = function (ActionString) {
+      if (this.ElementIFrameHandle() != null) {
+        this.ElementIFrameHandle().execCommand(ActionString,false);
+      };
+    };
+    this.DoEditAction$1 = function (ActionString, Data) {
+      if (this.ElementIFrameHandle() != null) {
+        this.ElementIFrameHandle().execCommand(ActionString,false,Data);
+      };
+    };
+    this.SelectText = function (StartPosition, EndPosition) {
+      this.DoSelectAction(StartPosition,EndPosition);
+    };
+    this.SetSelectionSpacing = function (ASpacing) {
+      var $Self = this;
+      var sel = null;
+      var range = null;
+      var node = null;
+      var pNode = null;
+      var i = 0;
+      var lh = "";
+      function getNextNode(anode) {
+        var Result = null;
+        if (anode.firstChild != null) {
+          Result = anode.firstChild}
+         else while (anode != null) {
+          if (anode.nextSibling != null) {
+            Result = anode.nextSibling;
+            break;
+          };
+          anode = anode.parentNode;
+        };
+        return Result;
+      };
+      sel = document.getSelection();
+      if (!(sel != null)) return;
+      lh = pas["WEBLib.Utils"].FormatProp("%g",pas.System.VarRecs(3,ASpacing));
+      for (var $l = 0, $end = sel.rangeCount - 1; $l <= $end; $l++) {
+        i = $l;
+        range = sel.getRangeAt(i);
+        node = range.startContainer;
+        if (node.nodeName === "#text") {
+          pNode = node.parentNode;
+          if (pNode.nodeName === "DIV") pNode.style.setProperty("line-height",lh);
+        };
+        while (node !== range.endContainer) {
+          node = getNextNode(node);
+          if (node.nodeName === "DIV") node.style.setProperty("line-height",lh);
+        };
+      };
+    };
+    this.DoImageAction = function () {
+      var url = "";
+      if (this.GetElementHandle() != null) {
+        url = window.prompt("Enter Image URL:","http://");
+        if (pas.System.Assigned(url)) {
+          if ((url !== "") && (url !== "http://") && (url !== "https://")) this.DoEditAction$1("insertImage",url);
+        };
+      };
+    };
+    this.DoLinkAction = function () {
+      var url = "";
+      if (this.GetElementHandle() != null) {
+        url = window.prompt("Enter URL:","http://");
+        if (pas.System.Assigned(url)) {
+          if ((url !== "") && (url !== "http://") && (url !== "https://")) this.DoEditAction$1("createLink",url);
+        };
+      };
+    };
+    this.AppendHTML = function (HTML) {
+      var sel = null;
+      var range = null;
+      var el = null;
+      var frag = null;
+      var node = null;
+      var lastNode = null;
+      sel = null;
+      if (this.Focused()) {
+        sel = document.getSelection();
+        range = sel.getRangeAt(0);
+        range.deleteContents();
+      } else {
+        range = document.createRange();
+        node = this.GetElementHandle().firstChild;
+        lastNode = node;
+        while (node != null) {
+          node = node.nextSibling;
+          if (node != null) lastNode = node;
+        };
+        if (lastNode != null) {
+          range.setStartAfter(lastNode);
+          range.setEndAfter(lastNode);
+        } else {
+          range.setStart(this.GetElementHandle(),0);
+          range.setEnd(this.GetElementHandle(),0);
+        };
+      };
+      el = document.createElement("div");
+      el.innerHTML = HTML;
+      frag = document.createDocumentFragment();
+      node = el.firstChild;
+      while (node === el.firstChild) {
+        lastNode = frag.appendChild(node);
+        range.insertNode(frag);
+      };
+      if (lastNode != null) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse();
+        if (sel != null) {
+          sel.removeAllRanges();
+          sel.addRange(range);
+        };
+      };
+    };
+    this.AppendLineBreak = function () {
+      this.AppendHTML("<BR>");
+    };
+    this.InsertHTML = function (HTML) {
+      var sel = null;
+      var range = null;
+      var el = null;
+      var frag = null;
+      var node = null;
+      var lastNode = null;
+      sel = null;
+      if (this.Focused()) {
+        sel = document.getSelection();
+        range = sel.getRangeAt(0);
+        range.deleteContents();
+      } else {
+        range = document.createRange();
+        range.setStart(this.GetElementHandle(),0);
+        range.setEnd(this.GetElementHandle(),0);
+      };
+      el = document.createElement("div");
+      el.innerHTML = HTML;
+      frag = document.createDocumentFragment();
+      node = el.firstChild;
+      while (node === el.firstChild) {
+        lastNode = frag.appendChild(node);
+        range.insertNode(frag);
+      };
+      if (lastNode != null) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse();
+        if (sel != null) {
+          sel.removeAllRanges();
+          sel.addRange(range);
+        };
+      };
+    };
+    this.InsertLineBreak = function () {
+      this.InsertHTML("<BR>");
+    };
+    this.InsertImage = function (DataURL) {
+      this.DoEditAction$1("insertImage",DataURL);
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TRichEdit",this.TCustomRichEdit,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("AutoSize",2,rtl.boolean,"FAutoSize","SetAutoSize",{Default: false});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor","SetColor");
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("BorderStyle",2,pas["WEBLib.Controls"].$rtti["TBorderStyle"],"FBorderStyle","SetBorderStyle",{Default: pas["WEBLib.Controls"].TBorderStyle.bsSingle});
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("InsertLineBreaks",0,rtl.boolean,"FInsertLineBreaks","FInsertLineBreaks",{Default: false});
+    $r.addProperty("Lines",3,pas.Classes.$rtti["TStrings"],"GetLines","SetLines");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("ReadOnly",2,rtl.boolean,"FReadOnly","SetReadOnly",{Default: false});
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("WantTabs",0,rtl.boolean,"FWantTabs","FWantTabs",{Default: false});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnChange",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnChange","FOnChange");
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnSelectionChange",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnSelectionChange","FOnSelectionChange");
+    $r.addProperty("OnKeyDown",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyDown","FOnKeyDown");
+    $r.addProperty("OnKeyPress",0,pas["WEBLib.Controls"].$rtti["TKeyPressEvent"],"FOnKeyPress","FOnKeyPress");
+    $r.addProperty("OnKeyUp",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyUp","FOnKeyUp");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebRichEdit",this.TRichEdit,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TTabSet",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FItems = null;
+      this.FItemIndex = 0;
+      this.FSelectedColor = 0;
+      this.FOnChange = null;
+      this.FSelectedTextColor = 0;
+      this.FElementTabActiveClassName = "";
+      this.FElementTabClassName = "";
+      this.FElementTabItemClassName = "";
+      this.FUseHash = false;
+    };
+    this.$final = function () {
+      this.FItems = undefined;
+      this.FOnChange = undefined;
+      pas["WEBLib.Menus"].TWebCustomControl.$final.call(this);
+    };
+    this.SetSelectedColor = function (Value) {
+      if (this.FSelectedColor !== Value) {
+        this.FSelectedColor = Value;
+        this.DoUpdateList();
+      };
+    };
+    this.SetSelectedTextColor = function (Value) {
+      if (this.FSelectedColor !== Value) {
+        this.FSelectedTextColor = Value;
+        this.DoUpdateList();
+      };
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      Result = document.createElement("SPAN");
+      return Result;
+    };
+    this.HandleDoClick = function (Event) {
+      var Result = false;
+      var sid = "";
+      var cid = "";
+      var i = 0;
+      var el = null;
+      el = Event.target;
+      sid = "";
+      if (el.hasAttribute("id")) sid = el.getAttribute("id");
+      if (sid !== "") {
+        cid = this.GetID();
+        if (cid === "") cid = this.FName;
+        sid = pas.SysUtils.StringReplace(sid,cid + "_","",{});
+        if (pas.SysUtils.TryStrToInt(sid,{get: function () {
+            return i;
+          }, set: function (v) {
+            i = v;
+          }})) {
+          this.FItemIndex = i;
+          this.DoUpdateList();
+        };
+        pas["WEBLib.Controls"].TControl.HandleDoClick.apply(this,arguments);
+      };
+      Result = true;
+      return Result;
+    };
+    this.HandleDoChange = function (Event) {
+      var Result = false;
+      if (this.FOnChange != null) this.FOnChange(this);
+      Result = true;
+      return Result;
+    };
+    this.HandleDoItemMouseOut = function (Event) {
+      var Result = false;
+      var el = null;
+      Result = true;
+      el = Event.relatedTarget;
+      if (el != null) {
+        if (el.nodeName === "A") el.style.setProperty("background-color","");
+      };
+      return Result;
+    };
+    this.HandleDoItemMouseOver = function (Event) {
+      var Result = false;
+      var el = null;
+      Result = true;
+      el = Event.relatedTarget;
+      if (el != null) {
+        if (el.nodeName === "A") el.style.setProperty("background-color","lightgray");
+      };
+      return Result;
+    };
+    this.BindEvents = function () {
+      pas["WEBLib.Controls"].TCustomControl.BindEvents.call(this);
+      if (this.GetElementHandle() != null) {
+        this.GetElementHandle().onchange = rtl.createSafeCallback(this,"HandleDoChange");
+      };
+    };
+    this.SetItems = function (AItems) {
+      this.FItems.Assign(AItems);
+    };
+    this.SetItemIndex = function (AIndex) {
+      if (this.FItemIndex !== AIndex) {
+        this.FItemIndex = AIndex;
+        this.DoUpdateList();
+      };
+    };
+    this.DoUpdateList = function () {
+      var i = 0;
+      var s = "";
+      var cid = "";
+      var ul = null;
+      var li = null;
+      var a = null;
+      if (!(this.GetContainer() != null)) return;
+      while (this.GetContainer().firstChild != null) this.GetContainer().removeChild(this.GetContainer().firstChild);
+      this.GetContainer().setAttribute("class","");
+      ul = document.createElement("UL");
+      ul.setAttribute("class",this.FElementClassName);
+      if (this.FElementClassName !== "") {
+        ul.setAttribute("role","tablist")}
+       else {
+        ul.style.setProperty("list-style-type","none");
+        ul.style.setProperty("margin","0");
+        ul.style.setProperty("padding","0");
+        ul.style.setProperty("display","inline-block");
+      };
+      this.GetContainer().appendChild(ul);
+      for (var $l = 0, $end = this.FItems.GetCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        s = this.FItems.Get(i);
+        li = document.createElement("LI");
+        if (this.FElementClassName !== "") {
+          if (this.FElementTabItemClassName === "") {
+            li.setAttribute("class","nav-item")}
+           else li.setAttribute("class",this.FElementTabItemClassName);
+        } else {
+          li.style.setProperty("float","left");
+          li.style.setProperty("border-bottom","1px solid lightgray");
+        };
+        pas["WEBLib.Controls"].SetHTMLElementFont(li,this.FFont,!((this.FElementClassName === "") && (this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty)));
+        if (this.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) li.setAttribute("draggable","true");
+        ul.appendChild(li);
+        if (!this.FEnabled) {
+          a = document.createElement("SPAN")}
+         else {
+          a = document.createElement("A");
+          if (this.FUseHash) a.setAttribute("href","#" + s);
+        };
+        a.innerHTML = s;
+        cid = this.GetID();
+        if (cid === "") cid = this.FName;
+        a.setAttribute("id",cid + "_" + pas.SysUtils.IntToStr(i));
+        if (this.FElementClassName !== "") {
+          if (this.FItemIndex === i) {
+            if (this.FElementTabActiveClassName === "") {
+              a.setAttribute("class","nav-link active")}
+             else a.setAttribute("class",this.FElementTabActiveClassName);
+          } else {
+            if (this.FElementTabClassName === "") {
+              a.setAttribute("class","nav-link")}
+             else a.setAttribute("class",this.FElementTabClassName);
+          };
+          a.setAttribute("role","tab");
+          a.setAttribute("data-toggle","tab");
+          a.setAttribute("aria-controls",s);
+          if (this.FItemIndex === i) {
+            a.setAttribute("aria-selected","true")}
+           else a.setAttribute("aria-selected","false");
+          if (this.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) a.setAttribute("draggable","false");
+        } else {
+          a.style.setProperty("display","block");
+          a.style.setProperty("text-align","center");
+          a.style.setProperty("padding","3px 15px");
+          a.style.setProperty("text-decoration","none");
+          a.style.setProperty("min-width","50px");
+          a.style.setProperty("color","inherit");
+          a.style.setProperty("font-family","inherit");
+          a.style.setProperty("font-style","inherit");
+          a.style.setProperty("font-size","inherit");
+          if (!this.FEnabled) a.style.setProperty("pointer-events","none");
+          if (this.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) a.setAttribute("draggable","false");
+          if (this.FItemIndex === i) {
+            if (this.FSelectedColor !== -1) a.style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(this.FSelectedColor));
+            if (this.FSelectedTextColor !== -1) a.style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FSelectedTextColor));
+          };
+        };
+        li.appendChild(a);
+      };
+      if (!this.GetIsLinked() && (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState)) this.RenderDesigning("TWebTabSet",this.GetContainer(),this,this.FItems.GetCount() === 0,"");
+      this.UpdateElement();
+    };
+    this.Loaded = function () {
+      pas["WEBLib.Controls"].TCustomControl.Loaded.call(this);
+      this.DoUpdateList();
+    };
+    this.ItemsChanged = function (Sender) {
+      this.DoUpdateList();
+    };
+    this.EnableDrag = function () {
+      var $Self = this;
+      function AddDraggableAttribute(AElement) {
+        var I = 0;
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          if (AElement.children.item(I).tagName === "LI") {
+            AElement.children.item(I).setAttribute("draggable","true");
+            AddDraggableAttribute(AElement.children.item(I));
+          } else if (AElement.children.item(I).tagName === "A") {
+            AElement.children.item(I).setAttribute("draggable","false")}
+           else AddDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      AddDraggableAttribute(this.GetContainer());
+    };
+    this.DisableDrag = function () {
+      var $Self = this;
+      function RemoveDraggableAttribute(AElement) {
+        var I = 0;
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          if (AElement.children.item(I).tagName === "LI") {
+            AElement.children.item(I).removeAttribute("draggable");
+            RemoveDraggableAttribute(AElement.children.item(I));
+          } else if (AElement.children.item(I).tagName === "A") {
+            AElement.children.item(I).removeAttribute("draggable")}
+           else RemoveDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      RemoveDraggableAttribute(this.GetContainer());
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FItems = pas.Classes.TStringList.$create("Create$1");
+      this.FItems.FOnChange = rtl.createCallback(this,"ItemsChanged");
+      this.FItemIndex = 0;
+      this.FSelectedColor = 12632256;
+      this.FSelectedTextColor = 0;
+      this.FUseHash = true;
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FItems");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.EndUpdate = function () {
+      pas["WEBLib.Controls"].TCustomControl.EndUpdate.call(this);
+      this.DoUpdateList();
+    };
+    this.Clear = function () {
+      this.FItems.Clear();
+    };
+    this.SelectNextTab = function (GoForward) {
+      if (GoForward) {
+        if (this.FItemIndex < (this.FItems.GetCount() - 1)) {
+          this.SetItemIndex(this.FItemIndex + 1)}
+         else this.SetItemIndex(0);
+      } else {
+        if (this.FItemIndex > 0) {
+          this.SetItemIndex(this.FItemIndex - 1)}
+         else this.SetItemIndex(this.FItems.GetCount() - 1);
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor","SetColor");
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementTabClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabClassName","FElementTabClassName");
+    $r.addProperty("ElementTabActiveClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabActiveClassName","FElementTabActiveClassName");
+    $r.addProperty("ElementTabItemClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabItemClassName","FElementTabItemClassName");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Enabled",2,rtl.boolean,"FEnabled","SetEnabled",{Default: true});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Hint",2,rtl.string,"FHint","SetHint");
+    $r.addProperty("ItemIndex",2,rtl.longint,"FItemIndex","SetItemIndex");
+    $r.addProperty("Items",2,pas.Classes.$rtti["TStringList"],"FItems","SetItems");
+    $r.addProperty("Left",3,rtl.longint,"GetLeft","SetLeft");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("ShowHint",2,rtl.boolean,"FShowHint","SetShowHint",{Default: false});
+    $r.addProperty("SelectedColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FSelectedColor","SetSelectedColor",{Default: 12632256});
+    $r.addProperty("SelectedTextColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FSelectedTextColor","SetSelectedTextColor",{Default: 0});
+    $r.addProperty("TabOrder",2,rtl.longint,"FTabOrder","SetTabOrder");
+    $r.addProperty("TabStop",2,rtl.boolean,"FTabStop","SetTabStop",{Default: true});
+    $r.addProperty("Top",3,rtl.longint,"GetTop","SetTop");
+    $r.addProperty("UseHash",0,rtl.boolean,"FUseHash","FUseHash",{Default: true});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnChange",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnChange","FOnChange");
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnKeyDown",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyDown","FOnKeyDown");
+    $r.addProperty("OnKeyPress",0,pas["WEBLib.Controls"].$rtti["TKeyPressEvent"],"FOnKeyPress","FOnKeyPress");
+    $r.addProperty("OnKeyUp",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyUp","FOnKeyUp");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebTabSet",this.TTabSet,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TTabSheet",pas["WEBLib.ExtCtrls"].TCustomPanel,function () {
+    this.$init = function () {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.$init.call(this);
+      this.FTabVisible = false;
+      this.FTabEnabled = false;
+      this.FPosUpdating = false;
+      this.FOnShow = null;
+      this.FOnHide = null;
+      this.FMaterialGlyph = "";
+      this.FMaterialGlyphColor = 0;
+      this.FMaterialGlyphType = 0;
+      this.FMaterialGlyphSize = 0;
+    };
+    this.$final = function () {
+      this.FOnShow = undefined;
+      this.FOnHide = undefined;
+      pas["WEBLib.ExtCtrls"].TCustomPanel.$final.call(this);
+    };
+    this.SetTabVisible = function (Value) {
+      if (this.FTabVisible !== Value) {
+        this.FTabVisible = Value;
+        if (this.FParent != null) {
+          if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+        };
+      };
+    };
+    this.SetTabEnabled = function (Value) {
+      if (this.FTabEnabled !== Value) {
+        this.FTabEnabled = Value;
+        if (this.FParent != null) {
+          if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+        };
+      };
+    };
+    this.GetPageIndex = function () {
+      var Result = 0;
+      var i = 0;
+      var j = 0;
+      var FPageControl = null;
+      Result = -1;
+      if ($mod.TPageControl.isPrototypeOf(this.FParent)) {
+        FPageControl = rtl.as(this.FParent,$mod.TPageControl);
+        j = 0;
+        for (var $l = 0, $end = FPageControl.GetControlsCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          if ($mod.TTabSheet.isPrototypeOf(FPageControl.GetControls(i))) {
+            if (FPageControl.GetControls(i) === this) {
+              Result = j;
+            } else j += 1;
+          };
+        };
+      };
+      return Result;
+    };
+    this.SetPageIndex = function (Value) {
+    };
+    this.SetMaterialGlyph = function (Value) {
+      if (this.FMaterialGlyph !== Value) {
+        this.FMaterialGlyph = Value;
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetMaterialGlyphColor = function (Value) {
+      if (this.FMaterialGlyphColor !== Value) {
+        this.FMaterialGlyphColor = Value;
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetMaterialGlyphSize = function (Value) {
+      if (this.FMaterialGlyphSize !== Value) {
+        this.FMaterialGlyphSize = Value;
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetMaterialGlyphType = function (Value) {
+      if (this.FMaterialGlyphType !== Value) {
+        this.FMaterialGlyphType = Value;
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetCaption = function (AValue) {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.SetCaption.apply(this,arguments);
+      if (this.FParent != null) {
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetParent = function (AValue) {
+      if ($mod.TTabSheet.isPrototypeOf(AValue)) {
+        if ($mod.TPageControl.isPrototypeOf(rtl.as(AValue,$mod.TTabSheet).FParent)) AValue = rtl.as(AValue,$mod.TTabSheet).FParent;
+      };
+      pas["WEBLib.Controls"].TControl.SetParent.call(this,AValue);
+      if (this.FParent != null) {
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) {
+          rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+        };
+      };
+    };
+    this.ResetUpdate = function () {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.EndUpdate.call(this);
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.CreateInitialize.call(this);
+      this.FEnablePropagation = true;
+      this.FControlStyle = rtl.unionSet(this.FControlStyle,rtl.createSet(pas["WEBLib.Controls"].TControlStyleValue.csAcceptsControls));
+      this.SetColor(16777215);
+      this.SetTabVisible(true);
+      this.SetTabEnabled(true);
+      this.SetShowCaption(false);
+      this.FPosUpdating = false;
+      this.FMaterialGlyphSize = 18;
+      this.FMaterialGlyphType = pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal;
+      this.FMaterialGlyphColor = -1;
+    };
+    this.EndUpdate = function () {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.EndUpdate.call(this);
+      if (this.FParent != null) {
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+      };
+    };
+    this.SetBounds = function (X, Y, AWidth, AHeight) {
+      pas["WEBLib.ExtCtrls"].TCustomPanel.SetBounds.apply(this,arguments);
+      if ($mod.TPageControl.isPrototypeOf(this.FParent) && !this.FPosUpdating) {
+        this.FPosUpdating = true;
+        rtl.as(this.FParent,$mod.TPageControl).DoUpdateList();
+        this.FPosUpdating = false;
+      };
+    };
+    this.Destroy = function () {
+      var p = null;
+      p = null;
+      if (this.FParent != null) {
+        if ($mod.TPageControl.isPrototypeOf(this.FParent)) {
+          p = rtl.as(this.FParent,$mod.TPageControl);
+        };
+      };
+      pas["WEBLib.ExtCtrls"].TCustomPanel.Destroy.call(this);
+      if (p != null) {
+        p.DoUpdateList();
+        p.SetTabIndex(0);
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Alignment",2,pas.Classes.$rtti["TAlignment"],"FAlignment","SetAlignment",{Default: pas.Classes.TAlignment.taCenter});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("BorderColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FBorderColor","SetBorderColor",{Default: 12632256});
+    $r.addProperty("BorderStyle",2,pas["WEBLib.Controls"].$rtti["TBorderStyle"],"FBorderStyle","SetBorderStyle",{Default: pas["WEBLib.Controls"].TBorderStyle.bsSingle});
+    $r.addProperty("Caption",2,rtl.string,"FCaption","SetCaption");
+    $r.addProperty("Color",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FColor","SetColor");
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementBodyClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementBodyClassName","FElementBodyClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("MaterialGlyph",2,rtl.string,"FMaterialGlyph","SetMaterialGlyph");
+    $r.addProperty("MaterialGlyphColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FMaterialGlyphColor","SetMaterialGlyphColor",{Default: -1});
+    $r.addProperty("MaterialGlyphSize",2,rtl.longint,"FMaterialGlyphSize","SetMaterialGlyphSize",{Default: 18});
+    $r.addProperty("MaterialGlyphType",2,pas["WEBLib.Controls"].$rtti["TMaterialGlyphType"],"FMaterialGlyphType","SetMaterialGlyphType",{Default: pas["WEBLib.Controls"].TMaterialGlyphType.mgNormal});
+    $r.addProperty("Padding",2,pas["WEBLib.Controls"].$rtti["TPadding"],"FPadding","SetPadding");
+    $r.addProperty("PageIndex",7,rtl.longint,"GetPageIndex","SetPageIndex");
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("Role",3,rtl.string,"GetRole","SetRole");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("TabVisible",2,rtl.boolean,"FTabVisible","SetTabVisible",{Default: true});
+    $r.addProperty("TabEnabled",2,rtl.boolean,"FTabEnabled","SetTabEnabled",{Default: true});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnHide",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnHide","FOnHide");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnShow",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnShow","FOnShow");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebTabSheet",this.TTabSheet,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  rtl.createClass(this,"TPageControl",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FDesignTime$1 = false;
+      this.FPrevTabIndex = 0;
+      this.FItems = null;
+      this.FTabIndex = 0;
+      this.FSelectedColor = 0;
+      this.FOnChange = null;
+      this.FSelectedTextColor = 0;
+      this.FDisabledTextColor = 0;
+      this.FShowTabs = false;
+      this.FOldVisible = false;
+      this.FUseHash = false;
+      this.FElementTabActiveClassName = "";
+      this.FElementTabClassName = "";
+      this.FElementTabItemClassName = "";
+    };
+    this.$final = function () {
+      this.FItems = undefined;
+      this.FOnChange = undefined;
+      pas["WEBLib.Menus"].TWebCustomControl.$final.call(this);
+    };
+    this.SetSelectedColor = function (AValue) {
+      if (this.FSelectedColor !== AValue) {
+        this.FSelectedColor = AValue;
+        this.DoUpdateList();
+      };
+    };
+    this.SetItems = function (AItems) {
+      this.FItems.Assign(AItems);
+    };
+    this.SetTabIndex = function (AIndex) {
+      if (pas.Classes.TComponentStateItem.csLoading in this.FComponentState) this.FTabIndex = AIndex;
+      if ((this.FTabIndex !== AIndex) && (AIndex >= 0) && (AIndex < this.PageCount())) {
+        this.FTabIndex = AIndex;
+        this.FPrevTabIndex = this.FTabIndex;
+        this.DoUpdateList();
+      };
+    };
+    this.GetActivePage = function () {
+      var Result = null;
+      var pi = 0;
+      Result = null;
+      pi = this.GetActivePageIndex();
+      if (pi >= 0) Result = this.GetPage(pi);
+      return Result;
+    };
+    this.GetActivePageIndex = function () {
+      var Result = 0;
+      Result = -1;
+      if ((this.PageCount() >= 0) && (this.FTabIndex >= 0) && (this.FTabIndex < this.PageCount())) Result = this.FTabIndex;
+      return Result;
+    };
+    this.SetActivePageIndex = function (Value) {
+      if ((Value >= 0) && (Value < this.PageCount())) this.SetTabIndex(Value);
+    };
+    this.SetSelectedTextColor = function (Value) {
+      if (this.FSelectedTextColor !== Value) {
+        this.FSelectedTextColor = Value;
+        this.DoUpdateList();
+      };
+    };
+    this.SetActivePage = function (Value) {
+      var i = 0;
+      for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if (this.GetControls(i) === Value) {
+          this.SetActivePageIndex(i);
+          break;
+        };
+      };
+    };
+    this.SetShowTabs = function (Value) {
+      if (this.FShowTabs !== Value) {
+        this.FShowTabs = Value;
+        this.DoUpdateList();
+      };
+    };
+    this.SetDisabledTextColor = function (Value) {
+      if (this.FDisabledTextColor !== Value) {
+        this.FDisabledTextColor = Value;
+        this.DoUpdateList();
+      };
+    };
+    this.GetPage = function (Index) {
+      var Result = null;
+      var c = 0;
+      var i = 0;
+      c = -1;
+      Result = null;
+      for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) c += 1;
+        if (c === Index) {
+          Result = rtl.as(this.GetControls(i),$mod.TTabSheet);
+          break;
+        };
+      };
+      return Result;
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      Result = document.createElement("SPAN");
+      return Result;
+    };
+    this.HandleDoClick = function (Event) {
+      var Result = false;
+      var sid = "";
+      var cid = "";
+      var i = 0;
+      var el = null;
+      var ts = null;
+      el = Event.target;
+      sid = "";
+      if (el.hasAttribute("id")) sid = el.getAttribute("id");
+      if (sid !== "") {
+        cid = this.GetID();
+        if (cid === "") cid = this.FName;
+        sid = pas.SysUtils.StringReplace(sid,cid + "_","",{});
+        if (pas.SysUtils.TryStrToInt(sid,{get: function () {
+            return i;
+          }, set: function (v) {
+            i = v;
+          }})) {
+          if (this.FTabIndex !== -1) {
+            ts = this.GetPage(this.FTabIndex);
+            if ((ts != null) && (ts.FOnHide != null)) ts.FOnHide(ts);
+          };
+          this.FTabIndex = i;
+          this.DoUpdateList();
+          if (this.FTabIndex !== -1) {
+            ts = this.GetPage(this.FTabIndex);
+            if ((ts != null) && (ts.FOnShow != null)) ts.FOnShow(ts);
+          };
+        };
+        pas["WEBLib.Controls"].TControl.HandleDoClick.apply(this,arguments);
+      };
+      Result = true;
+      return Result;
+    };
+    this.HandleDoChange = function (Event) {
+      var Result = false;
+      if (this.FPrevTabIndex !== this.FTabIndex) {
+        this.FPrevTabIndex = this.FTabIndex;
+        if (this.FOnChange != null) this.FOnChange(this);
+      };
+      Result = true;
+      return Result;
+    };
+    this.HandleDoItemMouseOut = function (Event) {
+      var Result = false;
+      var el = null;
+      Result = true;
+      el = Event.relatedTarget;
+      if (el != null) {
+        if (el.nodeName === "A") el.style.setProperty("background-color","");
+      };
+      return Result;
+    };
+    this.HandleDoItemMouseOver = function (Event) {
+      var Result = false;
+      var el = null;
+      Result = true;
+      el = Event.relatedTarget;
+      if (el != null) {
+        if (el.nodeName === "A") el.style.setProperty("background-color","lightgray");
+      };
+      return Result;
+    };
+    this.CanAcceptChild = function (AValue) {
+      var Result = null;
+      Result = pas["WEBLib.Controls"].TControl.CanAcceptChild.apply(this,arguments);
+      if ((AValue != null) && !$mod.TTabSheet.isPrototypeOf(AValue)) {
+        Result = this.FParent;
+      };
+      return Result;
+    };
+    this.BindEvents = function () {
+      pas["WEBLib.Controls"].TCustomControl.BindEvents.call(this);
+      if (this.GetElementHandle() != null) {
+        this.GetElementHandle().onclick = rtl.createSafeCallback(this,"HandleDoChange");
+      };
+    };
+    this.GetChildren = function (Proc, Root) {
+      var i = 0;
+      for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) {
+          Proc(this.GetControls(i));
+        };
+      };
+    };
+    this.UpdateElement = function () {
+      pas["WEBLib.Controls"].TControl.UpdateElement.call(this);
+    };
+    this.DoUpdateList = function () {
+      var i = 0;
+      var vistabindex = 0;
+      var ena = null;
+      var s = "";
+      var cid = "";
+      var shidden = "";
+      var n = null;
+      var ul = null;
+      var li = null;
+      var a = null;
+      var tabs = null;
+      var tab = null;
+      var LLabel = null;
+      var LHasLabel = false;
+      var matclr = "";
+      var icn = "";
+      var noptr = "";
+      var inactive = "";
+      var th = 0;
+      if (!(this.GetContainer() != null)) return;
+      if (!(this.GetElementHandle() != null) || this.IsUpdating()) return;
+      tab = null;
+      if (this.GetControlsCount() > 0) {
+        this.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsNone);
+        LLabel = this.GetElementHandle().firstChild;
+        LHasLabel = (LLabel != null) && (LLabel.tagName === "DIV") && (LLabel.getAttribute("data-design") === "1");
+        if (LHasLabel) {
+          this.GetElementHandle().removeChild(this.GetElementHandle().firstChild);
+          this.GetElementHandle().style.removeProperty("border");
+        };
+        tabs = pas.Classes.TStringList.$create("Create$1");
+        shidden = "{#hidden#}";
+        vistabindex = this.FTabIndex;
+        for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          if ((pas.Classes.TComponentStateItem.csDestroying in this.GetControls(i).FComponentState) && (i <= this.FTabIndex)) vistabindex += 1;
+          if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i)) && !(pas.Classes.TComponentStateItem.csDestroying in this.GetControls(i).FComponentState)) {
+            tab = this.GetControls(i);
+            icn = "";
+            if (tab.FTabEnabled) {
+              ena = this}
+             else ena = null;
+            if (tab.FTabVisible) {
+              if (tab.FMaterialGlyph !== "") {
+                matclr = "";
+                inactive = "";
+                if (!tab.FEnabled) inactive = " md-light md-inactive";
+                if (tab.FMaterialGlyphColor !== -1) matclr = ";color:" + pas["WEBLib.Graphics"].ColorToHTML(tab.FMaterialGlyphColor);
+                noptr = "pointer-events:none";
+                icn = '<i class="' + pas["WEBLib.Controls"].GetMaterialClass(tab.FMaterialGlyphType) + inactive + '" style="' + noptr + ";font-size:" + pas.SysUtils.IntToStr(tab.FMaterialGlyphSize) + "px" + matclr + '">' + tab.FMaterialGlyph + "</i>&nbsp;";
+              };
+              tabs.AddObject(icn + tab.FCaption,ena);
+            } else tabs.AddObject(shidden,ena);
+            tab.BeginUpdate();
+            if (vistabindex === i) {
+              tab.SetAlign(pas["WEBLib.Controls"].TAlign.alClient)}
+             else tab.SetAlign(pas["WEBLib.Controls"].TAlign.alNone);
+            tab.SetAlignWithMargins(true);
+            tab.FMargins.SetLeft(0);
+            tab.FMargins.SetRight(0);
+            tab.FMargins.SetBottom(0);
+            tab.SetVisible(vistabindex === i);
+            tab.ResetUpdate();
+            if (vistabindex === i) tab.GetElementHandle().parentElement.insertBefore(tab.GetElementHandle(),null);
+            tab.GetElementHandle().style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(tab.FColor));
+          };
+        };
+        cid = this.GetID();
+        if (cid === "") cid = this.FName;
+        for (var $l1 = 0, $end1 = this.GetContainer().childNodes.length - 1; $l1 <= $end1; $l1++) {
+          i = $l1;
+          n = this.GetContainer().childNodes.item(i);
+          if ((n != null) && (n.getAttribute("id") === (cid + "_UL"))) this.GetContainer().removeChild(n);
+        };
+        this.GetContainer().setAttribute("class","");
+        if (!this.FEnabled) {
+          this.GetElementHandle().style.setProperty("pointer-events","none")}
+         else this.GetElementHandle().style.setProperty("pointer-events","auto");
+        ul = document.createElement("UL");
+        ul.setAttribute("class",this.FElementClassName);
+        ul.setAttribute("id",cid + "_UL");
+        if (this.FElementClassName !== "") {
+          ul.setAttribute("role","tablist")}
+         else {
+          ul.style.setProperty("list-style-type","none");
+          ul.style.setProperty("margin","0");
+          ul.style.setProperty("padding","0");
+          ul.style.setProperty("display","inline-block");
+        };
+        if (!this.FShowTabs) ul.style.setProperty("display","none");
+        this.GetContainer().appendChild(ul);
+        for (var $l2 = 0, $end2 = tabs.GetCount() - 1; $l2 <= $end2; $l2++) {
+          i = $l2;
+          s = tabs.Get(i);
+          if (s !== shidden) {
+            if (s === "") s = "tab" + pas.SysUtils.IntToStr(i);
+            li = document.createElement("LI");
+            if (this.FElementClassName !== "") {
+              if (this.FElementTabItemClassName === "") {
+                li.setAttribute("class","nav-item")}
+               else li.setAttribute("class",this.FElementTabItemClassName);
+            } else {
+              li.style.setProperty("float","left");
+              if (this.FBorderStyle !== pas["WEBLib.Controls"].TBorderStyle.bsNone) li.style.setProperty("border-bottom","1px solid lightgray");
+            };
+            if (tabs.GetObject(i) === null) {
+              li.style.setProperty("pointer-events","none");
+              li.style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FDisabledTextColor));
+            };
+            if (this.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) li.setAttribute("draggable","true");
+            pas["WEBLib.Controls"].SetHTMLElementFont(li,this.FFont,!((this.FElementClassName === "") && (this.FElementFont === pas["WEBLib.Controls"].TElementFont.efProperty)));
+            ul.appendChild(li);
+            if (!this.FEnabled) {
+              a = document.createElement("SPAN")}
+             else {
+              a = document.createElement("A");
+              if (this.FUseHash) a.setAttribute("href","#" + s);
+            };
+            if (this.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) a.setAttribute("draggable","false");
+            a.innerHTML = s;
+            a.setAttribute("id",cid + "_" + pas.SysUtils.IntToStr(i));
+            if (this.FElementClassName !== "") {
+              if (this.FTabIndex === i) {
+                if (this.FElementTabActiveClassName === "") {
+                  a.setAttribute("class","nav-link active")}
+                 else a.setAttribute("class",this.FElementTabActiveClassName);
+              } else {
+                if (this.FElementTabClassName === "") {
+                  a.setAttribute("class","nav-link")}
+                 else a.setAttribute("class",this.FElementTabClassName);
+              };
+              a.setAttribute("role","tab");
+              a.setAttribute("data-toggle","tab");
+              a.setAttribute("aria-controls",s);
+              if (this.FTabIndex === i) {
+                a.setAttribute("aria-selected","true")}
+               else a.setAttribute("aria-selected","false");
+            } else {
+              a.style.setProperty("display","block");
+              a.style.setProperty("text-align","center");
+              a.style.setProperty("padding","3px 15px");
+              a.style.setProperty("text-decoration","none");
+              a.style.setProperty("min-width","50px");
+              a.style.setProperty("color","inherit");
+              a.style.setProperty("font-family","inherit");
+              a.style.setProperty("font-style","inherit");
+              a.style.setProperty("font-size","inherit");
+              if (this.FTabIndex === i) {
+                if (this.FSelectedColor !== -1) a.style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(this.FSelectedColor));
+                if (this.FSelectedTextColor !== -1) a.style.setProperty("color",pas["WEBLib.Graphics"].ColorToHTML(this.FSelectedTextColor));
+              };
+            };
+            li.appendChild(a);
+          };
+        };
+        for (var $l3 = 0, $end3 = this.GetControlsCount() - 1; $l3 <= $end3; $l3++) {
+          i = $l3;
+          if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) {
+            th = Math.round(ul.offsetHeight) - 1;
+            this.GetControls(i).FMargins.SetTop(th);
+            this.GetControls(i).GetElementHandle().style.setProperty("white-space","");
+          };
+        };
+        tabs = rtl.freeLoc(tabs);
+      } else {
+        if (!this.GetIsLinked()) {
+          this.ClearChildElements();
+          if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+            this.RenderDesigning("TWebPageControl",this.GetContainer(),this,true,"");
+          };
+        };
+      };
+      this.DoUpdateResize();
+      if (tab != null) {
+        tab.SetAlign(pas["WEBLib.Controls"].TAlign.alNone);
+        tab.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+      };
+      this.UpdateElement();
+      if (!this.GetIsLinked() && (this.GetControlsCount() === 0)) {
+        this.GetElementHandle().style.setProperty("border","1px solid lightgray");
+      };
+    };
+    this.DoUpdateResize = function () {
+      var i = 0;
+      var vistabindex = 0;
+      for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) this.GetControls(i).SetVisible(false);
+      };
+      for (var $l1 = 0, $end1 = this.GetControlsCount() - 1; $l1 <= $end1; $l1++) {
+        i = $l1;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) {
+          this.GetControls(i).SetVisible(true);
+          this.GetControls(i).SetAlign(pas["WEBLib.Controls"].TAlign.alNone);
+          this.GetControls(i).SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+          this.GetControls(i).SetVisible(false);
+        };
+      };
+      vistabindex = this.FTabIndex;
+      for (var $l2 = 0, $end2 = this.GetControlsCount() - 1; $l2 <= $end2; $l2++) {
+        i = $l2;
+        if ((pas.Classes.TComponentStateItem.csDestroying in this.GetControls(i).FComponentState) && (i <= this.FTabIndex)) vistabindex += 1;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) {
+          this.GetControls(i).SetVisible(vistabindex === i);
+        };
+      };
+    };
+    this.Loaded = function () {
+      pas["WEBLib.Controls"].TCustomControl.Loaded.call(this);
+      this.DoUpdateList();
+      this.SetTabIndex(this.FTabIndex);
+      this.FOldVisible = this.FVisible;
+    };
+    this.VisibleChanged = function () {
+      pas["WEBLib.Controls"].TControl.VisibleChanged.call(this);
+      if (this.FOldVisible !== this.FVisible) {
+        this.DoUpdateList();
+        this.FOldVisible = this.FVisible;
+      };
+    };
+    this.ItemsChanged = function (Sender) {
+      var i = 0;
+      var ts = null;
+      if ((this.PageCount() === 0) && (this.FItems.GetCount() > 0) && (this.GetElementHandle().childElementCount > 0)) {
+        this.GetElementHandle().removeChild(this.GetElementHandle().firstChild);
+      };
+      for (var $l = 0, $end = this.FItems.GetCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if (this.PageCount() <= i) {
+          ts = $mod.TTabSheet.$create("Create$1",[this.FOwner]);
+          ts.SetParent(this);
+          ts.SetName(this.FName + "sheet" + pas.SysUtils.IntToStr(i + 1));
+        };
+        this.GetPage(i).SetCaption(this.FItems.Get(i));
+      };
+      for (var $l1 = this.PageCount() - 1; $l1 >= 0; $l1--) {
+        i = $l1;
+        if (i >= this.FItems.GetCount()) {
+          ts = this.GetPage(i);
+          ts = rtl.freeLoc(ts);
+        };
+      };
+      this.DoUpdateList();
+    };
+    this.SetParent = function (AValue) {
+      var ts = null;
+      var frm = null;
+      pas["WEBLib.Controls"].TControl.SetParent.apply(this,arguments);
+      if (this.FDesignTime$1) {
+        frm = pas["WEBLib.Forms"].GetParentForm(this);
+        this.FDesignTime$1 = false;
+        ts = $mod.TWebTabSheet.$create("Create$1",[frm]);
+        ts.SetParent(this);
+        ts.SetCaption("Page1");
+        ts.SetName(this.GetUniqueName());
+        ts = $mod.TWebTabSheet.$create("Create$1",[frm]);
+        ts.SetParent(this);
+        ts.SetCaption("Page2");
+        ts.SetName(this.GetUniqueName());
+      };
+      this.DoUpdateList();
+    };
+    this.GetUniqueName = function () {
+      var Result = "";
+      var i = 0;
+      var id = 0;
+      var found = false;
+      var AName = "";
+      id = 1;
+      AName = this.FName + "sheet";
+      do {
+        Result = AName + pas.SysUtils.IntToStr(id);
+        found = true;
+        for (var $l = 0, $end = this.FOwner.GetComponentCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          if (this.FOwner.GetComponent(i).FName === Result) {
+            found = false;
+            id += 1;
+            break;
+          };
+        };
+      } while (!found);
+      return Result;
+    };
+    this.EnableDrag = function () {
+      var $Self = this;
+      function AddDraggableAttribute(AElement) {
+        var I = 0;
+        var tn = "";
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          tn = AElement.children.item(I).tagName;
+          if (tn === "LI") {
+            AElement.children.item(I).setAttribute("draggable","true");
+            AddDraggableAttribute(AElement.children.item(I));
+          } else if (tn === "A") {
+            AElement.children.item(I).setAttribute("draggable","false")}
+           else if (tn === "UL") AddDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      AddDraggableAttribute(this.GetContainer());
+    };
+    this.DisableDrag = function () {
+      var $Self = this;
+      function RemoveDraggableAttribute(AElement) {
+        var I = 0;
+        var tn = "";
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          tn = AElement.children.item(I).tagName;
+          if (tn === "LI") {
+            AElement.children.item(I).removeAttribute("draggable");
+            RemoveDraggableAttribute(AElement.children.item(I));
+          } else if (tn === "A") {
+            AElement.children.item(I).removeAttribute("draggable")}
+           else if (tn === "UL") RemoveDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      RemoveDraggableAttribute(this.GetContainer());
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FDesignTime$1 = (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) && !((pas.Classes.TComponentStateItem.csReading in this.FOwner.FComponentState) || (pas.Classes.TComponentStateItem.csLoading in this.FOwner.FComponentState));
+      this.FControlStyle = rtl.unionSet(this.FControlStyle,rtl.createSet(pas["WEBLib.Controls"].TControlStyleValue.csAcceptsControls));
+      this.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsNone);
+      this.FItems = pas.Classes.TStringList.$create("Create$1");
+      this.FItems.FOnChange = rtl.createCallback(this,"ItemsChanged");
+      this.FTabIndex = 0;
+      this.FPrevTabIndex = this.FTabIndex;
+      this.FShowTabs = true;
+      this.FUseHash = true;
+      this.SetTabStop(false);
+      this.FSelectedColor = 12632256;
+      this.FSelectedTextColor = 0;
+      if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+        this.SetWidth(400);
+        this.SetHeight(300);
+      };
+      this.FEnablePropagation = true;
+      this.FOldVisible = true;
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FItems");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.Clear = function () {
+      this.FItems.Clear();
+    };
+    this.EndUpdate = function () {
+      pas["WEBLib.Controls"].TCustomControl.EndUpdate.call(this);
+      this.DoUpdateList();
+    };
+    this.SelectNextPage = function (GoForward) {
+      if (GoForward) {
+        if (this.FTabIndex < (this.PageCount() - 1)) {
+          this.SetTabIndex(this.FTabIndex + 1)}
+         else this.SetTabIndex(0);
+      } else {
+        if (this.FTabIndex > 0) {
+          this.SetTabIndex(this.FTabIndex - 1)}
+         else this.SetTabIndex(this.PageCount() - 1);
+      };
+    };
+    this.PageCount = function () {
+      var Result = 0;
+      var i = 0;
+      Result = 0;
+      for (var $l = 0, $end = this.GetControlsCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        if ($mod.TTabSheet.isPrototypeOf(this.GetControls(i))) Result += 1;
+      };
+      return Result;
+    };
+    this.PageIndexFromElement = function (AElement) {
+      var Result = 0;
+      var sid = "";
+      var cid = "";
+      var i = 0;
+      Result = -1;
+      sid = "";
+      if (AElement.tagName === "LI") AElement = AElement.firstChild;
+      if (AElement.hasAttribute("id")) sid = AElement.getAttribute("id");
+      if (sid !== "") {
+        cid = this.GetID();
+        if (cid === "") cid = this.FName;
+        sid = pas.SysUtils.StringReplace(sid,cid + "_","",{});
+        if (pas.SysUtils.TryStrToInt(sid,{get: function () {
+            return i;
+          }, set: function (v) {
+            i = v;
+          }})) Result = i;
+      };
+      return Result;
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("BorderStyle",2,pas["WEBLib.Controls"].$rtti["TBorderStyle"],"FBorderStyle","SetBorderStyle",{Default: pas["WEBLib.Controls"].TBorderStyle.bsNone});
+    $r.addProperty("ChildOrder",2,rtl.longint,"FChildOrder","SetChildOrderEx",{Default: 0});
+    $r.addProperty("DisabledTextColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FDisabledTextColor","SetDisabledTextColor",{Default: 8421504});
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementTabClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabClassName","FElementTabClassName");
+    $r.addProperty("ElementTabActiveClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabActiveClassName","FElementTabActiveClassName");
+    $r.addProperty("ElementTabItemClassName",0,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementTabItemClassName","FElementTabItemClassName");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Enabled",2,rtl.boolean,"FEnabled","SetEnabled",{Default: true});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Hint",2,rtl.string,"FHint","SetHint");
+    $r.addProperty("TabIndex",2,rtl.longint,"FTabIndex","SetTabIndex");
+    $r.addProperty("Left",3,rtl.longint,"GetLeft","SetLeft");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("ShowHint",2,rtl.boolean,"FShowHint","SetShowHint",{Default: false});
+    $r.addProperty("ShowTabs",2,rtl.boolean,"FShowTabs","SetShowTabs",{Default: true});
+    $r.addProperty("SelectedColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FSelectedColor","SetSelectedColor",{Default: 12632256});
+    $r.addProperty("SelectedTextColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FSelectedTextColor","SetSelectedTextColor",{Default: 0});
+    $r.addProperty("TabOrder",2,rtl.longint,"FTabOrder","SetTabOrder");
+    $r.addProperty("TabStop",2,rtl.boolean,"FTabStop","SetTabStop",{Default: true});
+    $r.addProperty("Top",3,rtl.longint,"GetTop","SetTop");
+    $r.addProperty("UseHash",0,rtl.boolean,"FUseHash","FUseHash",{Default: true});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnChange",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnChange","FOnChange");
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnKeyDown",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyDown","FOnKeyDown");
+    $r.addProperty("OnKeyPress",0,pas["WEBLib.Controls"].$rtti["TKeyPressEvent"],"FOnKeyPress","FOnKeyPress");
+    $r.addProperty("OnKeyUp",0,pas["WEBLib.Controls"].$rtti["TKeyEvent"],"FOnKeyUp","FOnKeyUp");
+    $r.addProperty("OnMouseDown",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseDown","FOnMouseDown");
+    $r.addProperty("OnMouseUp",0,pas["WEBLib.Controls"].$rtti["TMouseEvent"],"FOnMouseUp","FOnMouseUp");
+    $r.addProperty("OnMouseMove",0,pas["WEBLib.Controls"].$rtti["TMouseMoveEvent"],"FOnMouseMove","FOnMouseMove");
+    $r.addProperty("OnMouseLeave",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseLeave","FOnMouseLeave");
+    $r.addProperty("OnMouseEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnMouseEnter","FOnMouseEnter");
+    $r.addProperty("OnEnter",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnEnter","FOnEnter");
+    $r.addProperty("OnExit",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnExit","FOnExit");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebPageControl",this.TPageControl,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  this.TProgressBarStyle = {"0": "pbstNormal", pbstNormal: 0, "1": "pbstMarquee", pbstMarquee: 1, "2": "pbstDiv", pbstDiv: 2};
+  this.$rtti.$Enum("TProgressBarStyle",{minvalue: 0, maxvalue: 2, ordtype: 1, enumtype: this.TProgressBarStyle});
+  this.TProgressBarValue = {"0": "pbvNone", pbvNone: 0, "1": "pbvPercentage", pbvPercentage: 1, "2": "pbvAbsolute", pbvAbsolute: 2};
+  this.$rtti.$Enum("TProgressBarValue",{minvalue: 0, maxvalue: 2, ordtype: 1, enumtype: this.TProgressBarValue});
+  rtl.createClass(this,"TProgressBar",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FMax = 0;
+      this.FMin = 0;
+      this.FPosition = 0;
+      this.FStyle = 0;
+      this.FElementBarClassName = "";
+      this.FValue = 0;
+      this.FValueColor = 0;
+    };
+    this.SetStyle = function (Value) {
+      if (this.FStyle !== Value) {
+        this.FStyle = Value;
+        if (this.GetElementHandle() != null) {
+          this.CreateProgressElement(this.GetElementHandle());
+          this.DoUpdate();
+        };
+      };
+    };
+    this.SetElementBarClassName = function (Value) {
+      this.FElementBarClassName = Value;
+      this.DoUpdate();
+    };
+    this.SetValue = function (Value) {
+      this.FValue = Value;
+      this.DoUpdate();
+    };
+    this.SetValueColor = function (Value) {
+      if (this.FValueColor !== Value) {
+        this.FValueColor = Value;
+        this.UpdateElementVisual();
+      };
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      Result = document.createElement("SPAN");
+      this.CreateProgressElement(Result);
+      return Result;
+    };
+    this.SetMax = function (AValue) {
+      this.FMax = AValue;
+      this.DoUpdate();
+    };
+    this.SetMin = function (AValue) {
+      this.FMin = AValue;
+      this.DoUpdate();
+    };
+    this.SetPosition = function (AValue) {
+      if ((AValue >= this.FMin) && (AValue <= this.FMax)) {
+        this.FPosition = AValue;
+        this.DoUpdate();
+      };
+    };
+    this.DoUpdate = function () {
+      var pvalue = 0;
+      var maxvalue = 0;
+      var el = null;
+      var pos = 0;
+      if (!(this.GetContainer() != null)) return;
+      if (this.FMax !== this.FMin) {
+        pos = Math.round(((this.FPosition - this.FMin) / (this.FMax - this.FMin)) * 100)}
+       else pos = 0;
+      if (this.GetIsLinked()) {
+        if (this.GetElementHandle().tagName === "DIV") {
+          if (this.GetElementHandle().getAttribute("role") === "progressbar") {
+            this.GetElementHandle().style.setProperty("width",pas.SysUtils.IntToStr(pos) + "%")}
+           else this.GetElementHandle().innerHTML = pas.SysUtils.IntToStr(pos);
+        } else this.GetElementHandle().setAttribute("value",pas.SysUtils.IntToStr(pos));
+        return;
+      };
+      if (this.FStyle === $mod.TProgressBarStyle.pbstDiv) {
+        el = this.GetElementHandle().firstChild;
+        if (this.FElementClassName !== "") {
+          el.setAttribute("class",this.FElementClassName);
+          this.GetElementHandle().removeAttribute("class");
+        };
+        el.style.setProperty("height",pas.SysUtils.IntToStr(this.GetHeight()) + "px");
+        if (this.FWidthStyle === pas["WEBLib.Controls"].TSizeStyle.ssAbsolute) el.style.setProperty("width",pas.SysUtils.IntToStr(this.GetWidth()) + "px");
+        el = el.firstChild;
+        el.style.setProperty("background-color","#3397FD");
+        if (this.FElementBarClassName !== "") el.setAttribute("class",this.FElementBarClassName);
+        el.setAttribute("role","progressbar");
+        el.style.setProperty("width",pas.SysUtils.IntToStr(pos) + "%");
+        var $tmp = this.FValue;
+        if ($tmp === $mod.TProgressBarValue.pbvPercentage) {
+          el.innerHTML = pas.SysUtils.IntToStr(pos) + "%"}
+         else if ($tmp === $mod.TProgressBarValue.pbvAbsolute) {
+          el.innerHTML = pas.SysUtils.IntToStr(this.FPosition)}
+         else if ($tmp === $mod.TProgressBarValue.pbvNone) el.innerHTML = "&nbsp;";
+      } else {
+        el = this.GetElementHandle().firstChild;
+        el.style.setProperty("width","100%");
+        el.style.setProperty("height","100%");
+        pvalue = this.FPosition - this.FMin;
+        maxvalue = this.FMax - this.FMin;
+        el.setAttribute("max",pas.SysUtils.IntToStr(maxvalue));
+        if (this.FStyle === $mod.TProgressBarStyle.pbstNormal) {
+          el.setAttribute("value",pas.SysUtils.IntToStr(pvalue))}
+         else el.removeAttribute("value");
+      };
+    };
+    this.UpdateElementVisual = function () {
+      var el = null;
+      pas["WEBLib.Controls"].TCustomControl.UpdateElementVisual.call(this);
+      if (this.FValueColor !== -1) {
+        if (this.FStyle === $mod.TProgressBarStyle.pbstDiv) {
+          el = this.GetElementHandle().firstChild;
+          el = el.firstChild;
+          el.style.setProperty("background-color",pas["WEBLib.Graphics"].ColorToHTML(this.FValueColor));
+        } else {
+          el = this.GetElementHandle().firstChild;
+          el.style.setProperty("accent-color",pas["WEBLib.Graphics"].ColorToHTML(this.FValueColor));
+        };
+      };
+    };
+    this.CreateProgressElement = function (AElement) {
+      var d = null;
+      while (AElement.firstChild != null) AElement.removeChild(AElement.firstChild);
+      if (this.FStyle === $mod.TProgressBarStyle.pbstDiv) {
+        d = document.createElement("DIV");
+        d.appendChild(document.createElement("DIV"));
+      } else d = document.createElement("PROGRESS");
+      AElement.appendChild(d);
+    };
+    this.CreateInitialize = function () {
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FMax = 100;
+      this.FMin = 0;
+      this.FPosition = 0;
+      this.FStyle = $mod.TProgressBarStyle.pbstNormal;
+      this.FValueColor = -1;
+    };
+    this.AfterLoadDFMValues = function () {
+      pas.Classes.TComponent.AfterLoadDFMValues.call(this);
+      this.DoUpdate();
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementBarClassName",2,rtl.string,"FElementBarClassName","SetElementBarClassName");
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Height",3,rtl.longint,"GetHeight","SetHeight");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Left",3,rtl.longint,"GetLeft","SetLeft");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("Max",2,rtl.longint,"FMax","SetMax");
+    $r.addProperty("Min",2,rtl.longint,"FMin","SetMin");
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("Position",2,rtl.longint,"FPosition","SetPosition");
+    $r.addProperty("Style",2,$mod.$rtti["TProgressBarStyle"],"FStyle","SetStyle");
+    $r.addProperty("Top",3,rtl.longint,"GetTop","SetTop");
+    $r.addProperty("Value",2,$mod.$rtti["TProgressBarValue"],"FValue","SetValue");
+    $r.addProperty("ValueColor",2,pas["WEBLib.Graphics"].$rtti["TColor"],"FValueColor","SetValueColor",{Default: -1});
+    $r.addProperty("Visible",2,rtl.boolean,"FVisible","SetVisible",{Default: true});
+    $r.addProperty("Width",3,rtl.longint,"GetWidth","SetWidth");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebProgressBar",this.TProgressBar,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  this.$rtti.$MethodVar("TTreeViewNodeEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["Node",pas["WEBLib.TreeNodes"].$rtti["TTreeNode"]]]), methodkind: 0});
+  this.$rtti.$MethodVar("TTreeViewNodeStateEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["Node",pas["WEBLib.TreeNodes"].$rtti["TTreeNode"]],["AState",rtl.boolean]]), methodkind: 0});
+  this.$rtti.$MethodVar("TTreeViewNodeAllowEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["Node",pas["WEBLib.TreeNodes"].$rtti["TTreeNode"]],["Allow",rtl.boolean,1]]), methodkind: 0});
+  this.$rtti.$MethodVar("TTreeViewNodeRenderEvent",{procsig: rtl.newTIProcSig([["Sender",pas.System.$rtti["TObject"]],["Node",pas["WEBLib.TreeNodes"].$rtti["TTreeNode"]],["AElement",pas["WEBLib.Controls"].$rtti["TJSHTMLElementRecord"]]]), methodkind: 0});
+  rtl.createClass(this,"TTreeView",pas["WEBLib.Menus"].TWebCustomControl,function () {
+    this.$init = function () {
+      pas["WEBLib.Menus"].TWebCustomControl.$init.call(this);
+      this.FItems = null;
+      this.FSelected = null;
+      this.FOnCollapsing = null;
+      this.FOnExpanding = null;
+      this.FOnCollapsed = null;
+      this.FOnExpanded = null;
+      this.FOnClickNode = null;
+      this.FOnDblClickNode = null;
+      this.FOnRenderNode = null;
+      this.FAutoExpand = false;
+      this.FOnChange = null;
+      this.FOnChanging = null;
+      this.FElementNodeSelectedClassName = "";
+      this.FElementNodeClassName = "";
+      this.FOnClickRadio = null;
+      this.FOnClickCheckBox = null;
+    };
+    this.$final = function () {
+      this.FItems = undefined;
+      this.FSelected = undefined;
+      this.FOnCollapsing = undefined;
+      this.FOnExpanding = undefined;
+      this.FOnCollapsed = undefined;
+      this.FOnExpanded = undefined;
+      this.FOnClickNode = undefined;
+      this.FOnDblClickNode = undefined;
+      this.FOnRenderNode = undefined;
+      this.FOnChange = undefined;
+      this.FOnChanging = undefined;
+      this.FOnClickRadio = undefined;
+      this.FOnClickCheckBox = undefined;
+      pas["WEBLib.Menus"].TWebCustomControl.$final.call(this);
+    };
+    this.SetItems = function (Value) {
+      this.FItems.Assign(Value);
+    };
+    this.GetSelected = function () {
+      var Result = null;
+      Result = this.FSelected;
+      return Result;
+    };
+    this.SetSelected = function (Value) {
+      var el = null;
+      if (this.FSelected != null) {
+        this.FSelected.UnSelect();
+        el = this.GetNodeElement(this.FSelected);
+        if (el != null) {
+          el.classList.toggle("TVSELECTED");
+          if (this.FElementNodeSelectedClassName !== "") el.classList.toggle(this.FElementNodeSelectedClassName);
+        };
+      };
+      this.FSelected = Value;
+      if (this.FSelected != null) this.FSelected.Select();
+      el = this.GetNodeElement(this.FSelected);
+      if (el != null) {
+        el.classList.toggle("TVSELECTED");
+        if (this.FElementNodeSelectedClassName !== "") el.classList.toggle(this.FElementNodeSelectedClassName);
+      };
+    };
+    this.SetElementNodeClassName = function (Value) {
+      if (this.FElementNodeClassName !== Value) {
+        this.FElementNodeClassName = Value;
+        this.UpdateElement();
+      };
+    };
+    this.SetElementNodeSelectedClassName = function (Value) {
+      if (this.FElementNodeSelectedClassName !== Value) {
+        this.FElementNodeSelectedClassName = Value;
+        this.UpdateElement();
+      };
+    };
+    this.GetTopItem = function () {
+      var Result = null;
+      var el = null;
+      var tn = null;
+      var h = 0.0;
+      Result = null;
+      if (this.FItems.GetSiblingCount() === 0) return Result;
+      h = this.GetElementHandle().getBoundingClientRect().top;
+      tn = this.FItems.GetSiblingFromIndex(0);
+      while (tn != null) {
+        el = this.GetNodeElement(tn);
+        if (el.getBoundingClientRect().top >= h) {
+          Result = tn;
+          break;
+        };
+        tn = tn.GetNext();
+      };
+      return Result;
+    };
+    this.SetTopItem = function (Value) {
+      var el = null;
+      var h = 0.0;
+      var ch = 0.0;
+      if (!(Value != null)) throw pas.SysUtils.Exception.$create("Create$1",["Value is not assigned"]);
+      el = this.GetNodeElement(Value);
+      h = el.getBoundingClientRect().top + this.GetElementHandle().scrollTop;
+      ch = this.GetElementHandle().getBoundingClientRect().top;
+      this.GetElementHandle().scrollTop = Math.round(h - ch);
+    };
+    this.DoRenderNode = function (ANode, AElement) {
+      var LElementRec = pas["WEBLib.Controls"].TJSHTMLElementRecord.$new();
+      if (this.FOnRenderNode != null) {
+        LElementRec.element = AElement;
+        this.FOnRenderNode(this,ANode,pas["WEBLib.Controls"].TJSHTMLElementRecord.$clone(LElementRec));
+      };
+    };
+    this.RenderControl = function (ANode, AElementName) {
+      var Result = "";
+      var chk = "";
+      var rname = "";
+      var l = 0;
+      chk = "";
+      if (ANode.FChecked) chk = " checked";
+      rname = AElementName;
+      l = rname.length;
+      if (pas.System.Pos("_",rname) > 0) {
+        while (rname.charAt(l - 1) !== "_") {
+          l -= 1;
+        };
+        rname = pas.System.Copy(rname,1,l - 1);
+      };
+      var $tmp = ANode.FNodeType;
+      if ($tmp === pas["WEBLib.TreeNodes"].TNodeType.ntCheckbox) {
+        Result = '<input type="checkbox"' + chk + "></input>&nbsp;" + ANode.FText}
+       else if ($tmp === pas["WEBLib.TreeNodes"].TNodeType.ntRadioButton) {
+        Result = '<input type="radio"' + chk + ' name="' + rname + '"></input>&nbsp;' + ANode.FText}
+       else if ($tmp === pas["WEBLib.TreeNodes"].TNodeType.ntText) Result = ANode.FText;
+      return Result;
+    };
+    this.RenderNode = function (ANode, AElementName) {
+      var Result = null;
+      Result = document.createElement("SPAN");
+      if (AElementName !== "") Result.setAttribute("id",AElementName);
+      Result.innerHTML = this.RenderControl(ANode,AElementName);
+      Result.classList.add("TVNODE");
+      if (this.FElementNodeClassName !== "") Result.classList.add(this.FElementNodeClassName);
+      if (this.GetSelected() != null) {
+        if (this.GetSelected() === ANode) {
+          Result.classList.add("TVSELECTED");
+          if (this.FElementNodeSelectedClassName !== "") Result.classList.add(this.FElementNodeSelectedClassName);
+        };
+      };
+      if (ANode.FHint !== "") Result.setAttribute("title",ANode.FHint);
+      return Result;
+    };
+    this.RenderNodes = function () {
+      var $Self = this;
+      function RenderChildNode(LinkElement, ANode, AElementName) {
+        var sp = null;
+        var nd = null;
+        sp = document.createElement("SPAN");
+        if (AElementName !== "") sp.setAttribute("id",AElementName);
+        sp.addEventListener("click",rtl.createSafeCallback($Self,"HandleNode"));
+        sp.addEventListener("dblclick",rtl.createSafeCallback($Self,"HandleDblClick"));
+        nd = document.createElement("SPAN");
+        if ($Self.FAutoExpand) nd.style.setProperty("pointer-events","none");
+        nd.innerHTML = $Self.RenderControl(ANode,AElementName);
+        nd.classList.add("TVNODE");
+        if ($Self.FElementNodeClassName !== "") nd.classList.add($Self.FElementNodeClassName);
+        if (!$Self.FAutoExpand) nd.classList.add("TVNOCURSOR");
+        if ($Self.GetSelected() != null) {
+          if ($Self.GetSelected() === ANode) {
+            nd.classList.add("TVSELECTED");
+            if ($Self.FElementNodeSelectedClassName !== "") nd.classList.add($Self.FElementNodeSelectedClassName);
+          };
+        };
+        if (ANode.FHint !== "") nd.setAttribute("title",ANode.FHint);
+        LinkElement.appendChild(sp);
+        sp.appendChild(nd);
+        if (ANode.FIsExpanded) {
+          sp.setAttribute("class","TVCARET TVCARET-DOWN")}
+         else sp.setAttribute("class","TVCARET");
+        $Self.DoRenderNode(ANode,nd);
+      };
+      function FillChilds(ParentElement, ParentName, ANode) {
+        var i = 0;
+        var ul = null;
+        var nd = null;
+        var li = null;
+        var nn = "";
+        ul = document.createElement("UL");
+        ul.setAttribute("class","TVUL");
+        ul.setAttribute("id",ParentName);
+        if ($Self.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) ul.setAttribute("draggable","true");
+        ParentElement.appendChild(ul);
+        if (!(ANode != null)) {
+          for (var $l = 0, $end = $Self.FItems.GetSiblingCount() - 1; $l <= $end; $l++) {
+            i = $l;
+            nn = ParentName + "_" + pas.SysUtils.IntToStr(i);
+            li = document.createElement("LI");
+            if ($Self.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) li.setAttribute("draggable","true");
+            ul.appendChild(li);
+            if ($Self.FItems.GetSiblingFromIndex(i).GetCount() > 0) {
+              RenderChildNode(li,$Self.FItems.GetSiblingFromIndex(i),nn);
+              FillChilds(li,nn,$Self.FItems.GetSiblingFromIndex(i));
+            } else {
+              nd = $Self.RenderNode($Self.FItems.GetSiblingFromIndex(i),nn);
+              li.appendChild(nd);
+              $Self.DoRenderNode($Self.FItems.GetSiblingFromIndex(i),nd);
+              nd.addEventListener("click",rtl.createSafeCallback($Self,"HandleClick"));
+              nd.addEventListener("dblclick",rtl.createSafeCallback($Self,"HandleDblClick"));
+            };
+          };
+        } else {
+          if (ANode.FIsExpanded) {
+            ul.setAttribute("class","TVNESTED TVUL TVACTIVE")}
+           else ul.setAttribute("class","TVNESTED TVUL");
+          for (var $l1 = 0, $end1 = ANode.GetCount() - 1; $l1 <= $end1; $l1++) {
+            i = $l1;
+            nn = ParentName + "_" + pas.SysUtils.IntToStr(i);
+            li = document.createElement("LI");
+            if ($Self.FDragMode === pas["WEBLib.Controls"].TDragMode.dmAutomatic) li.setAttribute("draggable","true");
+            ul.appendChild(li);
+            if (ANode.GetItem(i).GetCount() > 0) {
+              RenderChildNode(li,ANode.GetItem(i),nn);
+              FillChilds(li,nn,ANode.GetItem(i));
+            } else {
+              nd = $Self.RenderNode(ANode.GetItem(i),nn);
+              li.appendChild(nd);
+              $Self.DoRenderNode(ANode.GetItem(i),nd);
+              nd.addEventListener("click",rtl.createSafeCallback($Self,"HandleClick"));
+              nd.addEventListener("dblclick",rtl.createSafeCallback($Self,"HandleDblClick"));
+            };
+          };
+        };
+      };
+      if (!(this.GetElementHandle() != null)) return;
+      while (this.GetElementHandle().childNodes.length > 0) this.GetElementHandle().removeChild(this.GetElementHandle().firstChild);
+      FillChilds(this.GetElementHandle(),this.FormPrefix() + this.FName,null);
+      this.GetElementHandle().style.setProperty("overflow","auto");
+    };
+    this.CreateNodes = function () {
+      var Result = null;
+      Result = pas["WEBLib.TreeNodes"].TTreeNodes.$create("Create$1",[this]);
+      return Result;
+    };
+    this.CreateElement = function () {
+      var Result = null;
+      var tn = null;
+      if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+        this.BeginUpdate();
+        tn = this.FItems.Add$2('<font color="#E5413C" style="font-size:10pt">&#x25FC;</font> Item 1');
+        this.FItems.AddChild(tn,"Child Item 1");
+        tn = this.FItems.Add$2('<font color="#F39527" style="font-size:10pt">&#x25FC;</font> Item 2');
+        this.FItems.AddChild(tn,"Child Item 2");
+        tn = this.FItems.Add$2('<font color="#BDC6CB" style="font-size:10pt">&#x25FC;</font> Item 3');
+        this.FItems.AddChild(tn,"Child Item 3");
+        this.EndUpdate();
+      };
+      Result = document.createElement("DIV");
+      return Result;
+    };
+    this.DoNodesChanged = function (Sender) {
+    };
+    this.DoExpandedChanged = function (Sender, ANode) {
+      var el = null;
+      var su = null;
+      var i = 0;
+      if (ANode.GetCount() > 0) {
+        el = this.GetNodeElement(ANode);
+        if ((el != null) && (el.parentElement != null) && (el.parentElement.parentElement != null)) {
+          su = el.parentElement.parentElement.querySelector(".TVNESTED");
+          if (su != null) {
+            if (ANode.FIsExpanded) {
+              su.classList.add("TVACTIVE")}
+             else su.classList.remove("TVACTIVE");
+            el.parentElement.classList.toggle("TVCARET-DOWN");
+          };
+        };
+        if (this.FAutoExpand) {
+          for (var $l = 0, $end = ANode.GetCount() - 1; $l <= $end; $l++) {
+            i = $l;
+            if (ANode.GetItem(i).GetCount() > 0) {
+              ANode.GetItem(i).SetIsExpanded(ANode.FIsExpanded);
+            };
+          };
+        };
+      };
+    };
+    this.DoSelectionChanged = function (Sender, ANode, IsSelected) {
+      if (IsSelected) {
+        this.SetSelected(ANode)}
+       else this.SetSelected(null);
+    };
+    this.HandleNode = function (Event) {
+      var Result = false;
+      var el = null;
+      var n = null;
+      var Allow = false;
+      el = Event.srcElement;
+      if ((el != null) && el.hasAttribute("id")) {
+        n = this.GetNodeFromID(el.getAttribute("id"));
+        Allow = true;
+        if (n.FIsExpanded) {
+          if (this.FOnCollapsing != null) this.FOnCollapsing(this,n,{get: function () {
+              return Allow;
+            }, set: function (v) {
+              Allow = v;
+            }});
+        } else {
+          if (this.FOnExpanding != null) this.FOnExpanding(this,n,{get: function () {
+              return Allow;
+            }, set: function (v) {
+              Allow = v;
+            }});
+        };
+        if (Allow) {
+          n.SetIsExpanded(!n.FIsExpanded);
+          if (n.FIsExpanded) {
+            if (this.FOnExpanded != null) this.FOnExpanded(this,n);
+          } else {
+            if (this.FOnCollapsed != null) this.FOnCollapsed(this,n);
+          };
+        };
+        this.DoChangeSelection(n);
+        if (this.FOnClickNode != null) this.FOnClickNode(this,n);
+        Result = true;
+        Event.preventDefault();
+      } else {
+        if (el != null) {
+          el = el.parentElement;
+          if (el.hasAttribute("id")) {
+            n = this.GetNodeFromID(el.getAttribute("id"));
+            this.DoChangeSelection(n);
+            if (this.FOnClickNode != null) this.FOnClickNode(this,n);
+            Result = true;
+            Event.preventDefault();
+          };
+        };
+      };
+      return Result;
+    };
+    this.HandleClick = function (Event) {
+      var Result = false;
+      var n = null;
+      var el = null;
+      var chk = null;
+      Result = true;
+      el = Event.srcElement;
+      while ((el != null) && (el.tagName !== "SPAN")) el = el.parentElement;
+      if (el != null) {
+        if (el.hasAttribute("id")) {
+          n = this.GetNodeFromID(el.getAttribute("id"));
+          if (n.FNodeType in rtl.createSet(pas["WEBLib.TreeNodes"].TNodeType.ntCheckbox,pas["WEBLib.TreeNodes"].TNodeType.ntRadioButton)) {
+            chk = el.firstChild;
+            if (chk.tagName === "INPUT") {
+              if (chk.getAttribute("type") === "radio") {
+                this.ClickRadio(n,chk.checked)}
+               else this.ClickCheck(n,chk.checked);
+              n.SetChecked(chk.checked);
+            };
+          };
+          if (this.FOnClick != null) this.FOnClick(this);
+          if (n != null) {
+            this.DoChangeSelection(n);
+            if (this.FOnClickNode != null) this.FOnClickNode(this,n);
+          };
+        };
+      };
+      return Result;
+    };
+    this.HandleDblClick = function (Event) {
+      var Result = false;
+      var n = null;
+      var el = null;
+      Result = true;
+      el = Event.srcElement;
+      while ((el != null) && (el.tagName !== "SPAN")) el = el.parentElement;
+      if (el != null) {
+        if (!el.hasAttribute("id")) el = el.parentElement;
+        if (el.hasAttribute("id")) {
+          n = this.GetNodeFromID(el.getAttribute("id"));
+          if (this.FOnDblClick != null) this.FOnDblClick(this);
+          if ((n != null) && (this.FOnDblClickNode != null)) this.FOnDblClickNode(this,n);
+          n.SetIsExpanded(!n.FIsExpanded);
+        };
+      };
+      Event.stopPropagation();
+      Result = true;
+      return Result;
+    };
+    this.ClickCheck = function (ANode, AState) {
+      if (this.FOnClickCheckBox != null) this.FOnClickCheckBox(this,ANode,AState);
+    };
+    this.ClickRadio = function (ANode, AState) {
+      if (this.FOnClickRadio != null) this.FOnClickRadio(this,ANode,AState);
+    };
+    this.KeyDown = function (Key, Shift) {
+      var tn = null;
+      var sn = null;
+      var ln = null;
+      tn = this.GetSelected();
+      if (Key.get() === 36) {
+        if (this.FItems.GetSiblingFromIndex(0) != null) this.DoChangeSelection(this.FItems.GetSiblingFromIndex(0));
+      };
+      if ((Key.get() === 35) && (this.FItems.GetSiblingCount() > 0)) {
+        tn = this.FItems.GetSiblingFromIndex(this.FItems.GetSiblingCount() - 1);
+        while (tn.FIsExpanded) {
+          if (tn.GetCount() > 0) tn = tn.GetItem(tn.GetCount() - 1);
+        };
+        this.DoChangeSelection(tn);
+      };
+      if (Key.get() === 40) {
+        if (tn != null) {
+          if (tn.FIsExpanded && (tn.GetCount() > 0)) {
+            tn = tn.GetFirstChild();
+          } else tn = tn.GetNextSibling();
+          if (!(tn != null)) {
+            tn = this.GetSelected();
+            sn = tn;
+            while (!(sn.GetNextSibling() != null) && (sn.GetParent() != null)) {
+              sn = sn.GetParent();
+              if (sn != null) ln = sn.GetNextSibling();
+              if (ln != null) {
+                tn = ln;
+              };
+            };
+          };
+          if (tn != null) this.DoChangeSelection(tn);
+        };
+      };
+      if (Key.get() === 38) {
+        if (tn != null) {
+          tn = tn.GetPrevSibling();
+          if (tn != null) {
+            sn = tn;
+            while ((sn != null) && sn.FIsExpanded && (sn.GetCount() > 0)) {
+              sn = sn.GetItem(tn.GetCount() - 1);
+              if (sn != null) tn = sn;
+            };
+            this.DoChangeSelection(tn);
+          } else {
+            tn = this.GetSelected().GetParent();
+            if (tn != null) this.DoChangeSelection(tn);
+          };
+        };
+      };
+      if (Key.get() === 39) {
+        if (tn != null) this.GetSelected().SetIsExpanded(true);
+      };
+      if (Key.get() === 37) {
+        if (tn != null) this.GetSelected().SetIsExpanded(false);
+      };
+      if (Key.get() in rtl.createSet(37,39,40,38)) {
+        Key.set(0);
+        return;
+      };
+      pas["WEBLib.Controls"].TControl.KeyDown.apply(this,arguments);
+    };
+    this.DoChangeSelection = function (NewNode) {
+      var Allow = false;
+      Allow = true;
+      if (this.FOnChanging != null) this.FOnChanging(this,NewNode,{get: function () {
+          return Allow;
+        }, set: function (v) {
+          Allow = v;
+        }});
+      if (Allow) {
+        this.SetSelected(NewNode);
+        if (this.FOnChange != null) this.FOnChange(this,NewNode);
+      };
+    };
+    this.EnableDrag = function () {
+      var $Self = this;
+      function AddDraggableAttribute(AElement) {
+        var I = 0;
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          if (AElement.children.item(I).tagName === "LI") {
+            AElement.children.item(I).setAttribute("draggable","true");
+            AddDraggableAttribute(AElement.children.item(I));
+          } else AddDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      AddDraggableAttribute(this.GetContainer());
+    };
+    this.DisableDrag = function () {
+      var $Self = this;
+      function RemoveDraggableAttribute(AElement) {
+        var I = 0;
+        for (var $l = 0, $end = AElement.children.length - 1; $l <= $end; $l++) {
+          I = $l;
+          if (AElement.children.item(I).tagName === "LI") {
+            AElement.children.item(I).removeAttribute("draggable");
+            RemoveDraggableAttribute(AElement.children.item(I));
+          } else RemoveDraggableAttribute(AElement.children.item(I));
+        };
+      };
+      if (!(this.GetContainer() != null)) return;
+      RemoveDraggableAttribute(this.GetContainer());
+    };
+    this.FormPrefix = function () {
+      var Result = "";
+      var frm = null;
+      Result = "";
+      frm = pas["WEBLib.Forms"].GetParentForm(this);
+      if (frm != null) Result = frm.$classname;
+      return Result;
+    };
+    this.InitCSSLibrary = function (ALibrary) {
+      if (ALibrary === pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap) {
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+      };
+    };
+    this.CreateInitialize = function () {
+      var css = "";
+      pas["WEBLib.Controls"].TCustomControl.CreateInitialize.call(this);
+      this.FSelected = null;
+      this.FItems = this.CreateNodes();
+      this.FItems.FOnChange = rtl.createCallback(this,"DoNodesChanged");
+      this.FItems.FOnExpandedChange = rtl.createCallback(this,"DoExpandedChanged");
+      this.FItems.FOnSelectionChange = rtl.createCallback(this,"DoSelectionChanged");
+      css = ".TVUL {" + " list-style-type: none;" + " margin: 0;" + " padding-left: 15px;" + "}" + "\r\n" + " .TVCARET {" + "  cursor: pointer;" + "  user-select: none;" + "}" + "\r\n" + ".TVCARET::before {" + 'content: "\\25B6";' + "display: inline-block;" + "margin-right: 6px;" + "}" + "\r\n" + ".TVCARET-DOWN::before {" + "transform: rotate(90deg);" + "}" + "\r\n" + ".TVNESTED {" + "  display: none;" + "}" + "\r\n" + ".TVACTIVE {" + "  display: block;" + "}" + "\r\n" + ".TVNODE {" + " padding: 3px;" + " display: inline-block;" + "}" + "\r\n" + ".TVNOCURSOR {" + " cursor: initial;" + "}" + "\r\n" + ".TVSELECTED {" + "  background-color: #0000ff;" + "  color: #ffffff;" + "}";
+      this.AddControlStyle(css);
+      if (pas.Classes.TComponentStateItem.csDesigning in this.FComponentState) {
+        this.SetWidth(200);
+        this.SetHeight(200);
+      };
+    };
+    this.Destroy = function () {
+      rtl.free(this,"FItems");
+      pas["WEBLib.Controls"].TCustomControl.Destroy.call(this);
+    };
+    this.BeginUpdate = function () {
+      pas["WEBLib.Controls"].TControl.BeginUpdate.call(this);
+    };
+    this.EndUpdate = function () {
+      pas["WEBLib.Controls"].TCustomControl.EndUpdate.call(this);
+      if (!this.IsUpdating()) {
+        this.SetSelected(null);
+        this.RenderNodes();
+      };
+    };
+    this.GetNodeFromID = function (AId) {
+      var Result = null;
+      var s = "";
+      var sl = null;
+      var n = null;
+      var i = 0;
+      var j = 0;
+      var e = 0;
+      Result = null;
+      s = AId;
+      s = pas.System.Copy(s,((this.FormPrefix() + this.FName)).length + 2,s.length);
+      if (s !== "") {
+        sl = pas.Classes.TStringList.$create("Create$1");
+        sl.SetDelimiter("_");
+        sl.FStrictDelimiter = true;
+        sl.SetDelimitedText(s);
+        n = null;
+        for (var $l = 0, $end = sl.GetCount() - 1; $l <= $end; $l++) {
+          i = $l;
+          pas.System.val$6(sl.Get(i),{get: function () {
+              return j;
+            }, set: function (v) {
+              j = v;
+            }},{get: function () {
+              return e;
+            }, set: function (v) {
+              e = v;
+            }});
+          if (i === 0) {
+            n = this.FItems.GetSiblingFromIndex(j)}
+           else n = n.GetItem(j);
+        };
+        sl = rtl.freeLoc(sl);
+        Result = n;
+      };
+      return Result;
+    };
+    this.GetNodeElement = function (ANode) {
+      var Result = null;
+      var s = "";
+      var tn = null;
+      Result = null;
+      tn = ANode;
+      if (!(tn != null)) return Result;
+      s = "";
+      do {
+        if (s === "") {
+          s = pas.SysUtils.IntToStr(tn.GetIndex())}
+         else s = pas.SysUtils.IntToStr(tn.GetIndex()) + "_" + s;
+        tn = tn.GetParent();
+      } while (tn != null);
+      s = this.FormPrefix() + this.FName + "_" + s;
+      Result = document.getElementById(s);
+      if (Result != null) {
+        if (Result.classList.contains("TVCARET")) Result = Result.firstChild;
+      };
+      return Result;
+    };
+    this.Select = function (ANode) {
+      this.SetSelected(ANode);
+    };
+    this.FullExpand = function () {
+      var i = 0;
+      for (var $l = 0, $end = this.FItems.GetSiblingCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        this.FItems.GetSiblingFromIndex(i).Expand(true);
+      };
+    };
+    this.FullCollapse = function () {
+      var i = 0;
+      for (var $l = 0, $end = this.FItems.GetSiblingCount() - 1; $l <= $end; $l++) {
+        i = $l;
+        this.FItems.GetSiblingFromIndex(i).Collapse(true);
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addProperty("Align",2,pas["WEBLib.Controls"].$rtti["TAlign"],"FAlign","SetAlign",{Default: pas["WEBLib.Controls"].TAlign.alNone});
+    $r.addProperty("AlignWithMargins",2,rtl.boolean,"FAlignWithMargins","SetAlignWithMargins",{Default: false});
+    $r.addProperty("Anchors",2,pas["WEBLib.Controls"].$rtti["TAnchors"],"FAnchors","SetAnchors",{Default: rtl.createSet(pas["WEBLib.Controls"].TAnchorKind.akLeft,pas["WEBLib.Controls"].TAnchorKind.akTop)});
+    $r.addProperty("AutoExpand",0,rtl.boolean,"FAutoExpand","FAutoExpand");
+    $r.addProperty("DragMode",2,pas["WEBLib.Controls"].$rtti["TDragMode"],"FDragMode","SetDragMode",{Default: pas["WEBLib.Controls"].TDragMode.dmManual});
+    $r.addProperty("ElementNodeClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementNodeClassName","SetElementNodeClassName");
+    $r.addProperty("ElementNodeSelectedClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementNodeSelectedClassName","SetElementNodeSelectedClassName");
+    $r.addProperty("ElementClassName",2,pas["WEBLib.Controls"].$rtti["TElementClassName"],"FElementClassName","SetElementClassName");
+    $r.addProperty("ElementID",3,pas["WEBLib.Controls"].$rtti["TElementID"],"GetID","SetID");
+    $r.addProperty("ElementFont",2,pas["WEBLib.Controls"].$rtti["TElementFont"],"FElementFont","SetElementFont",{Default: pas["WEBLib.Controls"].TElementFont.efProperty});
+    $r.addProperty("ElementPosition",2,pas["WEBLib.Controls"].$rtti["TElementPosition"],"FElementPosition","SetElementPosition",{Default: pas["WEBLib.Controls"].TElementPosition.epAbsolute});
+    $r.addProperty("Font",2,pas["WEBLib.Graphics"].$rtti["TFont"],"FFont","SetFont");
+    $r.addProperty("HeightPercent",2,rtl.double,"FHeightPercent","SetHeightPercent",{Default: 100});
+    $r.addProperty("HeightStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FHeightStyle","SetHeightStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("Items",2,pas["WEBLib.TreeNodes"].$rtti["TTreeNodes"],"FItems","SetItems");
+    $r.addProperty("Margins",2,pas["WEBLib.Controls"].$rtti["TMargins"],"FMargins","SetMargins");
+    $r.addProperty("ParentFont",2,rtl.boolean,"FParentFont","SetParentFont",{Default: true});
+    $r.addProperty("PopupMenu",0,pas["WEBLib.Menus"].$rtti["TPopupMenu"],"FPopupMenu","FPopupMenu");
+    $r.addProperty("WidthPercent",2,rtl.double,"FWidthPercent","SetWidthPercent",{Default: 100});
+    $r.addProperty("WidthStyle",2,pas["WEBLib.Controls"].$rtti["TSizeStyle"],"FWidthStyle","SetWidthStyle",{Default: pas["WEBLib.Controls"].TSizeStyle.ssAbsolute});
+    $r.addProperty("OnClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnClick","FOnClick");
+    $r.addProperty("OnClickCheckBox",0,$mod.$rtti["TTreeViewNodeStateEvent"],"FOnClickCheckBox","FOnClickCheckBox");
+    $r.addProperty("OnClickRadio",0,$mod.$rtti["TTreeViewNodeStateEvent"],"FOnClickRadio","FOnClickRadio");
+    $r.addProperty("OnDblClick",0,pas["WEBLib.Controls"].$rtti["TNotifyEvent"],"FOnDblClick","FOnDblClick");
+    $r.addProperty("OnClickNode",0,$mod.$rtti["TTreeViewNodeEvent"],"FOnClickNode","FOnClickNode");
+    $r.addProperty("OnDblClickNode",0,$mod.$rtti["TTreeViewNodeEvent"],"FOnDblClickNode","FOnDblClickNode");
+    $r.addProperty("OnRenderNode",0,$mod.$rtti["TTreeViewNodeRenderEvent"],"FOnRenderNode","FOnRenderNode");
+    $r.addProperty("OnChange",0,$mod.$rtti["TTreeViewNodeEvent"],"FOnChange","FOnChange");
+    $r.addProperty("OnChanging",0,$mod.$rtti["TTreeViewNodeAllowEvent"],"FOnChanging","FOnChanging");
+    $r.addProperty("OnCollapsed",0,$mod.$rtti["TTreeViewNodeEvent"],"FOnCollapsed","FOnCollapsed");
+    $r.addProperty("OnCollapsing",0,$mod.$rtti["TTreeViewNodeAllowEvent"],"FOnCollapsing","FOnCollapsing");
+    $r.addProperty("OnExpanded",0,$mod.$rtti["TTreeViewNodeEvent"],"FOnExpanded","FOnExpanded");
+    $r.addProperty("OnExpanding",0,$mod.$rtti["TTreeViewNodeAllowEvent"],"FOnExpanding","FOnExpanding");
+    $r.addProperty("OnDragDrop",0,pas["WEBLib.Controls"].$rtti["TDragDropEvent"],"FOnDragDrop","FOnDragDrop");
+    $r.addProperty("OnDragOver",0,pas["WEBLib.Controls"].$rtti["TDragOverEvent"],"FOnDragOver","FOnDragOver");
+    $r.addProperty("OnEndDrag",0,pas["WEBLib.Controls"].$rtti["TEndDragEvent"],"FonEndDrag","FonEndDrag");
+    $r.addProperty("OnStartDrag",0,pas["WEBLib.Controls"].$rtti["TStartDragEvent"],"FOnStartDrag","FOnStartDrag");
+  });
+  rtl.createClass(this,"TWebTreeView",this.TTreeView,function () {
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  $mod.$implcode = function () {
+    rtl.createClass($impl,"TTreeNodeEx",pas["WEBLib.TreeNodes"].TTreeNode,function () {
+    });
+    rtl.createClass($impl,"TTreeNodesEx",pas["WEBLib.TreeNodes"].TTreeNodes,function () {
+    });
+    $impl.GetTextNodes = function (node, nodes) {
+      var children = null;
+      var i = 0;
+      var j = 0;
+      var childlist = null;
+      if (node.nodeType === 3) {
+        nodes.Add(node)}
+       else {
+        children = node.childNodes;
+        childlist = pas.Classes.TList.$create("Create$1");
+        for (var $l = 0, $end = children.length - 1; $l <= $end; $l++) {
+          i = $l;
+          $impl.GetTextNodes(children.item(i),childlist);
+          for (var $l1 = 0, $end1 = childlist.GetCount() - 1; $l1 <= $end1; $l1++) {
+            j = $l1;
+            nodes.Add(childlist.Get(j));
+          };
+        };
+        childlist = rtl.freeLoc(childlist);
+      };
+    };
+  };
+},["WEBLib.Buttons","WEBLib.Forms","WEBLib.Utils"]);
+rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.ComCtrls","WEBLib.Buttons","WEBLib.Controls","WEBLib.WebCtrls","WEBLib.ExtCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmRichEditor",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.WebHTMLDiv1 = null;
+      this.WebRichEditToolBar1 = null;
+      this.WebHTMLDiv2 = null;
+      this.WebRichEdit1 = null;
+    };
+    this.$final = function () {
+      this.WebHTMLDiv1 = undefined;
+      this.WebRichEditToolBar1 = undefined;
+      this.WebHTMLDiv2 = undefined;
+      this.WebRichEdit1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
     };
     this.LoadDFMValues = function () {
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
-      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
-      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
-      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divMenu"]);
-      this.WebHTMLContainer2 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
-      this.WebHTMLContainer1.BeforeLoadDFMValues();
-      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
+      this.WebRichEditToolBar1 = pas["WEBLib.Buttons"].TRichEditToolBar.$create("Create$2",[""]);
+      this.WebHTMLDiv2 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
+      this.WebRichEdit1 = pas["WEBLib.ComCtrls"].TRichEdit.$create("Create$1",[this]);
       this.WebHTMLDiv1.BeforeLoadDFMValues();
-      this.WebHTMLContainer2.BeforeLoadDFMValues();
+      this.WebRichEditToolBar1.BeforeLoadDFMValues();
+      this.WebHTMLDiv2.BeforeLoadDFMValues();
+      this.WebRichEdit1.BeforeLoadDFMValues();
       try {
-        this.SetName("frmMenu");
+        this.SetName("frmRichEditor");
         this.SetWidth(640);
         this.SetHeight(480);
         this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
@@ -57829,236 +64820,82 @@ rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphi
         this.FFont.SetName("Tahoma");
         this.FFont.SetStyle({});
         this.SetParentFont(false);
-        this.SetEvent(this,"OnCreate","WebFormCreate");
-        this.SetEvent(this,"OnHashChange","WebFormHashChange");
-        this.WebHTMLContainer1.SetParentComponent(this);
-        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
-        this.WebHTMLContainer1.SetLeft(0);
-        this.WebHTMLContainer1.SetTop(0);
-        this.WebHTMLContainer1.SetWidth(640);
-        this.WebHTMLContainer1.SetHeight(165);
-        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
-        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLContainer1.FHTML.BeginUpdate();
-        try {
-          this.WebHTMLContainer1.FHTML.Clear();
-          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
-          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
-          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
-          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
-          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
-          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
-          this.WebHTMLContainer1.FHTML.Add("    </button>");
-          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
-          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
-          this.WebHTMLContainer1.FHTML.Add("        </div>");
-          this.WebHTMLContainer1.FHTML.Add("      </div>");
-          this.WebHTMLContainer1.FHTML.Add("    </div>");
-          this.WebHTMLContainer1.FHTML.Add("  </nav>");
-        } finally {
-          this.WebHTMLContainer1.FHTML.EndUpdate();
-        };
-        this.WebResponsiveGridPanel1.SetParentComponent(this);
-        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
-        this.WebResponsiveGridPanel1.SetLeft(0);
-        this.WebResponsiveGridPanel1.SetTop(0);
-        this.WebResponsiveGridPanel1.SetWidth(640);
-        this.WebResponsiveGridPanel1.SetHeight(472);
-        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
-        this.WebResponsiveGridPanel1.FControlCollection.Clear();
-        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
-        $with.FColumn = 0;
-        $with.FRow = 0;
-        $with.FControl = this.WebHTMLContainer1;
-        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
-        $with1.FColumn = 0;
-        $with1.FRow = 0;
-        $with1.FControl = this.WebHTMLDiv1;
-        this.WebResponsiveGridPanel1.SetColor(16777215);
-        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebResponsiveGridPanel1.FLayout.Clear();
-        var $with2 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with2.FDescription = "Smartphone";
-        $with2.SetRowGap("10");
-        $with2.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with2.SetStyle("1fr");
-        $with2.SetWidth(575);
-        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with3.FDescription = "Tablet";
-        $with3.SetRowGap("10");
-        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with3.SetStyle("1fr 1fr");
-        $with3.SetWidth(768);
-        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with4.FDescription = "Desktop";
-        $with4.SetRowGap("10");
-        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with4.SetStyle("1fr 1fr 1fr");
-        $with4.SetWidth(991);
-        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with5.FDescription = "Large Desktop";
-        $with5.SetRowGap("10");
-        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with5.SetStyle("1fr 1fr 1fr 1fr");
-        $with5.SetWidth(1199);
-        this.WebHTMLDiv1.SetParentComponent(this.WebResponsiveGridPanel1);
+        this.WebHTMLDiv1.SetParentComponent(this);
         this.WebHTMLDiv1.SetName("WebHTMLDiv1");
-        this.WebHTMLDiv1.SetLeft(226);
-        this.WebHTMLDiv1.SetTop(10);
-        this.WebHTMLDiv1.SetWidth(100);
-        this.WebHTMLDiv1.SetHeight(186);
-        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetLeft(0);
+        this.WebHTMLDiv1.SetTop(0);
+        this.WebHTMLDiv1.SetWidth(640);
+        this.WebHTMLDiv1.SetHeight(41);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
         this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
         this.WebHTMLDiv1.SetRole("");
-        this.WebHTMLContainer2.SetParentComponent(this.WebHTMLDiv1);
-        this.WebHTMLContainer2.SetName("WebHTMLContainer2");
-        this.WebHTMLContainer2.SetLeft(0);
-        this.WebHTMLContainer2.SetTop(0);
-        this.WebHTMLContainer2.SetWidth(100);
-        this.WebHTMLContainer2.SetHeight(186);
-        this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer2.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebHTMLContainer2.SetChildOrderEx(1);
-        this.WebHTMLContainer2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLContainer2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
-        this.WebHTMLContainer2.FHTML.BeginUpdate();
+        this.WebRichEditToolBar1.SetParentComponent(this.WebHTMLDiv1);
+        this.WebRichEditToolBar1.SetName("WebRichEditToolBar1");
+        this.WebRichEditToolBar1.SetLeft(0);
+        this.WebRichEditToolBar1.SetTop(0);
+        this.WebRichEditToolBar1.SetWidth(640);
+        this.WebRichEditToolBar1.SetHeight(41);
+        this.WebRichEditToolBar1.SetElementClassName("");
+        this.WebRichEditToolBar1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebRichEditToolBar1.FHints.BeginUpdate();
         try {
-          this.WebHTMLContainer2.FHTML.Clear();
-          this.WebHTMLContainer2.FHTML.Add(" <!--  PRUEBAS bg-secondary");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card  bg-secondary  text-bg-secondary mb-3" style="max-width: 18rem;">');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-header">Header</div>');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
-          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Secondary card title</h5>');
-          this.WebHTMLContainer2.FHTML.Add('    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-auto" style="max-height: calc(100vh - 150px);"> -->');
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
-          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto ');
-          this.WebHTMLContainer2.FHTML.Add("editados.</p>");
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add(" </div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con columnas y renglones</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones registro de información de manera');
-          this.WebHTMLContainer2.FHTML.Add(" tabular, encabezado columnas, formulas etc.              </p>");
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('     <!-- <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsivel" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('     <!--   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div> ");
-          this.WebHTMLContainer2.FHTML.Add(" <!-- </div>-->");
+          this.WebRichEditToolBar1.FHints.Clear();
+          this.WebRichEditToolBar1.FHints.Add("Bold");
+          this.WebRichEditToolBar1.FHints.Add("Italic");
+          this.WebRichEditToolBar1.FHints.Add("Underline");
+          this.WebRichEditToolBar1.FHints.Add("Strike Throught");
+          this.WebRichEditToolBar1.FHints.Add("Text Color");
+          this.WebRichEditToolBar1.FHints.Add("Background Color");
+          this.WebRichEditToolBar1.FHints.Add("Align left");
+          this.WebRichEditToolBar1.FHints.Add("Align center");
+          this.WebRichEditToolBar1.FHints.Add("Align right");
+          this.WebRichEditToolBar1.FHints.Add("Numbered list");
+          this.WebRichEditToolBar1.FHints.Add("List");
+          this.WebRichEditToolBar1.FHints.Add("Hyperlink");
+          this.WebRichEditToolBar1.FHints.Add("Insert Image");
+          this.WebRichEditToolBar1.FHints.Add("Line spacing");
         } finally {
-          this.WebHTMLContainer2.FHTML.EndUpdate();
+          this.WebRichEditToolBar1.FHints.EndUpdate();
         };
+        this.WebRichEditToolBar1.SetRichEdit(this.WebRichEdit1);
+        this.WebHTMLDiv2.SetParentComponent(this);
+        this.WebHTMLDiv2.SetName("WebHTMLDiv2");
+        this.WebHTMLDiv2.SetLeft(0);
+        this.WebHTMLDiv2.SetTop(41);
+        this.WebHTMLDiv2.SetWidth(640);
+        this.WebHTMLDiv2.SetHeight(439);
+        this.WebHTMLDiv2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv2.SetChildOrderEx(1);
+        this.WebHTMLDiv2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv2.SetRole("");
+        this.WebRichEdit1.SetParentComponent(this.WebHTMLDiv2);
+        this.WebRichEdit1.SetName("WebRichEdit1");
+        this.WebRichEdit1.SetLeft(0);
+        this.WebRichEdit1.SetTop(0);
+        this.WebRichEdit1.SetWidth(640);
+        this.WebRichEdit1.SetHeight(439);
+        this.WebRichEdit1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebRichEdit1.SetAutoSize(true);
+        this.WebRichEdit1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
+        this.WebRichEdit1.SetColor(16777215);
       } finally {
-        this.WebHTMLContainer1.AfterLoadDFMValues();
-        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
         this.WebHTMLDiv1.AfterLoadDFMValues();
-        this.WebHTMLContainer2.AfterLoadDFMValues();
+        this.WebRichEditToolBar1.AfterLoadDFMValues();
+        this.WebHTMLDiv2.AfterLoadDFMValues();
+        this.WebRichEdit1.AfterLoadDFMValues();
       };
     };
     rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
     rtl.addIntf(this,pas.System.IUnknown);
     var $r = this.$rtti;
-    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
-    $r.addField("WebHTMLContainer2",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
-    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
     $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
-    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
-    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+    $r.addField("WebRichEditToolBar1",pas["WEBLib.Buttons"].$rtti["TRichEditToolBar"]);
+    $r.addField("WebHTMLDiv2",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebRichEdit1",pas["WEBLib.ComCtrls"].$rtti["TRichEdit"]);
   });
-  this.frmMenu = null;
-},["uLibretaResponsive","editorDiv"]);
-rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","uFormaMenu","uLibretaResponsive","editorDiv"],function () {
+  this.frmRichEditor = null;
+});
+rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","uFormaMenu","uLibretaResponsiveT","editorDiv","uRichEditor","uEditor","uLibretaResponsive","uLibretaResponsiveR"],function () {
   "use strict";
   var $mod = this;
   $mod.$implcode = function () {
