@@ -59414,486 +59414,6 @@ rtl.module("uLibretaResponsiveT",["System","SysUtils","Classes","JS","Web","WEBL
   });
   this.frmTLibretaResponsive = null;
 });
-rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.ExtCtrls","WEBLib.WebCtrls"],function () {
-  "use strict";
-  var $mod = this;
-  rtl.createClass(this,"TfrmMenu",pas["WEBLib.Forms"].TForm,function () {
-    this.$init = function () {
-      pas["WEBLib.Forms"].TForm.$init.call(this);
-      this.WebHTMLContainer1 = null;
-      this.WebHTMLContainer2 = null;
-      this.WebResponsiveGridPanel1 = null;
-      this.WebHTMLDiv1 = null;
-    };
-    this.$final = function () {
-      this.WebHTMLContainer1 = undefined;
-      this.WebHTMLContainer2 = undefined;
-      this.WebResponsiveGridPanel1 = undefined;
-      this.WebHTMLDiv1 = undefined;
-      pas["WEBLib.Forms"].TForm.$final.call(this);
-    };
-    this.WebFormCreate = function (Sender) {
-      this.WebHTMLDiv1.GetElementHandle().classList.add("scrollable-div");
-    };
-    this.WebFormHashChange = function (Sender, oldURL, newURL) {
-      var $Self = this;
-      var newform = null;
-      var mr = 0;
-      function AfterShowModal(AValue) {
-      };
-      function AfterCreate(AForm) {
-      };
-      window.console.log("Navigated from " + oldURL + " to " + newURL);
-      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#form2")) {}
-      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#form3")) {}
-      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmLibretaResponsive")) {
-        window.console.log("entro a abrir frmLibretaResponsive");
-        newform = pas.uLibretaResponsive.TfrmLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
-      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmRLibretaResponsive")) {
-        window.console.log("entro a abrir frmEditor");
-        newform = pas.uLibretaResponsiveR.TfrmRLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
-      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmTLibretaResponsive")) {
-        window.console.log("entro a abrir frmEditor");
-        newform = pas.uLibretaResponsiveT.TfrmTLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
-      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
-          return newURL;
-        }, set: function (v) {
-          newURL = v;
-        }},"#frmEditor")) {
-        window.console.log("entro a abrir frmEditor");
-        newform = pas.uEditor.TfrmEditor.$create("CreateNew$3",[AfterCreate]);
-        newform.ShowModal$1(AfterShowModal);
-      };
-    };
-    this.LoadDFMValues = function () {
-      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
-      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
-      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
-      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divMenu"]);
-      this.WebHTMLContainer2 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
-      this.WebHTMLContainer1.BeforeLoadDFMValues();
-      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
-      this.WebHTMLDiv1.BeforeLoadDFMValues();
-      this.WebHTMLContainer2.BeforeLoadDFMValues();
-      try {
-        this.SetName("frmMenu");
-        this.SetWidth(640);
-        this.SetHeight(480);
-        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
-        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.FFont.FCharset = 1;
-        this.FFont.SetColor(65793);
-        this.FFont.SetHeight(-15);
-        this.FFont.SetName("Tahoma");
-        this.FFont.SetStyle({});
-        this.SetParentFont(false);
-        this.SetEvent(this,"OnCreate","WebFormCreate");
-        this.SetEvent(this,"OnHashChange","WebFormHashChange");
-        this.WebHTMLContainer1.SetParentComponent(this);
-        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
-        this.WebHTMLContainer1.SetLeft(0);
-        this.WebHTMLContainer1.SetTop(0);
-        this.WebHTMLContainer1.SetWidth(640);
-        this.WebHTMLContainer1.SetHeight(165);
-        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
-        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLContainer1.FHTML.BeginUpdate();
-        try {
-          this.WebHTMLContainer1.FHTML.Clear();
-          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
-          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
-          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
-          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
-          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
-          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
-          this.WebHTMLContainer1.FHTML.Add("    </button>");
-          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
-          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
-          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
-          this.WebHTMLContainer1.FHTML.Add("        </div>");
-          this.WebHTMLContainer1.FHTML.Add("      </div>");
-          this.WebHTMLContainer1.FHTML.Add("    </div>");
-          this.WebHTMLContainer1.FHTML.Add("  </nav>");
-        } finally {
-          this.WebHTMLContainer1.FHTML.EndUpdate();
-        };
-        this.WebResponsiveGridPanel1.SetParentComponent(this);
-        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
-        this.WebResponsiveGridPanel1.SetLeft(0);
-        this.WebResponsiveGridPanel1.SetTop(0);
-        this.WebResponsiveGridPanel1.SetWidth(640);
-        this.WebResponsiveGridPanel1.SetHeight(472);
-        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
-        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
-        this.WebResponsiveGridPanel1.FControlCollection.Clear();
-        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
-        $with.FColumn = 0;
-        $with.FRow = 0;
-        $with.FControl = this.WebHTMLContainer1;
-        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
-        $with1.FColumn = 0;
-        $with1.FRow = 0;
-        $with1.FControl = this.WebHTMLDiv1;
-        this.WebResponsiveGridPanel1.SetColor(16777215);
-        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebResponsiveGridPanel1.FLayout.Clear();
-        var $with2 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with2.FDescription = "Smartphone";
-        $with2.SetRowGap("10");
-        $with2.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with2.SetStyle("1fr");
-        $with2.SetWidth(575);
-        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with3.FDescription = "Tablet";
-        $with3.SetRowGap("10");
-        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with3.SetStyle("1fr 1fr");
-        $with3.SetWidth(768);
-        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with4.FDescription = "Desktop";
-        $with4.SetRowGap("10");
-        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with4.SetStyle("1fr 1fr 1fr");
-        $with4.SetWidth(991);
-        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
-        $with5.FDescription = "Large Desktop";
-        $with5.SetRowGap("10");
-        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
-        $with5.SetStyle("1fr 1fr 1fr 1fr");
-        $with5.SetWidth(1199);
-        this.WebHTMLDiv1.SetParentComponent(this.WebResponsiveGridPanel1);
-        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
-        this.WebHTMLDiv1.SetLeft(226);
-        this.WebHTMLDiv1.SetTop(10);
-        this.WebHTMLDiv1.SetWidth(223);
-        this.WebHTMLDiv1.SetHeight(186);
-        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLDiv1.SetRole("");
-        this.WebHTMLContainer2.SetParentComponent(this.WebHTMLDiv1);
-        this.WebHTMLContainer2.SetName("WebHTMLContainer2");
-        this.WebHTMLContainer2.SetLeft(0);
-        this.WebHTMLContainer2.SetTop(0);
-        this.WebHTMLContainer2.SetWidth(223);
-        this.WebHTMLContainer2.SetHeight(186);
-        this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer2.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebHTMLContainer2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebHTMLContainer2.SetChildOrderEx(1);
-        this.WebHTMLContainer2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLContainer2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
-        this.WebHTMLContainer2.FHTML.BeginUpdate();
-        try {
-          this.WebHTMLContainer2.FHTML.Clear();
-          this.WebHTMLContainer2.FHTML.Add(" <!--  PRUEBAS bg-secondary");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card  bg-secondary  text-bg-secondary mb-3" style="max-width: 18rem;">');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-header">Header</div>');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
-          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Secondary card title</h5>');
-          this.WebHTMLContainer2.FHTML.Add('    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>');
-          this.WebHTMLContainer2.FHTML.Add("  </div>");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-auto" style="max-height: calc(100vh - 150px);"> -->');
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
-          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio (mis archivos)</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con renglones, hojas con columnas y renglones y archivos de texto ');
-          this.WebHTMLContainer2.FHTML.Add("editados.</p>");
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsive" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add(" </div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja con Renglones (notas rápidas)</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmRLibretaResponsive" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja Tabular con columnas y renglones</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones registro de información de manera');
-          this.WebHTMLContainer2.FHTML.Add(" tabular, encabezado columnas, formulas etc.              </p>");
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmTLibretaResponsive" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('     <!-- <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
-          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
-          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
-          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
-          this.WebHTMLContainer2.FHTML.Add('imagen">');
-          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
-          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
-          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
-          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmEditor" class="stretched-link"></a>');
-          this.WebHTMLContainer2.FHTML.Add('     <!--   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
-          this.WebHTMLContainer2.FHTML.Add("");
-          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
-          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
-          this.WebHTMLContainer2.FHTML.Add("</div>");
-          this.WebHTMLContainer2.FHTML.Add("-->");
-          this.WebHTMLContainer2.FHTML.Add("  </div> ");
-          this.WebHTMLContainer2.FHTML.Add("</div> ");
-          this.WebHTMLContainer2.FHTML.Add(" <!-- </div>-->");
-        } finally {
-          this.WebHTMLContainer2.FHTML.EndUpdate();
-        };
-      } finally {
-        this.WebHTMLContainer1.AfterLoadDFMValues();
-        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
-        this.WebHTMLDiv1.AfterLoadDFMValues();
-        this.WebHTMLContainer2.AfterLoadDFMValues();
-      };
-    };
-    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
-    rtl.addIntf(this,pas.System.IUnknown);
-    var $r = this.$rtti;
-    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
-    $r.addField("WebHTMLContainer2",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
-    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
-    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
-    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
-    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
-  });
-  this.frmMenu = null;
-},["uLibretaResponsive","uEditor","uLibretaResponsiveR","uLibretaResponsiveT"]);
-rtl.module("editorDiv",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.ExtCtrls"],function () {
-  "use strict";
-  var $mod = this;
-  rtl.createClass(this,"TfrmEditorDiv",pas["WEBLib.Forms"].TForm,function () {
-    this.$init = function () {
-      pas["WEBLib.Forms"].TForm.$init.call(this);
-      this.WebHTMLDiv1 = null;
-      this.WebPanel1 = null;
-      this.WebButton1 = null;
-    };
-    this.$final = function () {
-      this.WebHTMLDiv1 = undefined;
-      this.WebPanel1 = undefined;
-      this.WebButton1 = undefined;
-      pas["WEBLib.Forms"].TForm.$final.call(this);
-    };
-    this.WebFormCreate = function (Sender) {
-      const editableDiv = document.getElementById('editordiv');
-      
-      // Set the contentEditable property to 'true'
-           editableDiv.contentEditable = 'true';
-          // editableDiv.style.border = "2px solid black";
-    };
-    this.WebButton1Click = function (Sender) {
-      function highlightSelection() {
-          const selection = window.getSelection();
-      
-          // Check if anything is actually selected
-          if (selection.rangeCount > 0) {
-              console.log('text selected');
-              const range = selection.getRangeAt(0);
-              const span = document.createElement('span');
-              span.classList.add('highlight');
-      
-              try {
-                  // Surround the selection with the span element
-                  range.surroundContents(span);
-              } catch (error) {
-                  // Handle cases where the selection crosses non-text nodes
-                  console.error("Could not surround contents:", error);
-                  alert("Cannot highlight selection that crosses complex HTML nodes.");
-              }
-      
-              // Remove the user's active selection after highlighting
-              selection.removeAllRanges();
-          }
-      }
-      
-      
-      function getSelectedRange() {
-        const selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-          return selection.getRangeAt(0);
-        }
-        return null;
-      }
-      
-      function highlightSelectedText() {
-        const range = getSelectedRange();
-      
-        if (range && range.toString().trim().length > 0) {
-          // Create a span element for highlighting
-          const highlightSpan = document.createElement("span");
-          highlightSpan.style.backgroundColor = "yellow"; // Or use a CSS class
-          highlightSpan.classList.add("highlight");
-      
-          // Wrap the content of the range with the span
-          try {
-            range.surroundContents(highlightSpan);
-          } catch (e) {
-            // Handle cases where the range might span across different element boundaries
-            // This is a complex scenario often requiring a rich text editor library
-            console.error("Could not surround contents:", e);
-          }
-      
-          // Optional: clear the selection after highlighting
-          window.getSelection().removeAllRanges();
-        }
-      };
-      highlightSelection();
-    };
-    this.LoadDFMValues = function () {
-      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
-      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["editordiv"]);
-      this.WebPanel1 = pas["WEBLib.ExtCtrls"].TPanel.$create("Create$1",[this]);
-      this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
-      this.WebHTMLDiv1.BeforeLoadDFMValues();
-      this.WebPanel1.BeforeLoadDFMValues();
-      this.WebButton1.BeforeLoadDFMValues();
-      try {
-        this.SetName("frmEditorDiv");
-        this.SetWidth(640);
-        this.SetHeight(480);
-        this.SetCaption("Editor de Texto");
-        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
-        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.FFont.FCharset = 1;
-        this.FFont.SetColor(65793);
-        this.FFont.SetHeight(-15);
-        this.FFont.SetName("Tahoma");
-        this.FFont.SetStyle({});
-        this.SetParentFont(false);
-        this.SetEvent(this,"OnCreate","WebFormCreate");
-        this.WebHTMLDiv1.SetParentComponent(this);
-        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
-        this.WebHTMLDiv1.SetLeft(0);
-        this.WebHTMLDiv1.SetTop(60);
-        this.WebHTMLDiv1.SetWidth(640);
-        this.WebHTMLDiv1.SetHeight(420);
-        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLDiv1.SetRole("");
-        this.WebPanel1.SetParentComponent(this);
-        this.WebPanel1.SetName("WebPanel1");
-        this.WebPanel1.SetLeft(0);
-        this.WebPanel1.SetTop(0);
-        this.WebPanel1.SetWidth(640);
-        this.WebPanel1.SetHeight(60);
-        this.WebPanel1.SetElementClassName("card");
-        this.WebPanel1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
-        this.WebPanel1.SetChildOrderEx(2);
-        this.WebPanel1.FElementBodyClassName = "card-body";
-        this.WebPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebPanel1.SetTabOrder(1);
-        this.WebButton1.SetParentComponent(this.WebPanel1);
-        this.WebButton1.SetName("WebButton1");
-        this.WebButton1.SetLeft(3);
-        this.WebButton1.SetTop(21);
-        this.WebButton1.SetWidth(145);
-        this.WebButton1.SetHeight(33);
-        this.WebButton1.SetCaption("Remarcar Seleccion");
-        this.WebButton1.SetChildOrderEx(1);
-        this.WebButton1.SetElementClassName("btn btn-light");
-        this.WebButton1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebButton1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
-        this.WebButton1.SetHeightPercent(100.000000000000000000);
-        this.WebButton1.SetWidthPercent(100.000000000000000000);
-        this.SetEvent$1(this.WebButton1,this,"OnClick","WebButton1Click");
-      } finally {
-        this.WebHTMLDiv1.AfterLoadDFMValues();
-        this.WebPanel1.AfterLoadDFMValues();
-        this.WebButton1.AfterLoadDFMValues();
-      };
-    };
-    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
-    rtl.addIntf(this,pas.System.IUnknown);
-    var $r = this.$rtti;
-    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
-    $r.addField("WebPanel1",pas["WEBLib.ExtCtrls"].$rtti["TPanel"]);
-    $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
-    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
-    $r.addMethod("WebButton1Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
-  });
-  this.frmEditorDiv = null;
-});
 rtl.module("WEBLib.TreeNodes",["System","Classes","Types","SysUtils","Web"],function () {
   "use strict";
   var $mod = this;
@@ -64932,28 +64452,60 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
   rtl.createClass(this,"TfrmRichEditor",pas["WEBLib.Forms"].TForm,function () {
     this.$init = function () {
       pas["WEBLib.Forms"].TForm.$init.call(this);
-      this.WebHTMLDiv1 = null;
-      this.WebRichEditToolBar1 = null;
       this.WebHTMLDiv2 = null;
       this.WebRichEdit1 = null;
+      this.WebHTMLContainer1 = null;
+      this.WebHTMLDiv1 = null;
+      this.WebRichEditToolBar1 = null;
+      this.WebResponsiveGridPanel1 = null;
     };
     this.$final = function () {
-      this.WebHTMLDiv1 = undefined;
-      this.WebRichEditToolBar1 = undefined;
       this.WebHTMLDiv2 = undefined;
       this.WebRichEdit1 = undefined;
+      this.WebHTMLContainer1 = undefined;
+      this.WebHTMLDiv1 = undefined;
+      this.WebRichEditToolBar1 = undefined;
+      this.WebResponsiveGridPanel1 = undefined;
       pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      this.WebRichEditToolBar1.SetVisibleButtons(rtl.createSet(pas["WEBLib.Buttons"].TRichEditBtn.reFont,pas["WEBLib.Buttons"].TRichEditBtn.reFontSize,pas["WEBLib.Buttons"].TRichEditBtn.reBold,pas["WEBLib.Buttons"].TRichEditBtn.reItalic,pas["WEBLib.Buttons"].TRichEditBtn.reUnderline,pas["WEBLib.Buttons"].TRichEditBtn.reStrikeThrough,pas["WEBLib.Buttons"].TRichEditBtn.reAlignLeft,pas["WEBLib.Buttons"].TRichEditBtn.reAlignCenter,pas["WEBLib.Buttons"].TRichEditBtn.reAlignRight,pas["WEBLib.Buttons"].TRichEditBtn.reUnorderedList,pas["WEBLib.Buttons"].TRichEditBtn.reOrderedList,pas["WEBLib.Buttons"].TRichEditBtn.reForegroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reBackgroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reHyperlink,pas["WEBLib.Buttons"].TRichEditBtn.reImageInsert,pas["WEBLib.Buttons"].TRichEditBtn.reLineSpacing));
+      this.WebRichEditToolBar1.SetVisibleButtons(rtl.createSet(pas["WEBLib.Buttons"].TRichEditBtn.reFont,pas["WEBLib.Buttons"].TRichEditBtn.reFontSize,pas["WEBLib.Buttons"].TRichEditBtn.reBold,pas["WEBLib.Buttons"].TRichEditBtn.reItalic,pas["WEBLib.Buttons"].TRichEditBtn.reUnderline,pas["WEBLib.Buttons"].TRichEditBtn.reForegroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reBackgroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reImageInsert));
+    };
+    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu1")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#OpcionMenu2")) {
+        pas["WEBLib.Dialogs"].ShowMessage(newURL);
+        window.history.pushState(null, '', oldURL);
+      } else {
+        this.Close();
+        window.history.pushState(null, '', newURL);
+      };
     };
     this.LoadDFMValues = function () {
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
-      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
-      this.WebRichEditToolBar1 = pas["WEBLib.Buttons"].TRichEditToolBar.$create("Create$2",[""]);
       this.WebHTMLDiv2 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
       this.WebRichEdit1 = pas["WEBLib.ComCtrls"].TRichEdit.$create("Create$1",[this]);
-      this.WebHTMLDiv1.BeforeLoadDFMValues();
-      this.WebRichEditToolBar1.BeforeLoadDFMValues();
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
+      this.WebRichEditToolBar1 = pas["WEBLib.Buttons"].TRichEditToolBar.$create("Create$2",[""]);
+      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
       this.WebHTMLDiv2.BeforeLoadDFMValues();
       this.WebRichEdit1.BeforeLoadDFMValues();
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebRichEditToolBar1.BeforeLoadDFMValues();
+      this.WebHTMLContainer1.BeforeLoadDFMValues();
+      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
       try {
         this.SetName("frmRichEditor");
         this.SetWidth(640);
@@ -64966,13 +64518,37 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
         this.FFont.SetName("Tahoma");
         this.FFont.SetStyle({});
         this.SetParentFont(false);
-        this.WebHTMLDiv1.SetParentComponent(this);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnHashChange","WebFormHashChange");
+        this.WebHTMLDiv2.SetParentComponent(this);
+        this.WebHTMLDiv2.SetName("WebHTMLDiv2");
+        this.WebHTMLDiv2.SetLeft(0);
+        this.WebHTMLDiv2.SetTop(105);
+        this.WebHTMLDiv2.SetWidth(640);
+        this.WebHTMLDiv2.SetHeight(375);
+        this.WebHTMLDiv2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv2.SetChildOrderEx(1);
+        this.WebHTMLDiv2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.WebHTMLDiv2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv2.SetRole("");
+        this.WebRichEdit1.SetParentComponent(this.WebHTMLDiv2);
+        this.WebRichEdit1.SetName("WebRichEdit1");
+        this.WebRichEdit1.SetLeft(0);
+        this.WebRichEdit1.SetTop(41);
+        this.WebRichEdit1.SetWidth(640);
+        this.WebRichEdit1.SetHeight(334);
+        this.WebRichEdit1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebRichEdit1.SetAutoSize(true);
+        this.WebRichEdit1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
+        this.WebRichEdit1.SetColor(16777215);
+        this.WebHTMLDiv1.SetParentComponent(this.WebHTMLDiv2);
         this.WebHTMLDiv1.SetName("WebHTMLDiv1");
         this.WebHTMLDiv1.SetLeft(0);
         this.WebHTMLDiv1.SetTop(0);
         this.WebHTMLDiv1.SetWidth(640);
         this.WebHTMLDiv1.SetHeight(41);
         this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLDiv1.SetChildOrderEx(1);
         this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
         this.WebHTMLDiv1.SetRole("");
         this.WebRichEditToolBar1.SetParentComponent(this.WebHTMLDiv1);
@@ -64980,9 +64556,9 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
         this.WebRichEditToolBar1.SetLeft(0);
         this.WebRichEditToolBar1.SetTop(0);
         this.WebRichEditToolBar1.SetWidth(640);
-        this.WebRichEditToolBar1.SetHeight(41);
+        this.WebRichEditToolBar1.SetHeight(33);
         this.WebRichEditToolBar1.SetElementClassName("");
-        this.WebRichEditToolBar1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebRichEditToolBar1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
         this.WebRichEditToolBar1.FHints.BeginUpdate();
         try {
           this.WebRichEditToolBar1.FHints.Clear();
@@ -65004,42 +64580,590 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
           this.WebRichEditToolBar1.FHints.EndUpdate();
         };
         this.WebRichEditToolBar1.SetRichEdit(this.WebRichEdit1);
-        this.WebHTMLDiv2.SetParentComponent(this);
-        this.WebHTMLDiv2.SetName("WebHTMLDiv2");
-        this.WebHTMLDiv2.SetLeft(0);
-        this.WebHTMLDiv2.SetTop(41);
-        this.WebHTMLDiv2.SetWidth(640);
-        this.WebHTMLDiv2.SetHeight(439);
-        this.WebHTMLDiv2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebHTMLDiv2.SetChildOrderEx(1);
-        this.WebHTMLDiv2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
-        this.WebHTMLDiv2.SetRole("");
-        this.WebRichEdit1.SetParentComponent(this.WebHTMLDiv2);
-        this.WebRichEdit1.SetName("WebRichEdit1");
-        this.WebRichEdit1.SetLeft(0);
-        this.WebRichEdit1.SetTop(0);
-        this.WebRichEdit1.SetWidth(640);
-        this.WebRichEdit1.SetHeight(439);
-        this.WebRichEdit1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebRichEdit1.SetAutoSize(true);
-        this.WebRichEdit1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
-        this.WebRichEdit1.SetColor(16777215);
+        this.WebHTMLContainer1.SetParentComponent(this);
+        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
+        this.WebHTMLContainer1.SetLeft(0);
+        this.WebHTMLContainer1.SetTop(0);
+        this.WebHTMLContainer1.SetWidth(640);
+        this.WebHTMLContainer1.SetHeight(105);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLContainer1.SetChildOrderEx(4);
+        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer1.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer1.FHTML.Clear();
+          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
+          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
+          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
+          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
+          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
+          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
+          this.WebHTMLContainer1.FHTML.Add("    </button>");
+          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
+          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu1">Opcion Menu 1</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link" href="LibretaDigital.html#OpcionMenu2">Opcion Menu 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
+          this.WebHTMLContainer1.FHTML.Add("        </div>");
+          this.WebHTMLContainer1.FHTML.Add("      </div>");
+          this.WebHTMLContainer1.FHTML.Add("    </div>");
+          this.WebHTMLContainer1.FHTML.Add("  </nav>");
+        } finally {
+          this.WebHTMLContainer1.FHTML.EndUpdate();
+        };
+        this.WebResponsiveGridPanel1.SetParentComponent(this);
+        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
+        this.WebResponsiveGridPanel1.SetLeft(0);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(480);
+        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
+        this.WebResponsiveGridPanel1.FControlCollection.Clear();
+        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with.FColumn = 0;
+        $with.FRow = 0;
+        $with.FControl = this.WebHTMLContainer1;
+        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with1.FColumn = 0;
+        $with1.FRow = 0;
+        $with1.FControl = this.WebHTMLDiv2;
+        this.WebResponsiveGridPanel1.SetColor(16777215);
+        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebResponsiveGridPanel1.FLayout.Clear();
+        var $with2 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with2.FDescription = "Smartphone";
+        $with2.SetRowGap("10");
+        $with2.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with2.SetStyle("1fr");
+        $with2.SetWidth(575);
+        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with3.FDescription = "Tablet";
+        $with3.SetRowGap("10");
+        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with3.SetStyle("1fr 1fr");
+        $with3.SetWidth(768);
+        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with4.FDescription = "Desktop";
+        $with4.SetRowGap("10");
+        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with4.SetStyle("1fr 1fr 1fr");
+        $with4.SetWidth(991);
+        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with5.FDescription = "Large Desktop";
+        $with5.SetRowGap("10");
+        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with5.SetStyle("1fr 1fr 1fr 1fr");
+        $with5.SetWidth(1199);
       } finally {
-        this.WebHTMLDiv1.AfterLoadDFMValues();
-        this.WebRichEditToolBar1.AfterLoadDFMValues();
         this.WebHTMLDiv2.AfterLoadDFMValues();
         this.WebRichEdit1.AfterLoadDFMValues();
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebRichEditToolBar1.AfterLoadDFMValues();
+        this.WebHTMLContainer1.AfterLoadDFMValues();
+        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("WebHTMLDiv2",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebRichEdit1",pas["WEBLib.ComCtrls"].$rtti["TRichEdit"]);
+    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addField("WebRichEditToolBar1",pas["WEBLib.Buttons"].$rtti["TRichEditToolBar"]);
+    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+  });
+  this.frmRichEditor = null;
+});
+rtl.module("uFormaMenu",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.ExtCtrls","WEBLib.WebCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmMenu",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.WebHTMLContainer1 = null;
+      this.WebHTMLContainer2 = null;
+      this.WebResponsiveGridPanel1 = null;
+      this.WebHTMLDiv1 = null;
+    };
+    this.$final = function () {
+      this.WebHTMLContainer1 = undefined;
+      this.WebHTMLContainer2 = undefined;
+      this.WebResponsiveGridPanel1 = undefined;
+      this.WebHTMLDiv1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      this.WebHTMLDiv1.GetElementHandle().classList.add("scrollable-div");
+    };
+    this.WebFormHashChange = function (Sender, oldURL, newURL) {
+      var $Self = this;
+      var newform = null;
+      var mr = 0;
+      function AfterShowModal(AValue) {
+      };
+      function AfterCreate(AForm) {
+      };
+      window.console.log("Navigated from " + oldURL + " to " + newURL);
+      if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#form2")) {}
+      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#form3")) {}
+      else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmLibretaResponsive")) {
+        window.console.log("entro a abrir frmLibretaResponsive");
+        newform = pas.uLibretaResponsive.TfrmLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmRLibretaResponsive")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uRichEditor.TfrmRichEditor.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmTLibretaResponsive")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uLibretaResponsiveT.TfrmTLibretaResponsive.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      } else if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
+          return newURL;
+        }, set: function (v) {
+          newURL = v;
+        }},"#frmEditor")) {
+        window.console.log("entro a abrir frmEditor");
+        newform = pas.uEditor.TfrmEditor.$create("CreateNew$3",[AfterCreate]);
+        newform.ShowModal$1(AfterShowModal);
+      };
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["divMenu"]);
+      this.WebHTMLContainer2 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
+      this.WebHTMLContainer1.BeforeLoadDFMValues();
+      this.WebResponsiveGridPanel1.BeforeLoadDFMValues();
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebHTMLContainer2.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmMenu");
+        this.SetWidth(640);
+        this.SetHeight(480);
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.SetEvent(this,"OnHashChange","WebFormHashChange");
+        this.WebHTMLContainer1.SetParentComponent(this);
+        this.WebHTMLContainer1.SetName("WebHTMLContainer1");
+        this.WebHTMLContainer1.SetLeft(0);
+        this.WebHTMLContainer1.SetTop(0);
+        this.WebHTMLContainer1.SetWidth(640);
+        this.WebHTMLContainer1.SetHeight(165);
+        this.WebHTMLContainer1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebHTMLContainer1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer1.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer1.FHTML.Clear();
+          this.WebHTMLContainer1.FHTML.Add(' <nav class="navbar navbar-expand-lg navbar-dark bg-dark">');
+          this.WebHTMLContainer1.FHTML.Add('    <div class="container-fluid">');
+          this.WebHTMLContainer1.FHTML.Add('      <a class="navbar-brand" href="#">LibretaDigital</a>');
+          this.WebHTMLContainer1.FHTML.Add('      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-');
+          this.WebHTMLContainer1.FHTML.Add('controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">');
+          this.WebHTMLContainer1.FHTML.Add('      <span class="navbar-toggler-icon"></span>');
+          this.WebHTMLContainer1.FHTML.Add("    </button>");
+          this.WebHTMLContainer1.FHTML.Add('      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">');
+          this.WebHTMLContainer1.FHTML.Add('        <div class="navbar-nav">');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" aria-current="page" href="LibretaDigital.html#frmMenu">Inicio</a>  ');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link active" href="LibretaDigital.html#frmLibretaResponsive">Hoja Renglones</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form2">Hoja Tabular</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#frmEditorDiv">Editor 2</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled" href="LibretaDigital.html#form3">Editor Texto</a>');
+          this.WebHTMLContainer1.FHTML.Add('          <a class="nav-link disabled">Disabled</a>');
+          this.WebHTMLContainer1.FHTML.Add("        </div>");
+          this.WebHTMLContainer1.FHTML.Add("      </div>");
+          this.WebHTMLContainer1.FHTML.Add("    </div>");
+          this.WebHTMLContainer1.FHTML.Add("  </nav>");
+        } finally {
+          this.WebHTMLContainer1.FHTML.EndUpdate();
+        };
+        this.WebResponsiveGridPanel1.SetParentComponent(this);
+        this.WebResponsiveGridPanel1.SetName("WebResponsiveGridPanel1");
+        this.WebResponsiveGridPanel1.SetLeft(0);
+        this.WebResponsiveGridPanel1.SetTop(0);
+        this.WebResponsiveGridPanel1.SetWidth(640);
+        this.WebResponsiveGridPanel1.SetHeight(472);
+        this.WebResponsiveGridPanel1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssPercent);
+        this.WebResponsiveGridPanel1.SetChildOrderEx(3);
+        this.WebResponsiveGridPanel1.FControlCollection.Clear();
+        var $with = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with.FColumn = 0;
+        $with.FRow = 0;
+        $with.FControl = this.WebHTMLContainer1;
+        var $with1 = this.WebResponsiveGridPanel1.FControlCollection.Add$1();
+        $with1.FColumn = 0;
+        $with1.FRow = 0;
+        $with1.FControl = this.WebHTMLDiv1;
+        this.WebResponsiveGridPanel1.SetColor(16777215);
+        this.WebResponsiveGridPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebResponsiveGridPanel1.FLayout.Clear();
+        var $with2 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with2.FDescription = "Smartphone";
+        $with2.SetRowGap("10");
+        $with2.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with2.SetStyle("1fr");
+        $with2.SetWidth(575);
+        var $with3 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with3.FDescription = "Tablet";
+        $with3.SetRowGap("10");
+        $with3.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with3.SetStyle("1fr 1fr");
+        $with3.SetWidth(768);
+        var $with4 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with4.FDescription = "Desktop";
+        $with4.SetRowGap("10");
+        $with4.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with4.SetStyle("1fr 1fr 1fr");
+        $with4.SetWidth(991);
+        var $with5 = this.WebResponsiveGridPanel1.FLayout.Add$2();
+        $with5.FDescription = "Large Desktop";
+        $with5.SetRowGap("10");
+        $with5.SetStyleType(pas["WEBLib.ExtCtrls"].TGridStyle.gTemplateRows);
+        $with5.SetStyle("1fr 1fr 1fr 1fr");
+        $with5.SetWidth(1199);
+        this.WebHTMLDiv1.SetParentComponent(this.WebResponsiveGridPanel1);
+        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
+        this.WebHTMLDiv1.SetLeft(226);
+        this.WebHTMLDiv1.SetTop(10);
+        this.WebHTMLDiv1.SetWidth(223);
+        this.WebHTMLDiv1.SetHeight(186);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv1.SetRole("");
+        this.WebHTMLContainer2.SetParentComponent(this.WebHTMLDiv1);
+        this.WebHTMLContainer2.SetName("WebHTMLContainer2");
+        this.WebHTMLContainer2.SetLeft(0);
+        this.WebHTMLContainer2.SetTop(0);
+        this.WebHTMLContainer2.SetWidth(223);
+        this.WebHTMLContainer2.SetHeight(186);
+        this.WebHTMLContainer2.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer2.SetWidthStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebHTMLContainer2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLContainer2.SetChildOrderEx(1);
+        this.WebHTMLContainer2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLContainer2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
+        this.WebHTMLContainer2.FHTML.BeginUpdate();
+        try {
+          this.WebHTMLContainer2.FHTML.Clear();
+          this.WebHTMLContainer2.FHTML.Add(" <!--  PRUEBAS bg-secondary");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card  bg-secondary  text-bg-secondary mb-3" style="max-width: 18rem;">');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-header">Header</div>');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
+          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Secondary card title</h5>');
+          this.WebHTMLContainer2.FHTML.Add('    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>');
+          this.WebHTMLContainer2.FHTML.Add("  </div>");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-y-auto" style="max-height: 200px;">    style="max-height: 200px;" -->');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<!--<div class="overflow-auto" style="max-height: calc(100vh - 150px);"> -->');
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/DIRECTORIOsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" ');
+          this.WebHTMLContainer2.FHTML.Add('alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Directorio (mis archivos)</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Directorio con contenido sobre: hojas con notas rapidas, hojas con columnas y renglones y archivos de texto ');
+          this.WebHTMLContainer2.FHTML.Add("editados.</p>");
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add(" </div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/LIBRETAsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Libreta con notas rápidas</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap" >Registro de renglones con información relevante, notas, apuntes, pendientes, actividades etc.</p>');
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmRLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('   <!--    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmRLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/HTABsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Hoja Tabular con columnas y renglones</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Registro en formato tabular tipo Excel, con información columnas y renglones registro de información de manera');
+          this.WebHTMLContainer2.FHTML.Add(" tabular, encabezado columnas, formulas etc.              </p>");
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmTLibretaResponsive" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!-- <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmTLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card">    <!--style="width: 25rem;" -->');
+          this.WebHTMLContainer2.FHTML.Add('  <div class="card-body">');
+          this.WebHTMLContainer2.FHTML.Add("    <!-- Image with float-start and margin utilities -->");
+          this.WebHTMLContainer2.FHTML.Add('    <img src="https://github.com/IDSFDG/LibDigital/blob/main/img/EDITORsm.jpeg?raw=true" class="img-fluid rounded float-start me-3" alt="ejemplo ');
+          this.WebHTMLContainer2.FHTML.Add('imagen">');
+          this.WebHTMLContainer2.FHTML.Add('    <h5 class="card-title">Editor de Texto</h5>');
+          this.WebHTMLContainer2.FHTML.Add('        <p class="card-text text-wrap">Editor de texto libre, con formato enriquecido imagenes, tablas, remarcado, border y tablas etc.</p>');
+          this.WebHTMLContainer2.FHTML.Add(' <!--   <p class="card-text">Additional paragraph to show continued text flow below the image as well, if the content is long enough.</p>-->');
+          this.WebHTMLContainer2.FHTML.Add('   <a href="LibretaDigital.html#frmEditor" class="stretched-link"></a>');
+          this.WebHTMLContainer2.FHTML.Add('     <!--   <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsivel" class="btn btn-primary stretched-link">Go somewhere</a>');
+          this.WebHTMLContainer2.FHTML.Add("");
+          this.WebHTMLContainer2.FHTML.Add('<div class="card" style="width: 5rem;" > ');
+          this.WebHTMLContainer2.FHTML.Add('    <a href="LibretaDigital.html#frmLibretaResponsive" class="btn btn-primary">Entrar</a>');
+          this.WebHTMLContainer2.FHTML.Add("</div>");
+          this.WebHTMLContainer2.FHTML.Add("-->");
+          this.WebHTMLContainer2.FHTML.Add("  </div> ");
+          this.WebHTMLContainer2.FHTML.Add("</div> ");
+          this.WebHTMLContainer2.FHTML.Add(" <!-- </div>-->");
+        } finally {
+          this.WebHTMLContainer2.FHTML.EndUpdate();
+        };
+      } finally {
+        this.WebHTMLContainer1.AfterLoadDFMValues();
+        this.WebResponsiveGridPanel1.AfterLoadDFMValues();
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebHTMLContainer2.AfterLoadDFMValues();
+      };
+    };
+    rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
+    rtl.addIntf(this,pas.System.IUnknown);
+    var $r = this.$rtti;
+    $r.addField("WebHTMLContainer1",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addField("WebHTMLContainer2",pas["WEBLib.ExtCtrls"].$rtti["THTMLContainer"]);
+    $r.addField("WebResponsiveGridPanel1",pas["WEBLib.ExtCtrls"].$rtti["TResponsiveGridPanel"]);
+    $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebFormHashChange",0,[["Sender",pas.System.$rtti["TObject"]],["oldURL",rtl.string],["newURL",rtl.string]]);
+  });
+  this.frmMenu = null;
+},["uLibretaResponsive","uEditor","uLibretaResponsiveR","uLibretaResponsiveT","uRichEditor"]);
+rtl.module("editorDiv",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs","WEBLib.Controls","WEBLib.WebCtrls","WEBLib.StdCtrls","WEBLib.StdCtrls","WEBLib.ExtCtrls"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TfrmEditorDiv",pas["WEBLib.Forms"].TForm,function () {
+    this.$init = function () {
+      pas["WEBLib.Forms"].TForm.$init.call(this);
+      this.WebHTMLDiv1 = null;
+      this.WebPanel1 = null;
+      this.WebButton1 = null;
+    };
+    this.$final = function () {
+      this.WebHTMLDiv1 = undefined;
+      this.WebPanel1 = undefined;
+      this.WebButton1 = undefined;
+      pas["WEBLib.Forms"].TForm.$final.call(this);
+    };
+    this.WebFormCreate = function (Sender) {
+      const editableDiv = document.getElementById('editordiv');
+      
+      // Set the contentEditable property to 'true'
+           editableDiv.contentEditable = 'true';
+          // editableDiv.style.border = "2px solid black";
+    };
+    this.WebButton1Click = function (Sender) {
+      function highlightSelection() {
+          const selection = window.getSelection();
+      
+          // Check if anything is actually selected
+          if (selection.rangeCount > 0) {
+              console.log('text selected');
+              const range = selection.getRangeAt(0);
+              const span = document.createElement('span');
+              span.classList.add('highlight');
+      
+              try {
+                  // Surround the selection with the span element
+                  range.surroundContents(span);
+              } catch (error) {
+                  // Handle cases where the selection crosses non-text nodes
+                  console.error("Could not surround contents:", error);
+                  alert("Cannot highlight selection that crosses complex HTML nodes.");
+              }
+      
+              // Remove the user's active selection after highlighting
+              selection.removeAllRanges();
+          }
+      }
+      
+      
+      function getSelectedRange() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          return selection.getRangeAt(0);
+        }
+        return null;
+      }
+      
+      function highlightSelectedText() {
+        const range = getSelectedRange();
+      
+        if (range && range.toString().trim().length > 0) {
+          // Create a span element for highlighting
+          const highlightSpan = document.createElement("span");
+          highlightSpan.style.backgroundColor = "yellow"; // Or use a CSS class
+          highlightSpan.classList.add("highlight");
+      
+          // Wrap the content of the range with the span
+          try {
+            range.surroundContents(highlightSpan);
+          } catch (e) {
+            // Handle cases where the range might span across different element boundaries
+            // This is a complex scenario often requiring a rich text editor library
+            console.error("Could not surround contents:", e);
+          }
+      
+          // Optional: clear the selection after highlighting
+          window.getSelection().removeAllRanges();
+        }
+      };
+      highlightSelection();
+    };
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$2",["editordiv"]);
+      this.WebPanel1 = pas["WEBLib.ExtCtrls"].TPanel.$create("Create$1",[this]);
+      this.WebButton1 = pas["WEBLib.StdCtrls"].TButton.$create("Create$1",[this]);
+      this.WebHTMLDiv1.BeforeLoadDFMValues();
+      this.WebPanel1.BeforeLoadDFMValues();
+      this.WebButton1.BeforeLoadDFMValues();
+      try {
+        this.SetName("frmEditorDiv");
+        this.SetWidth(640);
+        this.SetHeight(480);
+        this.SetCaption("Editor de Texto");
+        this.SetCSSLibrary(pas["WEBLib.Controls"].TCSSLibrary.cssBootstrap);
+        this.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.FFont.FCharset = 1;
+        this.FFont.SetColor(65793);
+        this.FFont.SetHeight(-15);
+        this.FFont.SetName("Tahoma");
+        this.FFont.SetStyle({});
+        this.SetParentFont(false);
+        this.SetEvent(this,"OnCreate","WebFormCreate");
+        this.WebHTMLDiv1.SetParentComponent(this);
+        this.WebHTMLDiv1.SetName("WebHTMLDiv1");
+        this.WebHTMLDiv1.SetLeft(0);
+        this.WebHTMLDiv1.SetTop(60);
+        this.WebHTMLDiv1.SetWidth(640);
+        this.WebHTMLDiv1.SetHeight(420);
+        this.WebHTMLDiv1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
+        this.WebHTMLDiv1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebHTMLDiv1.SetRole("");
+        this.WebPanel1.SetParentComponent(this);
+        this.WebPanel1.SetName("WebPanel1");
+        this.WebPanel1.SetLeft(0);
+        this.WebPanel1.SetTop(0);
+        this.WebPanel1.SetWidth(640);
+        this.WebPanel1.SetHeight(60);
+        this.WebPanel1.SetElementClassName("card");
+        this.WebPanel1.SetAlign(pas["WEBLib.Controls"].TAlign.alTop);
+        this.WebPanel1.SetChildOrderEx(2);
+        this.WebPanel1.FElementBodyClassName = "card-body";
+        this.WebPanel1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebPanel1.SetTabOrder(1);
+        this.WebButton1.SetParentComponent(this.WebPanel1);
+        this.WebButton1.SetName("WebButton1");
+        this.WebButton1.SetLeft(3);
+        this.WebButton1.SetTop(21);
+        this.WebButton1.SetWidth(145);
+        this.WebButton1.SetHeight(33);
+        this.WebButton1.SetCaption("Remarcar Seleccion");
+        this.WebButton1.SetChildOrderEx(1);
+        this.WebButton1.SetElementClassName("btn btn-light");
+        this.WebButton1.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
+        this.WebButton1.SetHeightStyle(pas["WEBLib.Controls"].TSizeStyle.ssAuto);
+        this.WebButton1.SetHeightPercent(100.000000000000000000);
+        this.WebButton1.SetWidthPercent(100.000000000000000000);
+        this.SetEvent$1(this.WebButton1,this,"OnClick","WebButton1Click");
+      } finally {
+        this.WebHTMLDiv1.AfterLoadDFMValues();
+        this.WebPanel1.AfterLoadDFMValues();
+        this.WebButton1.AfterLoadDFMValues();
       };
     };
     rtl.addIntf(this,pas["WEBLib.Controls"].IControl);
     rtl.addIntf(this,pas.System.IUnknown);
     var $r = this.$rtti;
     $r.addField("WebHTMLDiv1",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
-    $r.addField("WebRichEditToolBar1",pas["WEBLib.Buttons"].$rtti["TRichEditToolBar"]);
-    $r.addField("WebHTMLDiv2",pas["WEBLib.WebCtrls"].$rtti["THTMLDiv"]);
-    $r.addField("WebRichEdit1",pas["WEBLib.ComCtrls"].$rtti["TRichEdit"]);
+    $r.addField("WebPanel1",pas["WEBLib.ExtCtrls"].$rtti["TPanel"]);
+    $r.addField("WebButton1",pas["WEBLib.StdCtrls"].$rtti["TButton"]);
+    $r.addMethod("WebFormCreate",0,[["Sender",pas.System.$rtti["TObject"]]]);
+    $r.addMethod("WebButton1Click",0,[["Sender",pas.System.$rtti["TObject"]]]);
   });
-  this.frmRichEditor = null;
+  this.frmEditorDiv = null;
 });
 rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","uFormaMenu","uLibretaResponsiveT","editorDiv","uRichEditor","uEditor","uLibretaResponsive","uLibretaResponsiveR"],function () {
   "use strict";
