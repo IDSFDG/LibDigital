@@ -57254,7 +57254,7 @@ rtl.module("uLibretaResponsive",["System","SysUtils","Classes","JS","Web","WEBLi
           addRowPos:"top",          //when adding a new row, add it to the top of the table
           history:true,             //allow undo and redo actions on the table
           pagination:"local",       //paginate the data
-          paginationSize:7,         //allow 7 rows per page of data
+          paginationSize:10,         //allow 7 rows per page of data
           paginationCounter:"rows", //display count of paginated rows in footer
           movableColumns:true,      //allow column order to be changed
           initialSort:[             //set the initial sort order of the data
@@ -58198,18 +58198,6 @@ rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBL
     };
     this.WebFormCreate = function (Sender) {
       this.txtBuscar.SetElementClassName("rounded-input");
-      var sheets = [
-          {
-            name:'huno',
-            title:"Renglones",
-            key:"uno",
-            rows:50,
-            //rows:0,
-           // columns:7,
-            columns:2,
-            data:[],
-        }
-      ];
       function customEditor(cell, onRendered, success, cancel) {
        // const input = document.createElement('input')
         const input = document.createElement('textarea')
@@ -58268,6 +58256,162 @@ rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBL
       
         return input
       }
+      
+      
+       var tabledata2 = [];
+          for (let i = 0; i < 50; i++) {
+            const dataobject = {
+             id: i,
+             texto: ""
+               };
+           tabledata2.push(dataobject);
+           }
+      
+      var table = new Tabulator("#ttabulator", {
+          data:tabledata2,           //load row data from array
+          layout:"fitColumns",      //fit columns to width of table
+          responsiveLayout:"hide",  //hide columns that don't fit on the table
+          addRowPos:"top",          //when adding a new row, add it to the top of the table
+          history:true,             //allow undo and redo actions on the table
+          pagination:"local",       //paginate the data
+          paginationSize:15,         //allow 7 rows per page of data
+          paginationCounter:"rows", //display count of paginated rows in footer
+          movableColumns:true,      //allow column order to be changed
+          initialSort:[             //set the initial sort order of the data
+              {column:"tipo", dir:"asc"},
+          ],
+      
+      
+          columnDefaults:{
+              tooltip:true,         //show tool tips on cells
+          },
+          columns:[                 //define the table columns
+      
+              {formatter:"rownum", width:40, hozAlign:"center", headerSort:false}, // Add a row number column
+      
+            //  {title:"id", field:"id", editor:false},
+              {title:"", field:"texto", editor:customEditor},
+          ],
+      
+          //locale:true,
+            langs:{
+              "espaniol":{
+                  "columns":{
+                      "name":"Name", //replace the title of column name with the value "Name"
+                  },
+                  "data":{
+                      "loading":"Loading", //data loader text
+                      "error":"Error", //data error text
+                  },
+                  "groups":{ //copy for the auto generated item count in group header
+                      "item":"item", //the singular  for item
+                      "items":"items", //the plural for items
+                  },
+                  "pagination":{
+                      "page_size":"Tam.Pag.", //label for the page size select element
+                      "page_title":"Ver Pag.",//tooltip text for the numeric page button, appears in front of the page number (eg. "Show Page" will result in a tool tip of "Show Page 1" on the page 1 button)
+                      "first":"Prim.", //text for the first page button
+                      "first_title":"Prim.Pag", //tooltip text for the first page button
+                      "last":"Ultim.",
+                      "last_title":"Ult.Pag.",
+                      "prev":"Prev.",
+                      "prev_title":"Pag.Ant.",
+                      "next":"Sig.",
+                      "next_title":"Pag.Sig.",
+                      "all":"All",
+                      "counter":{
+                          "showing": "Ver",
+                          "of": "de",
+                          "rows": "rengs",
+                          "pages": "paginas",
+                      }
+                  },
+                  "headerFilters":{
+                      "default":"filter column...", //default header filter placeholder text
+                      "columns":{
+                          "name":"filter name...", //replace default header filter text for column name
+                      }
+                  }
+              }
+          },
+      
+      });
+      
+      table.on("tableBuilt", function(){
+            table.setLocale("espaniol"); //set locale to espaniol
+      
+             });
+      return;
+      var sheets = [
+          {
+            name:'huno',
+            title:"Renglones",
+            key:"uno",
+            rows:50,
+            //rows:0,
+           // columns:7,
+            columns:2,
+            data:[],
+        }
+      ];
+      function customEditor(cell, onRendered, success, cancel) {
+       // const input = document.createElement('input')
+        const input = document.createElement('textarea')
+      
+        input.style.width = "100%";
+        //input.style.height = "100%";
+        //input.style.boxSizing = "border-box";
+        input.value = cell.getValue()
+        //input.selectionStart = input.value.length
+        //input.selectionEnd = input.value.length;
+      
+        input.value= input.value.trim()
+         if (input.value === 'undefined')
+        {
+           //console.log('undefined');
+           input.value='';
+        }
+        onRendered(() => {
+        console.log('onRender');
+          //input.focus()
+          //input.select()
+      
+         setTimeout(function() {
+                  input.focus();            // FOCUS INPUT
+              }, 30); // A short delay (e.g., 10ms) is often sufficient
+        })
+      
+        function onChange() {
+          if (input.value != cell.getValue()) {
+            success(input.value)
+          } else {
+            cancel()
+          }
+        }
+      
+        var successFunc = function(){
+              success(input.value);
+      
+          };
+      
+          input.addEventListener('blur', onChange)
+         // input.addEventListener("blur", successFunc);
+      
+        input.addEventListener('keydown', (e) => {
+         // alert(e.keyCode);
+          if (e.keyCode == 13) {
+            table.navigateNext()
+      
+            onChange()
+          }
+      
+          if (e.keyCode == 27) {
+            cancel()
+          }
+        })
+      
+        return input
+      }
        var editCheck = function(cell){
           //cell - the cell component for the editable cell
           //get row data
@@ -58279,10 +58423,10 @@ rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBL
       
       var table = new Tabulator("#ttabulator", {
           //data:tabledata2,           //load row data from array
-          spreadsheet:true,
+          spreadsheet:false,
         //spreadsheetData:sheetData,
         spreadsheetSheets:sheets,        // DEFINICION HOJAS ARREGLO
-        spreadsheetSheetTabs:true,
+        spreadsheetSheetTabs:false,
       
         rowHeader:{field:"_id", hozAlign:"center", headerSort:false, frozen:true},
       
@@ -58323,9 +58467,9 @@ rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBL
           addRowPos:"top",          //when adding a new row, add it to the top of the table
           history:true,             //allow undo and redo actions on the table
       
-         // pagination:"local",       //paginate the data
-         // paginationSize:7,         //allow 7 rows per page of data
-         // paginationCounter:"rows", //display count of paginated rows in footer
+          pagination:"local",       //paginate the data
+          paginationSize:7,         //allow 7 rows per page of data
+          paginationCounter:"rows", //display count of paginated rows in footer
          // movableColumns:true,      //allow column order to be changed
           initialSort:[             //set the initial sort order of the data
               {column:"tipo", dir:"asc"},
@@ -58383,13 +58527,13 @@ rtl.module("uLibretaResponsiveR",["System","SysUtils","Classes","JS","Web","WEBL
           var tableWidth = tableElement.offsetWidth;
           console.log("Table width:", tableWidth + "px");
           var activeSheet = table.getSheet();
-          var key = activeSheet.getKey();
-          if (key =='uno')
-          {
+         // var key = activeSheet.getKey();
+         // if (key =='uno')
+          //{
            console.log('update column definition');
            table.updateColumnDefinition("A", {title:"", width: tableWidth-50 }) //change the column title
            table.updateColumnDefinition("B", {title:"", visible:false }) //change the column title
-         }
+         //}
       
          let firstRow = table.getRowFromPosition(1);
          //console.log('firstRow',firstRow);
@@ -58830,13 +58974,15 @@ rtl.module("uLibretaResponsiveT",["System","SysUtils","Classes","JS","Web","WEBL
       }
       
       var table = new Tabulator("#ttabulator", {
+           maxHeight:"100%", //do not let table get bigger than the height of its parent element
+           frozenRows:1,
           //data:tabledata2,           //load row data from array
           spreadsheet:true,
         //spreadsheetData:sheetData,
         spreadsheetSheets:sheets,        // DEFINICION HOJAS ARREGLO
         spreadsheetSheetTabs:true,
       
-        rowHeader:{field:"_id", hozAlign:"center", headerSort:false, frozen:true},
+        rowHeader:{field:"_id", hozAlign:"center", headerSort:false, frozen:true,width:40},
       
         editorEmptyValue:undefined, //ensure empty values are set to undefined so they arent included in spreadsheet output data
       
