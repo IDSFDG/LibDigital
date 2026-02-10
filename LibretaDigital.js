@@ -64471,6 +64471,35 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
     this.WebFormCreate = function (Sender) {
       this.WebRichEditToolBar1.SetVisibleButtons(rtl.createSet(pas["WEBLib.Buttons"].TRichEditBtn.reFont,pas["WEBLib.Buttons"].TRichEditBtn.reFontSize,pas["WEBLib.Buttons"].TRichEditBtn.reBold,pas["WEBLib.Buttons"].TRichEditBtn.reItalic,pas["WEBLib.Buttons"].TRichEditBtn.reUnderline,pas["WEBLib.Buttons"].TRichEditBtn.reStrikeThrough,pas["WEBLib.Buttons"].TRichEditBtn.reAlignLeft,pas["WEBLib.Buttons"].TRichEditBtn.reAlignCenter,pas["WEBLib.Buttons"].TRichEditBtn.reAlignRight,pas["WEBLib.Buttons"].TRichEditBtn.reUnorderedList,pas["WEBLib.Buttons"].TRichEditBtn.reOrderedList,pas["WEBLib.Buttons"].TRichEditBtn.reForegroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reBackgroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reHyperlink,pas["WEBLib.Buttons"].TRichEditBtn.reImageInsert,pas["WEBLib.Buttons"].TRichEditBtn.reLineSpacing));
       this.WebRichEditToolBar1.SetVisibleButtons(rtl.createSet(pas["WEBLib.Buttons"].TRichEditBtn.reFont,pas["WEBLib.Buttons"].TRichEditBtn.reFontSize,pas["WEBLib.Buttons"].TRichEditBtn.reBold,pas["WEBLib.Buttons"].TRichEditBtn.reItalic,pas["WEBLib.Buttons"].TRichEditBtn.reUnderline,pas["WEBLib.Buttons"].TRichEditBtn.reForegroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reBackgroundColor,pas["WEBLib.Buttons"].TRichEditBtn.reImageInsert));
+      // Select the navbar collapse element
+      const navbarCollapseEl = document.getElementById('navbarNavAltMarkup');
+      const eleditor = document.getElementById('eleditor');
+      
+      // Add an event listener for when it starts to be shown
+      navbarCollapseEl.addEventListener('show.bs.collapse', function () {
+        console.log('Navbar is about to be shown/expanded');
+        // Add your custom code here
+      });
+      
+      // Add an event listener for when it has finished being shown
+      navbarCollapseEl.addEventListener('shown.bs.collapse', function () {
+        console.log('Navbar is now fully shown/expanded');
+        // Add your custom code here
+      });
+      
+      // Add an event listener for when it starts to be hidden
+      navbarCollapseEl.addEventListener('hide.bs.collapse', function () {
+        console.log('Navbar is about to be hidden/collapsed');
+        // Add your custom code here
+      });
+      
+      // Add an event listener for when it has finished being hidden
+      navbarCollapseEl.addEventListener('hidden.bs.collapse', function () {
+        console.log('Navbar is now fully hidden/collapsed');
+        // Add your custom code here
+        console.log(eleditor);
+         eleditor.focus();
+      });
     };
     this.WebFormHashChange = function (Sender, oldURL, newURL) {
       if (pas.SysUtils.TStringHelper.Contains.call({get: function () {
@@ -64495,9 +64524,9 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
     this.LoadDFMValues = function () {
       pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
       this.WebHTMLDiv2 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
-      this.WebRichEdit1 = pas["WEBLib.ComCtrls"].TRichEdit.$create("Create$1",[this]);
+      this.WebRichEdit1 = pas["WEBLib.ComCtrls"].TRichEdit.$create("Create$2",["eleditor"]);
       this.WebHTMLDiv1 = pas["WEBLib.WebCtrls"].THTMLDiv.$create("Create$1",[this]);
-      this.WebRichEditToolBar1 = pas["WEBLib.Buttons"].TRichEditToolBar.$create("Create$2",[""]);
+      this.WebRichEditToolBar1 = pas["WEBLib.Buttons"].TRichEditToolBar.$create("Create$2",["eleditortb"]);
       this.WebHTMLContainer1 = pas["WEBLib.ExtCtrls"].THTMLContainer.$create("Create$1",[this]);
       this.WebResponsiveGridPanel1 = pas["WEBLib.ExtCtrls"].TResponsiveGridPanel.$create("Create$1",[this]);
       this.WebHTMLDiv2.BeforeLoadDFMValues();
@@ -64528,7 +64557,6 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
         this.WebHTMLDiv2.SetHeight(375);
         this.WebHTMLDiv2.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
         this.WebHTMLDiv2.SetChildOrderEx(1);
-        this.WebHTMLDiv2.SetElementPosition(pas["WEBLib.Controls"].TElementPosition.epRelative);
         this.WebHTMLDiv2.SetElementFont(pas["WEBLib.Controls"].TElementFont.efCSS);
         this.WebHTMLDiv2.SetRole("");
         this.WebRichEdit1.SetParentComponent(this.WebHTMLDiv2);
@@ -64538,7 +64566,6 @@ rtl.module("uRichEditor",["System","SysUtils","Classes","JS","Web","WEBLib.Graph
         this.WebRichEdit1.SetWidth(640);
         this.WebRichEdit1.SetHeight(334);
         this.WebRichEdit1.SetAlign(pas["WEBLib.Controls"].TAlign.alClient);
-        this.WebRichEdit1.SetAutoSize(true);
         this.WebRichEdit1.SetBorderStyle(pas["WEBLib.Controls"].TBorderStyle.bsSingle);
         this.WebRichEdit1.SetColor(16777215);
         this.WebHTMLDiv1.SetParentComponent(this.WebHTMLDiv2);
